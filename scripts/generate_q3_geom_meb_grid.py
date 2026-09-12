@@ -1,4 +1,4 @@
-﻿import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 from matplotlib.patches import Circle, Polygon, Rectangle
 import numpy as np
@@ -105,10 +105,16 @@ ax3.text(14.0, 21.0, f'最远角点距 d = {d_corner:.2f} m < 20 m', fontsize=9,
 t_grid = np.array([22.0, 20.0])
 ax3.scatter(t_grid[0], t_grid[1], color='#C53030', s=70, marker='x', linewidth=2.0, zorder=6, label='单元内任意目标真值')
 
-# Bounding polygon
-poly_fallback = np.array([[8, 12], [32, 10], [38, 38], [15, 42]])
-poly_fb_patch = Polygon(poly_fallback, closed=True, facecolor='none', edgecolor='#805AD5', linestyle='-', linewidth=2.0, zorder=3, label='宽幅外包多边形')
-ax3.add_patch(poly_fb_patch)
+# Bounding box of candidate region (aligned with axes W_c x H_c)
+bbox_origin = (6.0, 8.0)
+bbox_w, bbox_h = 36.0, 36.0
+bbox_rect = Rectangle(bbox_origin, bbox_w, bbox_h, facecolor='none', edgecolor='#805AD5', linestyle='-', linewidth=2.0, zorder=3, label='候选区域正交包围盒')
+ax3.add_patch(bbox_rect)
+
+# Inner candidate polygon inside bounding box
+poly_inner = np.array([[10, 14], [34, 11], [39, 32], [28, 41], [9, 35]])
+poly_in_patch = Polygon(poly_inner, closed=True, facecolor='#E9D8FD', alpha=0.45, edgecolor='#6B46C1', linestyle='--', linewidth=1.4, zorder=2, label='待清除凸多边形')
+ax3.add_patch(poly_in_patch)
 
 ax3.set_xlim(-6, 58)
 ax3.set_ylim(-6, 58)
