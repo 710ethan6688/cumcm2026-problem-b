@@ -1,0 +1,533 @@
+% !TeX program = xelatex
+% 2026 CUMCM 参赛论文规范排版工程（严格对齐2026国赛最新格式规范）
+\documentclass[zihao=-4,a4paper,UTF8]{ctexart}
+\usepackage{cumcm2026}
+
+\title{无线电干扰源的快速自动定位与清除策略研究}
+
+\begin{document}
+
+\maketitle
+
+\section{问题重述}
+
+\subsection{问题背景}
+
+无线电频谱资源是国家重要的战略资源。近年来，各类突发性不明无线电干扰源严重压制关键频段，给公共安全与基础设施运行带来威胁，针对复杂环境下的干扰源监测与清除已成为电磁安全防护的核心任务。
+
+传统的人工徒步排查效率低下且面临高危风险。为提升响应效率，研制搭载测向与清除载荷的机动巡航平台（如四足机器狗），在未知区域自主机动定位并物理清除干扰源，已成为当前的重要发展方向。本任务的核心目标即是为该机动平台规划最优的搜索航线与定位清除策略，以极小化任务总时间。
+
+\subsection{问题提出}
+
+目标干扰源分布在一个半径为 1800 米的圆形区域内。机器狗初始位于坐标原点 $(0,0)$，初始监听频道为 1，以 $5\text{ m/s}$ 的固定速度在二维平面内直线移动，且机器狗的运动范围不受上述 1800 米目标分布边界的限制，可自由机动以获得更优的观测视角。目标区域内存在若干独占 20 个离散频道的干扰源，其最大有效信号覆盖半径在 $1000\sim 1500\text{ m}$ 之间。
+
+机器狗在执行任务时的客观物理动作约束如下：频道切换耗时 1 秒；停靠调整天线并获取稳定示向度耗时 5 秒；测向机全局角度误差严格有界于 $[-1^\circ, 1^\circ]$，且同一地点重复检测时环境测向误差保持恒定；当距干扰源中心不超过 20 米时，方可启动耗时 3 秒的光学精确定位与耗时 2 秒的激光清除（光学成功仅取决于距离，与发射角无关）；此外，若距干扰源不超过 5 米且处于其有效发射角内，将因信号过强而无法获取示向度，但可直接实施精确定位与清除。
+
+基于上述物理机制与客观约束，要求建立数学模型与算法依次解决以下四个核心问题：
+
+\begin{itemize}[leftmargin=2.5em, itemsep=0.6em, topsep=0.4em]
+  \item[\textbf{问题一}] 已知若干检测点的空间坐标及目标干扰源在此处的实测示向度。要求基于交会定位法原理，给出计算多边形定位区域直径（即区域内任意两点之间距离的最大值）的具体算法；并判定以该定位区域直径为直径的圆是否能够完全覆盖此定位区域。
+
+  \item[\textbf{问题二}] 已知某全向干扰源在单一检测点处测得的初始示向度。要求制定第二个检测点的选择策略，以期获得针对该干扰源较好的定位效果，并给出第二个检测点的合理候选区域。
+
+  \item[\textbf{问题三}] 已知目标区域内的干扰源均为全向干扰源，总数在 $10\sim 16$ 个之间（具体数目未知）。要求制定机器狗自动搜索定位及清除干扰源的策略与算法，在确保所有干扰源被清除的前提下，使完成任务的总时间越短越好；最后，需通过环境模拟器进行充分演练与三次正式测试，以检验策略有效性并输出规范结果。
+
+  \item[\textbf{问题四}] 目标区域中同时存在全向干扰源与半平面定向干扰源（即仅在特定 $180^\circ$ 扇区内辐射信号，包含边界），两者混合分布且干扰源总数依然在 $10\sim 16$ 个之间。其中，定向干扰源的具体数目及各自的辐射方向均完全未知，其余物理条件与时间约束均与问题三相同。要求在此非对称信号辐射遮蔽的复杂对抗条件下，制定针对混合干扰源的高效检测与清除策略及算法，同样通过环境模拟器完成充分的演练测试与三次正式测试，并按规范要求输出最终测试结果。
+\end{itemize}
+
+\section{模型基本假设与符号说明}
+
+\subsection{基本假设}
+为了保证数学模型的严谨性与物理逻辑的真实性，本文提出如下合理假设：
+\begin{enumerate}[leftmargin=2.5em, itemsep=0.2em]
+    \item \textbf{目标静止与基准坐标无漂移假设}：目标干扰源在整个作业过程中保持静止；机器狗的高精度差分惯导系统运行良好，其自身坐标与绝对方位基准无测量误差。
+    \item \textbf{观测同源性与信号有效性假设}：在同一频段内提取的连续测向数据已完成前置同源聚类，且参与解算的各次测向均处于目标有效覆盖半径内，为有效观测。
+    \item \textbf{确定性有界误差假设}：测向仪角度误差服从未知但有界的确定性区间分布（误差半宽 $\varepsilon = 1^\circ$），不作先验高斯分布假设，遵循最劣工况保障原则。
+    \item \textbf{同地重复测量的误差恒定性假设}：在同一物理坐标点不移动时的重复测向受相同的局部近场多径与地形畸变影响，误差值保持恒定，无法通过同地多次平均来缩小不确定度。
+\end{enumerate}
+
+\subsection{符号说明}
+本文使用的主要数学符号及其物理意义如表 \ref{tab:symbols} 所示。
+
+\begin{table}[htbp]
+    \centering
+    \small
+    \caption{主要数学符号物理意义与数学定义说明}
+    \label{tab:symbols}
+    \begin{tabularx}{\linewidth}{c X c}
+        \toprule[1.5pt]
+        \textbf{符号} & \textbf{数学定义与物理意义} & \textbf{量纲 / 类型} \\
+        \midrule
+        $n$ & 参与协同交会定位的已知检测基站（观测点）总数 & 无量纲 (个) \\
+        $\mathbf{p}_i$ & 第 $i$ 次观测时检测站的二维平面坐标，$\mathbf{p}_i = (x_i, y_i)^\top$ & $\text{m}$ \\
+        $\hat\theta_i$ & 第 $i$ 次观测所得实测示向度（平面直角坐标系下逆时针度量的极角方向） & $\text{rad}$ / 度 \\
+        $\varepsilon$ & 测向仪的客观物理误差确界半宽，$\varepsilon = 1^\circ = \pi/180\text{ rad}$ & $\text{rad}$ / 度 \\
+        $\mathbf{s}$ & 未知的真实辐射源二维平面位置坐标，$\mathbf{s} = (s_x, s_y)^\top$ & $\text{m}$ \\
+        $\mathcal{W}_i$ & 第 $i$ 次测向在空间中形成的前向有界角域（双向半平面的交集） & 平面闭子集 \\
+        $\mathcal{R}$ & 全体有效协同观测共同约束下的联合交会定位区域（紧致凸多边形） & 紧致凸多边形 \\
+        $\mathcal{V}$ & 定位凸多边形 $\mathcal{R}$ 逆时针有序排列的极点序列，$\mathcal{V} = \{\mathbf{v}_0, \dots, \mathbf{v}_{h-1}\}$ & 极点点列 \\
+        $D$ & 定位多边形区域 $\mathcal{R}$ 内任意两点间欧氏距离的上确界（几何直径） & $\text{m}$ \\
+        $(\mathbf{a}^*, \mathbf{b}^*)$ & 凸多边形上距离最远的一组极点对（直径端点对） & 极点坐标对 \\
+        $\mathcal{C}^*$ & 以最远对踵极点对 $(\mathbf{a}^*, \mathbf{b}^*)$ 连线为直径构造的闭圆盘 & 平面闭圆盘 \\
+        $\kappa$ & 直径圆盘 $\mathcal{C}^*$ 能否完全包含并覆盖定位区域 $\mathcal{R}$ 的布尔判定指标 & 布尔量 $\{0, 1\}$ \\
+        \bottomrule[1.5pt]
+    \end{tabularx}
+\end{table}
+
+\section{问题一：交会定位多边形解算与直径覆盖判定}
+
+\subsection{问题分析与求解思路}
+
+问题一要求针对给定的若干检测点空间坐标及实测示向度，建立交会定位模型，设计求解定位多边形几何直径的具体算法，并判定以该直径构成的闭圆盘能否完全覆盖此定位区域。
+
+求解问题一的核心难点在于：一方面，测向仪存在有界角度误差（$\pm 1^\circ$），需将离散的物理测向数据转化为严格的几何约束；另一方面，交会形成的多边形为连续闭合区域，无法直接通过离散网格采样来精确计算几何直径和判定圆盘覆盖。
+
+为此，本文建立如下求解流程：
+\[
+    \{(\mathbf{p}_i, \hat\theta_i)\}_{i=1}^n \;\longrightarrow\; \{\mathcal{W}_i\}_{i=1}^n \;\longrightarrow\; \mathcal{V} \;\longrightarrow\; (D, \mathbf{a}^*, \mathbf{b}^*) \;\longrightarrow\; \kappa
+\]
+求解过程首先基于测向误差确界将各检测点的实测示向度转化为半平面约束，通过半平面求交解出定位多边形的有序顶点序列；进而证明区域几何直径必在多边形极点处取得，利用旋转卡壳算法快速提取最远顶点对并计算区域直径；最后以该直径构造闭圆盘，从理论证明、几何反例与向量点积判据对圆盘覆盖性进行系统判定。
+
+\subsection{测向误差角域与半平面模型}
+
+为实现上述交会定位与几何解算流程，首要环节是将物理测向数据转化为严密的几何约束。在实际测向中，由于测向仪存在物理角度误差，检测点获得的观测并非单条理想射线，而是具有一定张角的扇形角域；多站协同交会定位的本质，即求取所有测向角域在二维平面上的公共重叠区域。为此，本节利用双向半平面刻画单个检测点的前向观测角域，进而将联合交会定位区域 $\mathcal{R}$ 严格表示为有限闭半平面的交集，为后续多边形顶点解算与几何直径计算提供标准的不等式输入。
+
+设参与协同交会定位的已知检测点数量为 $n$。对于第 $i$ 个检测点，其空间平面位置记为 $\mathbf{p}_i$，实测示向度记为 $\hat\theta_i$（$i=1, \dots, n$）。设真实辐射源的目标位置为 $\mathbf{s}$，其相对于检测点 $\mathbf{p}_i$ 的理论真值方位极角记为 $\theta_i^*$。在测向仪物理误差半宽 $\varepsilon = 1^\circ$ 的有界约束下，实测示向度与真实方位极角满足：
+\begin{equation}
+    \hat\theta_i \equiv \theta_i^* + e_i \pmod{2\pi}, \quad |e_i| \le \varepsilon
+\end{equation}
+
+为了消除传统斜率法在正切奇异角（$\pi/2$ 与 $3\pi/2$）处的数值发散，并统一处理极角 $0/2\pi$ 跨界周期性，定义第 $i$ 次观测在两侧误差边界处的临界单位导向向量：
+\begin{equation}
+    \mathbf{u}_i^- = \begin{bmatrix} \cos(\hat\theta_i - \varepsilon) \\ \sin(\hat\theta_i - \varepsilon) \end{bmatrix}, \quad
+    \mathbf{u}_i^+ = \begin{bmatrix} \cos(\hat\theta_i + \varepsilon) \\ \sin(\hat\theta_i + \varepsilon) \end{bmatrix}
+\end{equation}
+
+定义平面向量叉积行列式算子 $\det(\mathbf{a},\mathbf{b}) = a_x b_y - a_y b_x$。当且仅当向量 $\mathbf{b}$ 处于 $\mathbf{a}$ 的逆时针左侧半平面时，$\det(\mathbf{a},\mathbf{b}) \ge 0$。第 $i$ 次测向所确立的前向闭合楔形角域 $\mathcal{W}_i$ 可严格表示为两个闭半平面的交集：
+\begin{equation}
+    \mathcal{W}_i = \left\{ \mathbf{x} \in \mathbb{R}^2 : \det(\mathbf{u}_i^-, \mathbf{x}-\mathbf{p}_i) \ge 0, \quad \det(\mathbf{x}-\mathbf{p}_i, \mathbf{u}_i^+) \ge 0 \right\}
+\end{equation}
+
+全体有效协同观测的公共交会定位多边形 $\mathcal{R}$ 为全体前向角域之交集：
+\begin{equation}
+    \mathcal{R} = \bigcap_{i=1}^{n} \mathcal{W}_i
+\end{equation}
+由于每个闭半平面均为凸集，有限凸集之交仍为凸集。在合理的多站交会基线配置下，$\mathcal{R}$ 为非空、有界的紧致凸多边形，且满足真实目标真值包含性 $\mathbf{s} \in \mathcal{R}$。
+
+在模型边界的界定上，本问求解的定位区域 $\mathcal{R}$ 严格由各检测点的测向角域交会形成。题设中的发射覆盖半径（$1000\sim 1500\text{ m}$）、近场 5 米盲区以及目标区域 1800 米圆边界，是测向信号能否被成功接收的物理前提；既然各检测点已成功获取有效示向度，交会定位模型应直接聚焦于由半平面约束围成的凸多边形区域，不引入先验圆弧进行二次裁剪，以确保凸多边形几何结构的严整性与算法求解的准确性。至此，由全体测向角域共同界定的定位区域被严格表征为包含 $2n$ 条线性不等式的闭凸集系统。
+
+\subsection{半平面求交与定位多边形解算}
+
+上述闭半平面系统在代数上完备界定了目标可行域，但隐式线性不等式无法直接提供空间拓扑结构。为支撑后续几何直径度量与覆盖判定，需将其显式转换为逆时针严格排序的极点序列：
+\begin{equation}
+    \mathcal{R} = \{\mathbf{x} \in \mathbb{R}^2 : A\mathbf{x} \le \mathbf{b}\} = \operatorname{conv}(\mathcal{V}), \quad \mathcal{V} = \{\mathbf{v}_0, \mathbf{v}_1, \dots, \mathbf{v}_{h-1}\}
+\end{equation}
+为此，本文采用计算几何中基于双端队列的增量半平面求交算法。首先提取全部 $2n$ 条有向边界的法向角并执行极角单调排序；对于同向平行边界仅保留位置最严格的内部边界；随后利用双端队列动态维护当前可行凸多边形的活动外轮廓，当新加入的半平面使得队头或队尾的相邻交点落入不可行侧时，执行出队剪枝操作；遍历全部半平面并完成收尾闭合检验后，联立相邻边界方程解出交点，最终获得按逆时针严格排列的规范化极点序列 $\mathcal{V}$（时间复杂度 $O(n\log n)$，空间复杂度 $O(n)$），将连续区域搜索完全收敛至有限边界极点。
+
+\subsection{基于旋转卡壳算法的多边形直径求解}
+
+基于上述解出的外轮廓极点序列 $\mathcal{V}$，多边形定位区域 $\mathcal{R}$ 的几何直径 $D$ 严格定义为区域内任意两点间欧氏距离的上确界：
+\begin{equation}
+    D = \max_{\mathbf{x}, \mathbf{y} \in \mathcal{R}} \|\mathbf{x} - \mathbf{y}\|_2
+\end{equation}
+作为连续二维闭集，$\mathcal{R}$ 内包含无穷多个点，直接求解两点间最大间距属于连续极值优化问题。为实现确定性快速求解，关键在于将连续搜索降维至有限极点集合的离散比较。为此，本文给出并证明如下极值定理：
+
+\noindent\textbf{定理 1}\quad 紧致凸多边形 $\mathcal{R}$ 的几何直径 $D$ 必在该多边形的某对极点（外轮廓顶点）之间取得，即：
+\begin{equation}
+    D = \max_{\mathbf{v}_j, \mathbf{v}_k \in \mathcal{V}} \|\mathbf{v}_j - \mathbf{v}_k\|_2
+\end{equation}
+
+\begin{cumcmproof}
+任取区域内的任意两点 $\mathbf{x}, \mathbf{y} \in \mathcal{R}$。由凸多边形极点表示定理，两点可分别展开为全体极点集的凸组合：$\mathbf{x} = \sum_{j=0}^{h-1} \lambda_j \mathbf{v}_j$ 与 $\mathbf{y} = \sum_{k=0}^{h-1} \mu_k \mathbf{v}_k$，其中系数满足 $\lambda_j, \mu_k \ge 0$ 且 $\sum_j \lambda_j = \sum_k \mu_k = 1$。利用系数归一性 $\sum_k \mu_k = \sum_j \lambda_j = 1$ 将差向量改写为双重凸组合，并由范数三角不等式放缩：
+\begin{equation}
+    \|\mathbf{x} - \mathbf{y}\|_2 = \left\| \sum_{j=0}^{h-1}\sum_{k=0}^{h-1} \lambda_j \mu_k (\mathbf{v}_j - \mathbf{v}_k) \right\|_2 
+    \le \sum_{j=0}^{h-1}\sum_{k=0}^{h-1} \lambda_j \mu_k \|\mathbf{v}_j - \mathbf{v}_k\|_2 
+    \le \max_{0 \le j, k \le h-1} \|\mathbf{v}_j - \mathbf{v}_k\|_2
+\end{equation}
+由于双重凸组合系数满足 $\sum_{j=0}^{h-1}\sum_{k=0}^{h-1} \lambda_j \mu_k = 1$，连续区域内任意两点间的欧氏间距上界必不超过有限极点对间的最大距离；又由极点包含性 $\mathcal{V} \subset \mathcal{R}$，该极大值在极点集上严格可达，证毕。
+\end{cumcmproof}
+
+定理 1 虽将连续搜索降维至 $\binom{h}{2}$ 对离散顶点比较，但全顶点穷举复杂度仍为 $O(h^2)$。根据对踵几何特征，两点最大间距必在相互平行的外切支撑线接触点（对踵点对）处取得。为此引入旋转卡壳算法，通过一对平行卡尺绕多边形旋转步进，仅需在 $O(h)$ 线性时间内遍历全部对踵候选，即可精确提取区域几何直径 $D$ 及最远顶点对 $(\mathbf{a}^*, \mathbf{b}^*)$。
+
+\subsection{直径圆盘覆盖判定与反例构造}
+
+求得几何直径 $D$ 与最远极点对 $(\mathbf{a}^*, \mathbf{b}^*)$ 后，针对以最远点连线为直径构造的闭圆盘（圆心 $\mathbf{c}^* = \frac{\mathbf{a}^* + \mathbf{b}^*}{2}$，半径 $R = D/2$）：
+\begin{equation}
+    \mathcal{C}^* = \left\{ \mathbf{x} \in \mathbb{R}^2 : \|\mathbf{x} - \mathbf{c}^*\|_2 \le \frac{D}{2} \right\}
+\end{equation}
+直觉常误以为直径既然是区域内最大间距，该圆盘便理应包含多边形全部点。然而严密分析表明：\textbf{以最远点间距为直径构造的闭圆盘，并不能恒定保证完全覆盖定位多边形。}
+
+构造理论反例予以证明：设交会定位区域为边长为 $D$ 的正三角形 $\triangle ABC$。由正三角形几何性质可知，其任意两点间距离的最大值即为边长，故该凸多边形的几何直径为 $D$。若取底边端点 $A, B$ 作为最远点对构造闭圆盘 $\mathcal{C}^*$，圆心为其几何中点 $\mathbf{c}^* = (\mathbf{v}_A + \mathbf{v}_B)/2$，半径 $R = 0.5D$。第三个顶点 $C$ 到圆心 $\mathbf{c}^*$ 的距离为该三角形的高：
+\begin{equation}
+    h_{\triangle} = \|\mathbf{v}_C - \mathbf{c}^*\|_2 = \frac{\sqrt{3}}{2} D \approx 0.8660 D > 0.5 D
+\end{equation}
+顶点 $C$ 位于该圆盘之外（超出圆盘边界达 $0.366D$），否定了恒能完全覆盖的假设。根据几何学荣格定理，平面上直径为 $D$ 的任意有界闭集，其最小覆盖圆半径满足 $R_{\min} \le \frac{\sqrt{3}}{3} D \approx 0.5774 D$。而以最远点间距构造的圆盘半径仅为 $0.5D < 0.5774D$。因此，当多边形在垂直于直径的方向上横向宽展较大时，其顶点便会超出该圆盘。
+
+为判定具体多边形的覆盖性，利用凸集性质，多边形 $\mathcal{R} = \operatorname{conv}(\mathcal{V})$ 被闭圆盘完全包含充要等价于全体极点落入圆盘内部。借助向量点积恒等式：
+\begin{equation}
+    (\mathbf{x} - \mathbf{a}^*) \cdot (\mathbf{x} - \mathbf{b}^*) = \|\mathbf{x} - \mathbf{c}^*\|_2^2 - \frac{D^2}{4}
+\end{equation}
+点 $\mathbf{x} \in \mathcal{C}^* \iff (\mathbf{x} - \mathbf{a}^*) \cdot (\mathbf{x} - \mathbf{b}^*) \le 0$。该式将开方几何距离检验转化为无需开方的线性内积符号判据，避免了浮点舍入误差。据此定义覆盖布尔算子 $\kappa \in \{0, 1\}$：
+\begin{equation}
+    \kappa = 
+    \begin{cases}
+        1, & \text{若 } \forall \mathbf{v}_j \in \mathcal{V},\; (\mathbf{v}_j - \mathbf{a}^*) \cdot (\mathbf{v}_j - \mathbf{b}^*) \le 0 \\
+        0, & \text{若 } \exists \mathbf{v}_j \in \mathcal{V},\; (\mathbf{v}_j - \mathbf{a}^*) \cdot (\mathbf{v}_j - \mathbf{b}^*) > 0
+    \end{cases}
+\end{equation}
+若 $\kappa=0$，记录超出圆盘边界的最大超量 $g_{\text{viol}} = \max_j \max\{(\mathbf{v}_j - \mathbf{a}^*) \cdot (\mathbf{v}_j - \mathbf{b}^*), 0\}$ 及其对应越界顶点。至此，从测向数据到定位多边形、几何直径求解以及圆盘覆盖判定的完整几何机制如图 \ref{fig:q1_dual_panel} 所示。其中图 \ref{fig:q1_dual_panel}(a) 直观展示了多站测向角域求交围成的定位多边形；图 \ref{fig:q1_dual_panel}(b) 说明了利用旋转卡壳法在对踵平行外切线上提取区域直径与构造直径圆盘的过程；图 \ref{fig:q1_dual_panel}(c) 则清晰刻画了正三角形底边直径圆盘无法覆盖对向顶点的理论反例与越界几何形态。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.96\textwidth]{images/fig_q1_dual_panel.png}
+    \caption{多站测向角域交会、定位多边形直径提取与圆盘覆盖判定几何机制示意图}
+    \label{fig:q1_dual_panel}
+\end{figure}
+
+\subsection{数值算例解算与算法验证}
+
+为检验上述交会定位模型、几何直径算法与覆盖判定准则的正确性与数值稳定性，本节首先通过典型四站对称基准算例与大规模蒙特卡洛统计展示解算过程与覆盖特性规律，随后设计独立的几何枚举对照算法开展多重独立交叉复核与极端工况压力测试，最后分析计算复杂度与异常几何输入的自适应处理机制。
+
+\subsubsection{基准算例求解与多边形覆盖特性实证}
+
+为检验算法的基本执行流程与数值精度，首先选取四向对称测向基准算例进行解算。4 个观测站环绕分布于半径 $1000\text{ m}$ 的圆周上：$\mathbf{p}_1=(1000, 0)\text{ m}$、$\mathbf{p}_2=(0, 1000)\text{ m}$、$\mathbf{p}_3=(-1000, 0)\text{ m}$、$\mathbf{p}_4=(0, -1000)\text{ m}$，实测示向度分别为指向坐标原点的正四向极角 $180^\circ, 270^\circ, 0^\circ, 90^\circ$。在误差半宽 $\varepsilon = 1^\circ$ 约束下，共形成 8 条半平面边界。
+
+算法解算得到严格中心对称的正规凸八边形，覆盖面积为 $1197.81\text{ m}^2$。旋转卡壳算法求得其最大几何直径为 $D = 48.523\text{ m}$，对应最远顶点对坐标为 $(17.156, -17.156)\text{ m}$ 与 $(-17.156, 17.156)\text{ m}$。以该点对连线为直径构造闭圆盘（圆心为坐标原点，半径 $24.262\text{ m}$），经逐顶点点积检验，各顶点的最大点积超量仅为 $9.64 \times 10^{-12}\text{ m}^2$，低于预设数值容差，覆盖指标输出 $\kappa = 1$，实现了对定位多边形的完全覆盖。基准算例解算指标汇总于表 \ref{tab:q1_default_results}。
+
+\begin{table}[htbp]
+    \centering
+    \small
+    \caption{Q1 默认基准算例（四站对称观测）几何解算结果表}
+    \label{tab:q1_default_results}
+    \renewcommand{\arraystretch}{1.08}
+    \begin{tabularx}{\linewidth}{X c c c X}
+        \toprule[1.5pt]
+        \textbf{几何参数 / 评估指标} & \textbf{符号 / 变量} & \textbf{数值结果} & \textbf{量纲} & \textbf{验证状态与备注} \\
+        \midrule
+        观测基站总数 & $N_{\text{obs}}$ & 4 & 个 & 环绕分布于 $R=1000\text{ m}$ \\
+        有效半平面约束数 & $M$ & 8 & 条 & 每站提供 $\pm 1^\circ$ 双向边界 \\
+        定位区域状态 & $\text{Status}$ & 正常有界 & - & 严格有界、正常非退化凸多边形 \\
+        多边形极点总数 & $h$ & 8 & 个 & 严格逆时针拓扑排序 \\
+        定位多边形覆盖面积 & $S$ & 1197.81 & $\text{m}^2$ & 对称八边形紧致闭包 \\
+        定位区域最大几何直径 & $D$ & \textbf{48.523} & $\text{m}$ & 旋转卡壳提取，最远对 $(\mathbf{a}^*, \mathbf{b}^*)$ \\
+        直径圆盘圆心坐标 & $\mathbf{c}^*$ & $(0.000, 0.000)$ & $\text{m}$ & 最远点对连线几何中点 \\
+        直径圆盘半径 & $R = D/2$ & 24.262 & $\text{m}$ & 待检圆盘半径 \\
+        逐顶点点积最大违规量 & $g_{\text{viol}}$ & $9.64 \times 10^{-12}$ & $\text{m}^2$ & 低于预设容差 $10^{-10}$，按零处理 \\
+        圆盘完全覆盖判定结论 & $\kappa$ & \textbf{完全覆盖} & - & 默认基准算例下圆盘实现 $100\%$ 覆盖 \\
+        \bottomrule[1.5pt]
+    \end{tabularx}
+\end{table}
+
+上述基准算例表明，在空间高度对称的测向环境下，几何直径构造的圆盘确实能够实现对定位多边形的完全覆盖。然而，在非对称或任意多站协同的普遍场景下，该结论是否仍恒定成立？为从大样本统计层面检验前述理论反例的实证表现，本文基于固定随机种子（\texttt{20260911}）进一步生成 1000 组随机蒙特卡洛测试样本，定义各算例中凸多边形顶点相对直径圆盘边界的最大相对半径超量：
+\begin{equation}
+    \Delta_{\mathrm{rel}} = \frac{\max_j \|\mathbf{v}_j - \mathbf{c}^*\|_2 - D/2}{D/2} \times 100\%
+\end{equation}
+当 $\Delta_{\mathrm{rel}} \le 0$ 时表示多边形完全落入圆盘内（$\kappa=1$）；当 $\Delta_{\mathrm{rel}} > 0$ 时表示存在顶点超出圆盘边界（$\kappa=0$）。
+
+在 1000 个随机蒙特卡洛测试样本中，共有 347 个算例被直径圆盘完全覆盖（占 $34.7\%$），653 个算例发生外突未被完全覆盖（占 $65.3\%$）。图 \ref{fig:q1_validation} 绘制了将 1000 个算例按相对半径超量由小到大升序排序后的经验分布曲线。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.76\linewidth]{images/q1_validation.png}
+    \vspace{-0.5em}
+    \caption{固定随机种子生成的 1000 个随机蒙特卡洛算例相对半径超量排序经验折线}
+    \label{fig:q1_validation}
+    \vspace{-0.5em}
+\end{figure}
+
+由图 \ref{fig:q1_validation} 可见，曲线自负超量区跨越零点延伸至正超量区（最大正超量为 $+67.4\%$）。这直观表明多边形能否被其直径圆盘覆盖取决于横向宽展程度：当多边形在垂直于直径方向较窄时容易被圆盘包含；而当形态趋近于正三角形或宽展钝角几何时，顶点便易超出圆盘。该统计实证与理论反例互相印证，证明了算法对覆盖成立与外突失效均具备灵敏准确的双向判别能力。
+
+\subsubsection{双算法对照复核与算法稳健性检验}
+
+在明确了基准算例数值与千例统计规律之后，为检验增量半平面交与旋转卡壳主算法在浮点计算与边界剪枝中是否存在潜在偏差，本文专门设计了一套基于穷举原理的独立对照复核算法，针对三个核心求解环节展开多角度独立交叉校验：
+\begin{enumerate}[leftmargin=2.5em, itemsep=0.2em]
+    \item \textbf{多边形构造对照（全边界两两求交与可行性筛选法）：}不同于主算法依赖极角排序与双端队列动态维护外轮廓，对照算法直接对全体 $2n$ 条半平面边界直线进行全组合联立求解，解出全部 $\binom{2n}{2}$ 个候选交点坐标；随后将每个交点逐一代入全部 $2n$ 个半平面不等式中检验可行性，剔除所有违反任意约束的外侧交点，仅保留全局可行顶点；最后对保留的离散点集执行平面凸包构建，得到无冗余的逆时针多边形顶点集。该方法计算复杂度为 $O(n^3)$，但逻辑直观、不涉及增量剪枝，可作为多边形顶点的可靠对照依据。
+    \item \textbf{几何直径求解对照（全顶点对欧氏距离全局穷举法）：}不依赖旋转切线步进与对踵点候选理论，对照算法直接对多边形的全部 $h$ 个顶点展开全局双重循环穷举，计算任意两顶点间的欧氏距离：$D_{\text{ref}} = \max_{0 \le j < k < h} \|\mathbf{v}_j - \mathbf{v}_k\|_2$。该方法复杂度为 $O(h^2)$，遍历全部顶点组合，用于直接检验旋转卡壳算法在对踵点搜索时是否存在漏检或步进跳跃。
+    \item \textbf{圆盘覆盖判定对照（顶点外接欧氏半径直接比对法）：}对照算法绕过向量点积代数式，直接计算每个多边形顶点到直径圆心 $\mathbf{c}^* = (\mathbf{a}^* + \mathbf{b}^*)/2$ 的实际欧氏空间距离 $d_j = \|\mathbf{v}_j - \mathbf{c}^*\|_2$。当且仅当所有顶点均满足 $d_j \le D/2 + 10^{-10}\text{ m}$ 时判定为完全覆盖，与主算法的点积准则形成机理独立的对照。
+\end{enumerate}
+
+在 1000 组多站协同测向测试算例的全量对照比对中：增量半平面交与全边界两两筛选法求得的多边形极点序列完全一致，面积相对偏差小于 $10^{-12}$；旋转卡壳算法与全点对距离穷举法求得的几何直径绝对偏差严格为 $0.0\text{ m}$；点积判据与欧氏半径判据对圆盘覆盖性的布尔判断结果一致率达 $100\%$。
+
+在此基础上，本文进一步对算法开展了五项极端工况下的鲁棒性压力测试：(1) 输入观测顺序乱序测试：对测向输入顺序进行 1000 次随机置换，输出直径保持完全一致（$\Delta D = 0.0\text{ m}$）；(2) 同向冗余约束测试：人工添加 1000 次同向完全重合半平面，算法自适应去重且输出不变；(3) 空间刚体变换测试：对整个系统施加 $37^\circ$ 空间旋转与大距离平移，求解区域直径严格保持；(4) 约束单调性测试：在 8443 次逐步递增有效观测半平面的测试中，定位区域直径全部满足单调非增性质；(5) 容差敏感性测试：将临界容差扰动至 $10^{-9}$ 与 $10^{-11}$，算法求解状态与覆盖判定保持高度稳定。双算法对照与稳健性检验结果汇总于表 \ref{tab:q1_verification_methods}。
+
+\begin{table}[!ht]
+    \centering
+    \small
+    \caption{主算法与复核方法对照及大规模检验统计表}
+    \label{tab:q1_verification_methods}
+    \renewcommand{\arraystretch}{1.08}
+    \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{2.6cm} X X c >{\raggedright\arraybackslash}p{3.0cm}}
+        \toprule[1.5pt]
+        \textbf{计算环节 / 检验项目} & \textbf{正式算法} & \textbf{对照复核方法 / 检验标准} & \textbf{样本规模} & \textbf{检验结论 / 通过率} \\
+        \midrule
+        定位多边形构造 & 极角排序半平面交 ($O(n\log n)$) & 边界两两求交全筛选 ($O(n^3)$) & 1000 例 & 极点集与面积 100\% 一致 \\
+        区域几何直径计算 & 旋转卡壳算法 ($O(h)$) & 全顶点对距离穷举 ($O(h^2)$) & 1000 例 & 直径绝对偏差严格为 $0.0\text{ m}$ \\
+        直径圆盘覆盖判定 & 顶点向量点积准则 ($O(h)$) & 顶点到圆心欧氏距离准则 ($O(h)$) & 1000 例 & 覆盖布尔值 100\% 一致 \\
+        观测序列乱序不变性 & 随机置换观测输入顺序 & 比较置换前后求解直径与覆盖 & 1000 次 & 1000 次全部通过 ($\Delta D = 0.0\text{ m}$) \\
+        冗余约束幂等性检验 & 人工添加同向完全重合半平面 & 比较添加前后几何输出 & 1000 次 & 1000 次全部通过 (完全一致) \\
+        刚体空间变换不变性 & $37^\circ$ 旋转 + 大距离平移 & 比较变换前后区域直径 & 100 次 & 100 次全部通过 (严格保持) \\
+        约束增加单调性检验 & 逐步递增有效观测半平面 & 验证几何区域直径单调非增 & 8443 次 & \textbf{8443 次检验 100\% 通过} \\
+        容差数值敏感性检验 & 临界容差 $10^{-9}$ 与 $10^{-11}$ & 检验求解状态与覆盖分类稳定度 & 50 次 & 50 次全部通过 (数值高度稳定) \\
+        算法综合执行效率 & 正式算法 + 双算法对照复核 & 包含全部复核的千例总耗时 & 1000 例 & 总耗时 3.24 s (单例 3.24 ms) \\
+        \bottomrule[1.5pt]
+    \end{tabularx}
+\end{table}
+
+\subsubsection{算法复杂度分析与异常几何自适应处理}
+
+在算法复杂度与工程可用性方面：常规运行模式下仅执行增量半平面交与旋转卡壳算法，理论时间复杂度为 $O(n\log n)$，空间复杂度为 $O(n)$；在标准运行环境下，包含全套对照复核的 1000 例测试平均单例耗时仅为 3.24 毫秒，计算效率充分满足工程实时应用需求。同时，算法设计了针对空集、无界可行域、退化线段或单点等异常几何输入的自适应状态判别机制，仅在正常凸多边形状态下输出确定性几何直径与覆盖结论，为后续选点优化与机动搜索策略提供了底层计算支持。
+
+\section{问题二：第二检测点选择策略与候选区域优化}
+
+\subsection{问题分析与决策准则}
+
+在问题二中，机器狗在第一检测点 $\mathbf{p}_1$ 测得某干扰源的初始示向度 $\hat\theta_1$。题设要求确定第二检测点 $\mathbf{p}_2$ 的选择策略与较优候选区域。基于问题一所建立的测向角域半平面交会模型与多边形几何直径解算算法，第二检测点的选择需兼顾以下两点：
+\begin{enumerate}[leftmargin=2.5em, itemsep=0.2em]
+    \item \textbf{信号接收保证：}干扰源覆盖半径 $R \in [1000, 1500]\text{ m}$ 未知。为获得不依赖未知实际覆盖半径的确定性接收保证，本文选取如下充分安全条件：第二检测点到该干扰源所有相容位置的距离均不得超过最小覆盖半径 $R_{\min} = 1000\text{ m}$。
+    \item \textbf{定位效果最优：}在目标先验分布未知的情况下，以两次交会后最坏情况下的定位多边形几何直径衡量定位效果，采用极小化极大（Min-Max）准则使该最差后验直径达到最小。
+\end{enumerate}
+
+选点以两次交会后的最坏后验定位效果为主目标，并将移动距离与安全余量作为次级优化准则。
+
+\subsection{初次观测后的目标可行域}
+
+设第一检测点坐标为 $\mathbf{p}_1 = (x_1, y_1)^\top$，实测示向度为 $\hat\theta_1$。初次观测后，干扰源真实位置 $\mathbf{s}$ 满足如下几何约束系统：
+\begin{equation}
+    \begin{cases}
+        \mathbf{s} \in \mathcal{W}(\mathbf{p}_1, \hat\theta_1, \varepsilon) & (\text{测向角域约束，误差半宽 }\varepsilon = 1^\circ) \\
+        \|\mathbf{s} - \mathbf{p}_1\|_2 \le R_{\max} = 1500\text{ m} & (\text{信号有效接收覆盖半径约束}) \\
+        \|\mathbf{s}\|_2 \le R_{\text{target}} = 1800\text{ m} & (\text{目标分布圆形区域约束}) \\
+        \|\mathbf{s} - \mathbf{p}_1\|_2 > r_{\text{near}} = 5\text{ m} & (\text{近场强信号盲区排除约束})
+    \end{cases}
+\end{equation}
+
+上述约束的交集即为初测后的目标可行域 $\mathcal{P}_1$。为便于计算，采用角域射线与圆边界切线构建包含 $\mathcal{P}_1$ 的凸多边形外包络 $\mathcal{P}_1^+$（满足 $\mathcal{P}_1 \subseteq \mathcal{P}_1^+$）。数值实现中，目标圆区域及最大接收圆均采用 48 边外切正多边形近似，以保证 $\mathcal{P}_1 \subseteq \mathcal{P}_1^+$ 的包含关系。在基准算例（$\mathbf{p}_1 = (0, 0)\text{ m}, \hat\theta_1 = 0^\circ$）下，$\mathcal{P}_1^+$ 为底边长 $52.36\text{ m}$、高 $1500\text{ m}$ 的等腰三角形。
+
+\subsection{保守安全区域构建}
+
+为保证在第二检测点 $\mathbf{p}_2$ 处必定接收到信号，定义信号接收安全余量：
+\begin{equation}
+    m(\mathbf{p}_2) = R_{\min} - \max_{\mathbf{s} \in \mathcal{P}_1^+} \|\mathbf{p}_2 - \mathbf{s}\|_2
+\end{equation}
+
+若考虑定位与控制误差，可设置缓冲距离 $b > 0$ 要求 $m(\mathbf{p}_2) \ge b$；本文基准模型取 $b = 0$。
+
+由于欧氏距离关于点 $\mathbf{s}$ 具有凸性，点 $\mathbf{p}_2$ 到凸多边形 $\mathcal{P}_1^+$ 内任意点的最大距离必在其有限顶点集 $V(\mathcal{P}_1^+)$ 处取得：
+\begin{equation}
+    \max_{\mathbf{s} \in \mathcal{P}_1^+} \|\mathbf{p}_2 - \mathbf{s}\|_2 = \max_{\mathbf{v} \in V(\mathcal{P}_1^+)} \|\mathbf{p}_2 - \mathbf{v}\|_2
+\end{equation}
+据此，第二检测点的保守安全候选区域 $\mathcal{U}$ 为：
+\begin{equation}
+    \mathcal{U} = \left( \bigcap_{\mathbf{v} \in V(\mathcal{P}_1^+)} \left\{ \mathbf{p}_2 \in \mathbb{R}^2 : \|\mathbf{p}_2 - \mathbf{v}\|_2 \le R_{\min} \right\} \right) \setminus \{\mathbf{p}_1\}
+\end{equation}
+即 $\mathcal{U}$ 为以 $\mathcal{P}_1^+$ 各顶点为圆心、$R_{\min}$ 为半径的闭圆盘交集并排除第一检测点自身。排除 $\mathbf{p}_1$ 是由于题设同地点重复检测的环境误差保持不变，原地再次测量无法提供独立测向基线。只要 $\mathbf{p}_2 \in \mathcal{U}$，即可确保对可行域内的任意源位置均处于有效接收范围内。若 $\mathcal{U} = \varnothing$，表明在以 $R_{\min}$ 为充分安全约束下无可行测点，算法将给出无解标识并转入回退流程。
+
+\subsection{第二检测点优化决策模型}
+
+在安全区域 $\mathcal{U}$ 内，机器狗在 $\mathbf{p}_2$ 处观测可能出现两种情形：
+\begin{enumerate}[leftmargin=2.5em, itemsep=0.2em]
+    \item 若第二检测点距干扰源真实位置不超过近场阈值（$\|\mathbf{p}_2 - \mathbf{s}\|_2 \le r_{\text{near}} = 5\text{ m}$），测向接口返回 \texttt{near}。机器狗随后可进入光学精确定位与清除流程，因此在第二测点选择目标中将该反馈视为终止分支，令其剩余位置不确定性为 $0$；
+    \item 若处于近场之外，测得示向度 $\hat\theta_2$。在测向误差 $e_2 \in [-\varepsilon, \varepsilon]$ 作用下，形成第二角域 $\mathcal{W}_2$，交会后的保守后验可行域为 $\mathcal{P}_2 = \mathcal{P}_1^+ \cap \mathcal{W}_2$。
+\end{enumerate}
+
+据此，定义单次观测下的后验定位损失函数为：
+\begin{equation}
+    L(\mathbf{p}_2; \mathbf{s}, e) = \begin{cases}
+        0, & \|\mathbf{p}_2 - \mathbf{s}\|_2 \le r_{\text{near}} \\
+        \operatorname{diam}\left[ \mathcal{P}_1^+ \cap \mathcal{W}\left(\mathbf{p}_2, \operatorname{bearing}(\mathbf{p}_2, \mathbf{s}) + e, \varepsilon\right) \right], & \|\mathbf{p}_2 - \mathbf{s}\|_2 > r_{\text{near}}
+    \end{cases}
+\end{equation}
+在连续理论上，真实相容状态属于 $\mathcal{P}_1$。为保守覆盖源位置趋近 5 米盲区边界时的极限情形，连续评估将状态集合扩展至闭包 $\overline{\mathcal{P}}_1 = \operatorname{cl}(\mathcal{P}_1)$，数值采样点集相应满足 $S_N \subseteq \overline{\mathcal{P}}_1$。交会区域采用外包络 $\mathcal{P}_1^+$ 实施保守估计，定义保守最坏后验直径为：
+\begin{equation}
+    J^+(\mathbf{p}_2) = \sup_{\mathbf{s} \in \overline{\mathcal{P}}_1,\; |e| \le \varepsilon} L(\mathbf{p}_2; \mathbf{s}, e)
+\end{equation}
+式中明确区分了真实源状态空间 $\mathbf{s} \in \overline{\mathcal{P}}_1$ 与保守包络几何 $\mathcal{P}_1^+$。在数值解算时，采用有限采样集（$N$ 个代表源状态 $S_N \subset \overline{\mathcal{P}}_1$ 与 $M$ 个误差节点 $E_M$）计算离散评估指标：
+\begin{equation}
+    \widehat{J}_{N,M}(\mathbf{p}_2) = \max_{\mathbf{s}_i \in S_N,\; e_j \in E_M} L(\mathbf{p}_2; \mathbf{s}_i, e_j)
+\end{equation}
+
+经全域粗筛与局部寻优后，入围候选点进入精细评估阶段（$N=64, M=7$）。设进入精细评估的候选点集合为 $\mathcal{Q}_{\text{final}} \subset \mathcal{U}$，当前优化搜索求得的最优评价值与数值推荐点定义为：
+\begin{equation}
+    \widetilde{J}_{64,7} = \min_{\mathbf{p} \in \mathcal{Q}_{\text{final}}} \widehat{J}_{64,7}(\mathbf{p}), \qquad \widetilde{\mathbf{p}}_2 \in \arg\min_{\mathbf{p} \in \mathcal{Q}_{\text{final}}} \widehat{J}_{64,7}(\mathbf{p})
+\end{equation}
+进入精细评估阶段的候选点按 $(\widehat{J}_{64,7}(\mathbf{p}), \|\mathbf{p} - \mathbf{p}_1\|_2, -m(\mathbf{p}))$ 的字典序严格排序并优选。
+
+为进一步量化给出较优候选区域，定义在空间采样网格 $\mathcal{G}_h$（网格步长 $h$）上相对容差 $\tau > 0$（如 $\tau = 1\%, 3\%, 5\%$）的近优候选区域：
+\begin{equation}
+    \widehat{\mathcal{C}}_{\tau, h} = \left\{ \mathbf{p} \in \mathcal{G}_h \cap \mathcal{U} : \widehat{J}_{N,M}(\mathbf{p}) \le (1+\tau)\widehat{J}_{N,M, h}^* \right\}
+\end{equation}
+式中 $\widehat{J}_{N,M, h}^* = \min_{\mathbf{p} \in \mathcal{G}_h \cap \mathcal{U}} \widehat{J}_{N,M}(\mathbf{p})$ 为全域网格扫描下的基准最优值。该区域给出了在定位性能损失受控前提下允许选点的几何范围。
+
+\subsection{快速求解算法}
+
+为兼顾全局搜索视野与计算效率，采用全域粗筛、局部寻优与精细评估三阶段求解算法：
+\begin{enumerate}[leftmargin=2.5em, itemsep=0.2em]
+    \item \textbf{全域粗筛：}以 $\mathcal{P}_1^+$ 的最小包围圆（半径记为 $r_{\mathrm{MEC}}$）圆心为基准向四周引出 12 个辐射方向，分别在安全射线最大长度的 $55\%$ 与 $90\%$ 处取样，连同圆心共生成至多 25 个初选候选点，并采用 24 个源点 $\times$ 3 个误差节点（$-\varepsilon, 0, \varepsilon$）进行粗评估；
+    \item \textbf{局部寻优：}选取粗筛前 3 个种子点，以初始步长 $h_0 = \min\{200, \max[20, 0.45(R_{\min}-r_{\mathrm{MEC}})]\}\text{ m}$ 进行 4 轮八邻域步长折半搜索；
+    \item \textbf{精细评估：}将粗筛前 6 点与局部寻优点合并去重构建最终入围集 $\mathcal{Q}_{\text{final}}$，采用 64 个源点 $\times$ 7 个误差节点实施最终离散复核，输出字典序排序前三的优质候选点，并以首位点作为基准推荐点 $\widetilde{\mathbf{p}}_2$。
+\end{enumerate}
+
+\subsection{算例求解与多场景验证}
+
+记算法求得的最坏后验直径为 $\widetilde{D}_2 := \widetilde{J}_{64,7} = \widehat{J}_{64,7}(\widetilde{\mathbf{p}}_2)$，初始外包络几何直径为 $D_1^+ = \operatorname{diam}(\mathcal{P}_1^+)$，离散评估不确定性压缩比为 $\widetilde{\eta} = (D_1^+ - \widetilde{D}_2)/D_1^+$。对基准算例（$\mathbf{p}_1 = (0, 0)\text{ m}, \hat\theta_1 = 0^\circ$）进行求解，单次计算耗时约 1.2 秒，指标如表 \ref{tab:q2_results} 所示。
+
+\begin{table}[htbp]
+    \centering
+    \small
+    \caption{基准算例下第二检测点优化解算指标}
+    \label{tab:q2_results}
+    \renewcommand{\arraystretch}{1.08}
+    \begin{tabularx}{\linewidth}{X c c c X}
+        \toprule[1.5pt]
+        \textbf{评估指标} & \textbf{符号} & \textbf{数值} & \textbf{量纲} & \textbf{说明} \\
+        \midrule
+        第一检测点位置 & $\mathbf{p}_1$ & $(0.00, 0.00)$ & $\text{m}$ & 初始观测位置坐标 \\
+        初始实测示向度 & $\hat\theta_1$ & $0^\circ$ & 度 & 沿 $+x$ 轴正方向 \\
+        推荐第二检测点 & $\widetilde{\mathbf{p}_2}$ & $(839.64, 538.75)$ & $\text{m}$ & 优化所得推荐测点坐标 \\
+        机器狗移动距离 & $\|\widetilde{\mathbf{p}}_2 - \mathbf{p}_1\|_2$ & 997.62 & $\text{m}$ & 两检测点间直线机动位移 \\
+        保守安全余量 & $m(\widetilde{\mathbf{p}}_2)$ & 2.38 & $\text{m}$ & 目标外包络最劣距离余量 \\
+        初测外包络跨度 & $D_1^+$ & 1500.23 & $\text{m}$ & 基准算例初始外包络几何直径 \\
+        离散最坏后验直径 & $\widetilde{D}_2$ & \textbf{111.90} & $\text{m}$ & 64 源点 $\times$ 7 误差节点采样复核 \\
+        离散评估压缩比 & $\widetilde{\eta}$ & \textbf{92.5\%} & - & $(D_1^+ - \widetilde{D}_2)/D_1^+$ \\
+        单例计算耗时 & $t_{\text{solve}}$ & $\sim 1.2$ & $\text{s}$ & 算法单次完整求解耗时 \\
+        \bottomrule[1.5pt]
+    \end{tabularx}
+\end{table}
+
+在基准算例下，初始观测可行域关于第一示向线呈轴对称分布，优化模型在理论上存在两侧对称的最优解。数值求解在示向线两侧分别获得两组镜像对称的优选测点：
+\begin{equation}
+    \widetilde{\mathbf{p}}_2^{(1)} = (839.64, 538.75)\text{ m}, \quad \widetilde{\mathbf{p}}_2^{(2)} = (839.64, -538.75)\text{ m}
+\end{equation}
+两点移动距离均为 $997.62\text{ m}$，安全余量均为 $2.38\text{ m}$。受离散采样影响，两侧测点的目标函数值存在约 $0.14\text{ m}$ 的数值微差（正侧 $111.90\text{ m}$，负侧 $112.04\text{ m}$）。选取正侧测点作为推荐结果，其最坏后验直径由初测的 $1500.23\text{ m}$ 降至 $111.90\text{ m}$，不确定性压缩比达到 $92.5\%$。
+
+\begin{figure}[htbp]
+    \centering
+    \vspace{0.2em}
+    \includegraphics[width=0.76\linewidth]{images/fig_q2_candidate_region.png}
+    \vspace{-0.5em}
+    \caption{第二检测点保守安全域 $\mathcal{U}$ 与推荐测点几何分布图}
+    \label{fig:q2_candidate_region}
+    \vspace{-0.4em}
+\end{figure}
+
+图 \ref{fig:q2_candidate_region} 展示了保守安全域 $\mathcal{U}$ 的几何形态及推荐测点分布。从几何机理来看，推荐测点分布于第一示向线两侧，其核心优势在于拉大空间交会角，有效避免小角度交会造成的后验多边形径向过度拉伸；更为关键的是，该构型并非人为机械预设固定的正交夹角，而是由最差后验几何直径指标内生驱动得出的最优决策。
+
+为进一步检验算法对不同几何构型的适应性，对圆心、偏置、切向及圆外等 6 个代表性测试场景开展求解，结果如表 \ref{tab:q2_scenarios} 所示。
+
+\begin{table}[htbp]
+    \centering
+    \footnotesize
+    \vspace{-0.6em}
+    \caption{快速模型在不同测试场景下的实际解算结果对比}
+    \label{tab:q2_scenarios}
+    \renewcommand{\arraystretch}{1.04}
+    \begin{tabularx}{\linewidth}{l c c c c c c X}
+        \toprule[1.5pt]
+        \textbf{测试场景} & \textbf{第一测点与示向} & \textbf{推荐测点} $\widetilde{\mathbf{p}}_2$ & \textbf{余量} & $D_1^+$ & $\widetilde{D}_2$ & \textbf{压缩比} & \textbf{耗时与场景说明} \\
+        \midrule
+        中心基准 & $(0, 0)\text{ m},\; 0^\circ$ & $(839.6, 538.8)\text{ m}$ & $2.38\text{ m}$ & $1500.2\text{ m}$ & $111.90\text{ m}$ & $92.5\%$ & $1.20\text{ s}$，对称交会 \\
+        偏置场景 & $(300, 500)\text{ m},\; 125^\circ$ & $(-615.9, 898.5)\text{ m}$ & $1.16\text{ m}$ & $1493.9\text{ m}$ & $107.21\text{ m}$ & $92.8\%$ & $1.18\text{ s}$，内部非对称 \\
+        边缘内指 & $(1600, 0)\text{ m},\; 180^\circ$ & $(760.4, -538.8)\text{ m}$ & $2.38\text{ m}$ & $1500.2\text{ m}$ & $111.90\text{ m}$ & $92.5\%$ & $1.22\text{ s}$，边界指心 \\
+        边缘切向 & $(1600, 0)\text{ m},\; 90^\circ$ & $(1021.8, 605.0)\text{ m}$ & $163.20\text{ m}$ & $854.7\text{ m}$ & \textbf{41.41 m} & \textbf{95.2\%} & $1.28\text{ s}$，目标圆截断 \\
+        圆外内指 & $(2000, 0)\text{ m},\; 180^\circ$ & $(911.1, 454.0)\text{ m}$ & \textbf{0.27 m} & $1300.3\text{ m}$ & $85.87\text{ m}$ & $93.4\%$ & $1.30\text{ s}$，圆外测点余量极敏感 \\
+        跨界回绕 & $(0, 0)\text{ m},\; 359.5^\circ$ & $(844.6, 531.3)\text{ m}$ & $2.20\text{ m}$ & $1500.5\text{ m}$ & $111.87\text{ m}$ & $92.5\%$ & $1.24\text{ s}$，角度平滑跨越 \\
+        \bottomrule[1.5pt]
+    \end{tabularx}
+    \vspace{-0.6em}
+\end{table}
+
+在基准测试中，六个代表性场景单次解算耗时均在 $1.18\sim 1.30\text{ s}$ 之间，后验定位直径较初测外包络显著压缩，展现出良好的模型鲁棒性与实时求解性能。特别地，在圆外场景中无缓冲推荐测点的安全余量仅为 $0.27\text{ m}$，表明在纯定位精度导向下最优测点易贴近安全域边界，实际工程应用中宜结合平台控制精度设置物理安全缓冲。
+
+\subsection{近优域、运行稳定性与安全缓冲敏感性}
+
+\subsubsection{近优候选区域的全域网格量化}
+
+为给出具体的较优候选区域，在基准算例下以网格步长 $h=25\text{ m}$ 对保守安全域 $\mathcal{U}$ 实施全域网格扫描。扫描边界由各安全圆盘的公共包围盒确定（$x\in[500, 1000]\text{ m}, y\in[-950, 950]\text{ m}$），共得到 702 个有效安全网格点；采用与全域粗筛一致的 24 个代表源点和 3 个误差节点计算离散评估指标 $\widehat{J}_{24,3}$。全域网格最优值为 $111.893\text{ m}$，对应最优网格点 $(850, 525)\text{ m}$。各近优候选区域计算结果汇总于表 \ref{tab:q2_near_optimal}，其中区域面积按入选网格点数乘以单个网格单元面积（$h^2=625\text{ m}^2$）进行估算。
+
+\begin{table}[htbp]
+    \centering
+    \small
+    \vspace{-0.3em}
+    \caption{基准算例下不同容差近优候选域 $\widehat{\mathcal{C}}_{\tau, h}$ 的 $25\text{ m}$ 网格统计}
+    \label{tab:q2_near_optimal}
+    \renewcommand{\arraystretch}{1.05}
+    \begin{tabularx}{\linewidth}{c c c c c >{\raggedright\arraybackslash}X}
+        \toprule[1.5pt]
+        \textbf{相对容差} $\tau$ & \textbf{直径阈值} & \textbf{网格点数} & \textbf{网格面积估计} & \textbf{8-连通分量} & \textbf{总包围盒} $(x, y)$ \\
+        \midrule
+        $1\%$ & $113.012\text{ m}$ & 4 & $0.0025\text{ km}^2$ & 4 & $[800, 850]\times[-600, 600]\text{ m}$ \\
+        $3\%$ & $115.250\text{ m}$ & 14 & $0.00875\text{ km}^2$ & 2 & $[775, 875]\times[-625, 625]\text{ m}$ \\
+        $5\%$ & $117.488\text{ m}$ & 28 & $0.0175\text{ km}^2$ & 2 & $[750, 900]\times[-625, 625]\text{ m}$ \\
+        \bottomrule[1.5pt]
+    \end{tabularx}
+    \vspace{-0.4em}
+\end{table}
+
+计算结果表明：当相对容差 $\tau$ 取 $3\%$ 与 $5\%$ 时，近优候选区域在初始示向线两侧各形成一个连通分支，呈现严格的对称分布；当容差收紧至 $1\%$ 时，候选区域高度集中于最优测点邻域，在 $25\text{ m}$ 网格步长下包含 4 个相邻网格点。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.78\linewidth]{images/fig_q2_candidate_contour.png}
+    \vspace{-0.5em}
+    \caption{基准算例下近优候选域 $\mathcal{C}_{\tau}$ 的双侧结构与最坏后验直径等值线分布图}
+    \label{fig:q2_candidate_contour}
+    \vspace{-0.5em}
+\end{figure}
+
+\subsubsection{六大代表场景重复运行计时统计}
+
+为排除单次计算的偶然波动，对表 \ref{tab:q2_scenarios} 中的 6 个代表性场景分别独立重复执行 20 次完整解算（共计 120 次）。表 \ref{tab:q2_runtime_stats} 给出了各场景耗时的统计均值、标准差、中位数、95 分位数（P95）及最大值。
+
+\begin{table}[htbp]
+    \centering
+    \small
+    \caption{六大测试场景各 20 次独立完整解算耗时统计表（单位：$\text{s}$）}
+    \label{tab:q2_runtime_stats}
+    \renewcommand{\arraystretch}{1.06}
+    \begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}l c c c c c}
+        \toprule[1.5pt]
+        \textbf{测试场景} & \textbf{耗时均值} & \textbf{标准差} & \textbf{中位数} & \textbf{P95 分位数} & \textbf{最大耗时} \\
+        \midrule
+        中心基准 & 1.224 & 0.019 & 1.223 & 1.253 & 1.270 \\
+        偏置场景 & 1.216 & 0.012 & 1.214 & 1.232 & 1.250 \\
+        边缘内指 & 1.238 & 0.016 & 1.234 & 1.273 & 1.275 \\
+        边缘切向 & 1.286 & 0.017 & 1.284 & 1.313 & 1.326 \\
+        圆外内指 & 1.264 & 0.009 & 1.264 & 1.282 & 1.286 \\
+        跨界回绕 & 1.268 & 0.010 & 1.265 & 1.286 & 1.292 \\
+        \bottomrule[1.5pt]
+    \end{tabular*}
+\end{table}
+
+实测表明，各场景平均耗时稳定在 $1.216\sim 1.286\text{ s}$，P95 均不超过 $1.313\text{ s}$，全样本最大耗时仅 $1.326\text{ s}$，且变异系数均低于 $2\%$。统计结果证实该算法计算效率高度稳定，完全能够支持机器狗在动态任务中进行实时在线决策。
+
+\subsubsection{正安全缓冲的性能代价与可行边界分析}
+
+将信号接收安全要求由 $m(\mathbf{p}_2)\ge 0$ 收紧为带有物理安全缓冲 $b > 0$ 的约束 $m(\mathbf{p}_2) \ge b$。在算法实现中，仅将选点安全约束半径收紧为 $R_{\min}-b$，而发射源的初始后验状态集 $\mathcal{P}_1^+$ 仍基于真实通信距离 $R_{\min}=1000\text{ m}$ 构建，避免因人为引入安全缓冲而错误缩小目标可行域。中心基准场景下的敏感性解算结果汇总于表 \ref{tab:q2_safety_buffer}。
+
+\begin{table}[htbp]
+    \centering
+    \small
+    \caption{中心基准场景下不同安全缓冲距离 $b$ 的选点敏感性分析表}
+    \label{tab:q2_safety_buffer}
+    \renewcommand{\arraystretch}{1.06}
+    \begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}c c c c c}
+        \toprule[1.5pt]
+        \textbf{安全缓冲} $b$ & \textbf{推荐测点坐标} $(x, y)$ & \textbf{实际安全余量} $m$ & \textbf{最坏后验直径} $\widetilde{D}_2$ & \textbf{相对} $b=0$ \textbf{性能损失} \\
+        \midrule
+        $0\text{ m}$ & $(839.6, 538.8)\text{ m}$ & $2.38\text{ m}$ & $111.90\text{ m}$ & 基准 ($0\%$) \\
+        $5\text{ m}$ & $(837.9, 532.6)\text{ m}$ & $7.20\text{ m}$ & $112.85\text{ m}$ & $+0.85\%$ \\
+        $10\text{ m}$ & $(836.1, 526.4)\text{ m}$ & $12.03\text{ m}$ & $113.47\text{ m}$ & $+1.40\%$ \\
+        $20\text{ m}$ & $(832.5, 513.8)\text{ m}$ & $21.71\text{ m}$ & $115.37\text{ m}$ & $+3.11\%$ \\
+        \bottomrule[1.5pt]
+    \end{tabular*}
+\end{table}
+
+由表 \ref{tab:q2_safety_buffer} 可知，当预留 $10\text{ m}$ 的安全缓冲时，推荐测点向安全域内部适当收缩，实际安全余量提升至 $12.03\text{ m}$，而后验直径仅增加 $1.57\text{ m}$（相对性能损失仅 $1.40\%$），表明系统在牺牲极小定位精度的前提下可显著提升行进安全性。
+
+进一步地，设 $r_{\mathrm{MEC}}$ 为外包络 $\mathcal{P}_1^+$ 的最小外接圆半径，则安全圆盘交集非空的理论充要条件为：
+\begin{equation}
+    b \le b_{\max} = R_{\min} - r_{\mathrm{MEC}}
+\end{equation}
+对于圆外内指场景，外包络最小外接圆半径为 $r_{\mathrm{MEC}} = 650.268\text{ m}$，该场景理论最大容许缓冲为 $b_{\max} = 349.732\text{ m}$。数值扫描验证表明：在 $b=349\text{ m}$ 时算法仍能解出可行测点（$\widetilde{D}_2 = 650.27\text{ m}$），而在 $b=350\text{ m}$ 时安全域为空集，算法返回无解标识，与理论极限吻合。在 $b=0$ 时，由于模型以极小化后验直径为主目标，优选测点贴近安全域边界，安全余量仅为 $0.27\text{ m}$。当设置物理安全缓冲 $b>0$ 时，候选区域向最小外接圆圆心收缩，算法通过自适应后撤满足缓冲要求，后验直径随之平缓增大，体现出信号接收安全性与定位精度之间的权衡关系。本节建立的选点优化模型与安全域分析方法，为后续多阶段搜索与机动决策提供了计算基础。
+
+\end{document}

@@ -1,0 +1,14 @@
+﻿*.aux
+*.log
+*.out
+*.synctex.gz
+latex_temp/
+check*.png
+page*.png
+preview*.png
+main_v*.pdf
+main_updated.pdf
+main_with_*.pdf
+old_pdfs/
+page*.txt
+__pycache__/
