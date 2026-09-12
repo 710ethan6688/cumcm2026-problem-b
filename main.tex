@@ -532,28 +532,20 @@
 
 \section{问题三：未知多干扰源在线协同搜索、定位与清除策略}
 
-\subsection{问题特性与整体策略框架}
+\subsection{问题分析与求解策略}
 
-\subsubsection{问题难点与建模考量}
-
-问题三要求机器狗在半径 $R_{\mathrm{target}} = 1800\text{ m}$ 的圆形区域内，自主搜索、定位并清除全部未知的全向干扰源，在确保无一遗漏的前提下极小化任务总时间。该任务的核心难点在于：
+问题三要求机器狗在半径 $R_{\mathrm{target}} = 1800\text{ m}$ 的圆形区域内，自主搜索、定位并清除全部未知的全向干扰源，在确保无一遗漏的前提下极小化任务总时间。相比前两问，该任务面临三重更为严苛的物理约束与现实挑战：
 \begin{enumerate}[leftmargin=2.5em, itemsep=0.15em]
-    \item \textbf{目标先验信息未知}：目标数量 $N \in [10, 16]$、所在频段 $\mathcal{C} = \{1, \dots, 20\}$、位置坐标 $\mathbf{s}_c$ 及有效接收半径 $R_c \in [1000, 1500]\text{ m}$ 事先均未知；
-    \item \textbf{空间观测存在区域差异}：测向传感器存在确界误差 $[-1^\circ, 1^\circ]$；当间距 $\le 5\text{ m}$ 时信号过强无法测向，但可直接实施清除；$5\sim 20\text{ m}$ 内兼具测向与清除条件；$20\text{ m}\sim R_c$ 仅可测向；超出 $R_c$ 则无信号响应；
-    \item \textbf{缺乏全局完成提示}：外部环境不主动提供剩余目标数，需算法根据搜索与清除记录，自主确证全场目标已无遗漏并主动决断终止。
+    \item \textbf{先验信息完全未知}：真实目标数量 $N \in [10, 16]$、所属频段 $\mathcal{C} = \{1, \dots, 20\}$、空间物理坐标 $\mathbf{s}_c$ 及各频道的有效接收半径 $R_c \in [1000, 1500]\text{ m}$ 事先均未知；
+    \item \textbf{空间观测存在区域异构性}：机载测向传感器存在确界误差 $[-1^\circ, 1^\circ]$；当机器狗与目标间距 $\le 5\text{ m}$ 时，由于信号饱和无法测向，但可直接实施有效清除；$5\sim 20\text{ m}$ 区间内兼具测向与清除条件；$20\text{ m}\sim R_c$ 仅具备测向条件；超出 $R_c$ 则无任何信号响应；
+    \item \textbf{无外部终止提示}：外部环境不主动提供剩余存活目标数或任务完成信号，系统必须完全依赖机载记录与状态空间演化，自主确证全场目标已彻底清除并安全决断终止。
 \end{enumerate}
-
-\subsubsection{优化目标与策略设计}
 
 为确保全场所有客观存在的干扰源被彻底清除，首要目标为清除率达到 100\%，在此硬性前提下极小化全任务时间，建立分层优化目标：
 \begin{equation}
     \operatorname{lex}\min \left\{ 1 - \eta_{\mathrm{clear}},\; T_{\mathrm{total}} \right\}
 \end{equation}
-其中 $\eta_{\mathrm{clear}} = K/N = 1$。为此，整体策略包含两个核心层次：
-\begin{itemize}[leftmargin=2.5em, itemsep=0.15em]
-    \item \textbf{理论完备性保障}：通过几何覆盖、相容集真值包含与外接圆判据，提供全域搜索无盲区、清除高精度与全局终止无遗漏的数学证明；
-    \item \textbf{在线动态优化}：在满足上述完备性约束的前提下，采用极小极大几何收缩准则与动态优先级评估，实时规划机器狗的移动路径与测向顺序。
-\end{itemize}
+其中 $\eta_{\mathrm{clear}} = K/N = 1$。为此，本文设计“理论证明保障完备性、在线滚动优化时效性”的协同架构：一方面建立涵盖全域几何覆盖、真值区域包含、安全清除与自主退出的理论保证，在数学上杜绝漏检与脱靶；另一方面采用极小极大几何收缩准则与动态优先级评估，实现多频道目标在线交错搜索、追踪与就地清除，大幅压缩行进与测向时间。
 
 \subsection{在线信息状态与空间区域更新}
 
@@ -593,17 +585,17 @@
 \end{equation}
 系统实时保证 $X_{c, k} \subseteq K_{c, k}^+$，只要 $K_{c, k}^+$ 满足可清除几何条件，理论相容集亦必满足，从而在保障计算凸性与数值效率的同时杜绝漏检。
 
-\subsection{全域无遗漏清除的理论证明链}
+\subsection{完全清除的理论保证与判定定理}
 
-为保证 100\% 清除率并自主决断终止，建立四环递进的逻辑证明链：
-\[
-\begin{aligned}
-    \text{全域蜂窝覆盖保证发现} &\;\Longrightarrow\; \text{误差归纳恒包真值} \\
-    &\;\Longrightarrow\; \text{最小外接圆精准清除} \;\Longrightarrow\; \text{完备终止充分判据}
-\end{aligned}
-\]
+在未知目标分布、有限感知半径、测量误差以及缺乏外部终止提示的严苛条件下，单纯依赖经验启发式搜索无法杜绝目标漏检或脱靶的风险。为此，本节针对全域完全清除任务建立由浅入深、环环相扣的理论支撑体系：
+第一阶段针对全域可发现性，证明基于七点正六边形基准测站的蜂窝几何覆盖定理，确保全场任意位置的目标均能被探测；
+第二阶段针对误差包含性，证明多次测向角楔求交的凸外包多边形恒包含真值，确保目标物理位置不被错误剔除；
+第三阶段针对物理可清除性，建立结合机动到位偏差的最小外接圆判定准则与有限网格兜底机制，保证激光打击的一次命中率与收敛有限性；
+第四阶段针对系统完备终止，依据信道空间的状态单向转移特性给出系统自主安全退出的充分条件。四个阶段层层推进，共同构成了未知目标全域完备清除的坚实理论基石。
 
-\subsubsection{七点蜂窝覆盖与保证发现定理}
+\subsubsection{全域搜索覆盖与可发现性}
+
+在开展主动定位与精准清除前，首要任务是建立全域基准搜索网，确保无论未知干扰源分布在何处、有效接收半径取何值（在物理下限 $R_c \ge 1000\text{ m}$ 下），都能在有限个基准测站内被机器狗可靠探测到，从而为后续锁定与清除提供可发现性前提。
 
 构造包含 7 个基准测站的集合 $\mathcal{Q}_7 = \{\mathbf{q}_0\} \cup \{\mathbf{q}_m\}_{m=1}^6$，其中中心站 $\mathbf{q}_0=(0,0)^\top$，外围正六边形对称站分布半径设为 $R_{\mathrm{ring}} = 1140\text{ m}$：
 \begin{equation}
@@ -624,12 +616,14 @@
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.55\linewidth]{images/fig_q3_seven_point_coverage.png}
+    \includegraphics[width=0.48\linewidth]{images/fig_q3_seven_point_coverage.png}
     \caption{七点蜂窝全域完备覆盖几何验证}
     \label{fig:q3_seven_point_coverage}
 \end{figure}
 
-\subsubsection{有界误差包含性与清除判定定理}
+\subsubsection{目标区域包含性与精准清除判据}
+
+定理 2 确保了全域目标的几何可发现性。然而，一旦某一频道首次捕获测向信号，由于机载测向仪存在确界误差 $[-1^\circ, 1^\circ]$，多次观测交汇形成的可行域必须在数学上严格保持对真实物理位置的可靠包络，避免因几何求交裁剪而将真实目标错误剔除。为此，首先确立凸外包多边形的真值包含性质。
 
 \noindent\textbf{定理 3（凸外包多边形真值包含性定理）}\quad 在任意步 $k \ge 0$，算法维护的凸外包多边形恒满足 $\mathbf{s}_c \in X_{c, k} \subseteq K_{c, k}^+$。
 
@@ -637,7 +631,7 @@
 初始外切多边形满足 $\mathbf{s}_c \in \mathcal{P}_0$；假设第 $k$ 步包含性成立，步 $k$ 接收新方位角 $\hat{\theta}$ 时，因测向误差有界 $|\hat{\theta} - \theta^*| \le 1^\circ$，真值必落在角楔内，故更新集 $K_{c, k+1}^+ = K_{c, k}^+ \cap \mathcal{W}$ 恒包含 $\mathbf{s}_c$；当遭遇负观测或清除失败时，在相容集中剔除对应圆盘而在外包层维持凸性，包含性天然保持。由数学归纳法可知定理得证。
 \end{cumcmproof}
 
-定义多边形 $K_{c, k}^+$ 的最小外接圆（MEB）半径为 $r(K_{c, k}^+)$，圆心为 $\mathbf{c}(K_{c, k}^+)$。
+在确立凸外包多边形 $K_{c, k}^+$ 恒包真值后，机器狗需逼近目标并发起激光清除。由于机械行进存在综合到位偏差（确界 $\delta_p = 0.5\text{ m}$），且激光有效清除半径严格为 $20\text{ m}$，必须建立严格的几何尺度判据，确保清除指令一旦发出便必定命中目标；同时，针对多次测向因夹角退化未能收敛的极端情况，需配备收敛兜底机制。定义多边形 $K_{c, k}^+$ 的最小外接圆（MEB）半径为 $r(K_{c, k}^+)$，圆心为 $\mathbf{c}(K_{c, k}^+)$。
 
 \noindent\textbf{定理 4（最小外接圆精准清除与有限网格兜底定理）}\quad 设定位综合误差确界为 $\delta_p = 0.5\text{ m}$，则：
 \begin{enumerate}[leftmargin=2.5em, itemsep=0.15em]
@@ -647,14 +641,14 @@
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.96\linewidth]{images/fig_q3_geom_meb_grid.png}
+    \includegraphics[width=0.86\linewidth]{images/fig_q3_geom_meb_grid.png}
     \caption{角楔交会、MEB判据与网格兜底机制示意图}
     \label{fig:q3_geom_meb_grid}
 \end{figure}
 
-\subsubsection{全局任务完备终止充分性定理}
+\subsubsection{全局任务完备终止充分条件}
 
-记已清除频道集为 $\mathcal{C}_k^{\mathrm{cl}}$，已证实空置频道集为 $\mathcal{C}_k^{\mathrm{abs}}$。
+在完成各个被探测目标的逐一清除后，系统面临的关键决策在于：在外部环境不提供剩余存活目标总数的情况下，机器狗何时可以确信全场已绝对无任何存活目标，从而自主决断终止任务？若盲目提前退出将造成漏检，若无止境游弋则会导致时间超时。为此，依据全频道状态单向不可逆演化特性，建立全局完备终止的充分性判定条件。记已清除频道集为 $\mathcal{C}_k^{\mathrm{cl}}$，已证实空置频道集为 $\mathcal{C}_k^{\mathrm{abs}}$。
 
 \noindent\textbf{定理 5（全局任务完备终止充分性定理）}\quad 若系统无未决通信事务，且满足下列双判据之一：
 \begin{equation}
@@ -695,7 +689,7 @@
     \small
     \caption{算法 1：未知多干扰源在线协同搜索、定位与清除主算法}
     \label{alg:q3_unified_loop}
-    \renewcommand{\arraystretch}{1.1}
+    \renewcommand{\arraystretch}{1.05}
     \begin{tabularx}{\linewidth}{l X}
         \toprule[1.5pt]
         \multicolumn{2}{X}{\textbf{输入：} 区域半径 $R_{\mathrm{target}}=1800\text{ m}$，感知下限 $R_{\min}=1000\text{ m}$，误差界 $\varepsilon=1^\circ$，频道集 $\mathcal{C}=\{1,\dots,20\}$} \\
@@ -738,7 +732,7 @@ $\mathcal{Q}_7$ 基准搜索任务至多 $7 \times 20 = 140$ 步且不重复；�
     \footnotesize
     \caption{多场景极限工况测试与策略消融性能对比表}
     \label{tab:q3_benchmark_ablation}
-    \renewcommand{\arraystretch}{1.08}
+    \renewcommand{\arraystretch}{1.0}
     \begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}l c c c c c}
         \toprule[1.5pt]
         \textbf{测试工况 / 策略配置方案} & \textbf{清除率} & \textbf{时间均值/s} & \textbf{时间标差/s} & \textbf{网格触发} & \textbf{计算耗时/s} \\
@@ -760,9 +754,9 @@ $\mathcal{Q}_7$ 基准搜索任务至多 $7 \times 20 = 140$ 步且不重复；�
 \end{table}
 
 实测数据表明：
-\begin{enumerate}[leftmargin=2.5em, itemsep=0.15em]
-    \item 在各类极限工况场景中，系统目标清除率均稳定达到 100\%；在 15\% 通信丢包或超时干扰下，重试机制成功处理了全部 394 次未决请求；在强制网格兜底工况下，虽因全面遍历搜索使耗时上升至 $74833.4\text{ s}$，但依然实现了全部目标的有效清除，印证了定理 4 与定理 6 的理论正确性。
-    \item 策略消融表明，极小极大主动选点使平均任务时间由 $72982.0\text{ s}$ 大幅缩减 93.4\% 至 $4800.5\text{ s}$；边搜边清的协同机制避免了多余的往返移动，使任务耗时进一步降低 20.5\%；而缺乏几何覆盖保障的对照基准 C 出现了明显的目标漏检，单目标清除率仅 90.6\%（全场完全清除率仅 32.0\%），无法满足全部清除的硬性要求。
+\begin{enumerate}[leftmargin=2.5em, itemsep=0.05em, topsep=0.2em]
+    \item 在各类极限工况中目标清除率均稳定达到 100\%；在 15\% 通信丢包或超时干扰下，重试机制成功处理了全部 394 次未决请求；在强制网格兜底工况下，虽因全面遍历使耗时上升至 $74833.4\text{ s}$，但依然实现全部目标清除，印证了定理 4 与定理 6 的理论正确性。
+    \item 策略消融表明，极小极大主动选点使平均任务时间由 $72982.0\text{ s}$ 大幅缩减 93.4\% 至 $4800.5\text{ s}$；边搜边清协同机制避免了多余往返，耗时降低 20.5\%；缺乏几何覆盖保障的对照基准 C 出现明显漏检，单目标清除率仅 90.6\%，无法满足完备清除要求。
 \end{enumerate}
 
 \subsubsection{基于赛题规范模拟环境的三次测试结果}
@@ -771,10 +765,10 @@ $\mathcal{Q}_7$ 基准搜索任务至多 $7 \times 20 = 140$ 步且不重复；�
 
 \begin{table}[htbp]
     \centering
-    \small
+    \footnotesize
     \caption{基于赛题规范模拟环境的三次测试结果汇总表}
     \label{tab:q3_official_tests}
-    \renewcommand{\arraystretch}{1.08}
+    \renewcommand{\arraystretch}{1.0}
     \begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}l c c c c c c c}
         \toprule[1.5pt]
         \textbf{测试轮次} & \textbf{真实目标} & \textbf{清除数量} & \textbf{清除率} & \textbf{停靠测站} & \textbf{测向次数} & \textbf{虚拟总时间} & \textbf{算法耗时} \\
@@ -789,10 +783,10 @@ $\mathcal{Q}_7$ 基准搜索任务至多 $7 \times 20 = 140$ 步且不重复；�
 \end{table}
 
 测试结果与理论机制分析如下：
-\begin{enumerate}[leftmargin=2.5em, itemsep=0.15em]
-    \item \textbf{完备性与精准性}：三次测试清除率均严格达到 100\%，且全部目标均在 MEB 判据下一次清除成功，清除动作次数与真实目标数完全一致，无任何误判或无效清除；
-    \item \textbf{终止判据触发一致性}：测试 1 与测试 2 触发定理 5 第二判据（确认全部空置频道后退出），测试 3 在清除第 16 个目标后直接触发第一判据即刻退出，与理论推导完全吻合；
-    \item \textbf{时间合规与实时高效}：全任务虚拟时间最长为 $5884.9\text{ s}$（约 98 分钟），完全处于 100 分钟的时间限制之内；单步决策计算耗时低于 $0.1\text{ ms}$，计算效率极高，完全满足机器狗实时在线决策的工程要求。
+\begin{enumerate}[leftmargin=2.5em, itemsep=0.05em, topsep=0.2em]
+    \item \textbf{完备性与精准性}：三次测试清除率均达到 100\%，且全部目标均在 MEB 判据下一次清除成功，动作次数与目标数完全一致，无任何误判或无效清除；
+    \item \textbf{终止判据触发一致性}：测试 1 与测试 2 触发定理 5 第二判据（确认全部空置频道后退出），测试 3 在清除第 16 个目标后触发第一判据即刻退出，与理论推导吻合；
+    \item \textbf{时间合规与实时高效}：全任务虚拟时间最长为 $5884.9\text{ s}$（约 98 分钟），完全处于 100 分钟限制之内；单步决策计算耗时低于 $0.1\text{ ms}$，完全满足在线实时决策要求。
 \end{enumerate}
 
 \end{document}
