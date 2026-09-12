@@ -1,0 +1,44 @@
+{
+  "test_1": {
+    "true_targets": 11,
+    "cleared_targets": 11,
+    "clear_rate": 1.0,
+    "station_count": 47,
+    "channel_measure_count": 113,
+    "clear_action_count": 11,
+    "virtual_time": 5548.3,
+    "compute_time": 0.009,
+    "grid_triggered": 0,
+    "self_heal_success": 1.0,
+    "healed_tx": 0,
+    "certificate": "CERT_2"
+  },
+  "test_2": {
+    "true_targets": 14,
+    "cleared_targets": 14,
+    "clear_rate": 1.0,
+    "station_count": 57,
+    "channel_measure_count": 92,
+    "clear_action_count": 14,
+    "virtual_time": 6579.7,
+    "compute_time": 0.011,
+    "grid_triggered": 0,
+    "self_heal_success": 1.0,
+    "healed_tx": 0,
+    "certificate": "CERT_2"
+  },
+  "test_3": {
+    "true_targets": 16,
+    "cleared_targets": 16,
+    "clear_rate": 1.0,
+    "station_count": 63,
+    "channel_measure_count": 96,
+    "clear_action_count": 16,
+    "virtual_time": 6801.5,
+    "compute_time": 0.011,
+    "grid_triggered": 0,
+    "self_heal_success": 1.0,
+    "healed_tx": 0,
+    "certificate": "CERT_1"
+  }
+}

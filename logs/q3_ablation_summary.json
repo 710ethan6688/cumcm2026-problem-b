@@ -1,0 +1,42 @@
+{
+  "total_scenarios": 100,
+  "total_targets_generated": 1299,
+  "full_scheme": {
+    "clear_rate": 1.0,
+    "cleared_targets": 1299,
+    "mean_time": 4800.5,
+    "median_time": 4730.2,
+    "p95_time": 5595.3,
+    "max_time": 6421.0,
+    "compute_time": 0.001
+  },
+  "variant_a_no_q2": {
+    "clear_rate": 1.0,
+    "cleared_targets": 1299,
+    "mean_time": 72982.0,
+    "median_time": 75087.4,
+    "p95_time": 105150.9,
+    "max_time": 117915.3,
+    "compute_time": 0.023
+  },
+  "variant_b_no_interleave": {
+    "clear_rate": 1.0,
+    "cleared_targets": 1299,
+    "mean_time": 6039.0,
+    "median_time": 5575.4,
+    "p95_time": 7430.5,
+    "max_time": 20812.7,
+    "compute_time": 0.001
+  },
+  "baseline_c_greedy": {
+    "clear_rate": 0.9061,
+    "cleared_targets": 1177,
+    "missed_targets": 122,
+    "whole_field_success_rate": 0.32,
+    "mean_time": 2743.6,
+    "median_time": 2671.1,
+    "p95_time": 3812.7,
+    "max_time": 4261.9,
+    "compute_time": 0.0
+  }
+}

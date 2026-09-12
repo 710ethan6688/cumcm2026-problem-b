@@ -1,0 +1,47 @@
+{
+  "outer_ring": {
+    "clear_rate": 1.0,
+    "time_mean": 4279.2,
+    "time_std": 438.9,
+    "time_max": 5219.7,
+    "grid_triggers": 21,
+    "self_heal_success": 1.0,
+    "healed_tx": 0
+  },
+  "dense_cluster": {
+    "clear_rate": 1.0,
+    "time_mean": 3462.0,
+    "time_std": 648.7,
+    "time_max": 4976.9,
+    "grid_triggers": 0,
+    "self_heal_success": 1.0,
+    "healed_tx": 0
+  },
+  "min_radius": {
+    "clear_rate": 1.0,
+    "time_mean": 4237.3,
+    "time_std": 427.2,
+    "time_max": 5357.7,
+    "grid_triggers": 0,
+    "self_heal_success": 1.0,
+    "healed_tx": 0
+  },
+  "comm_fault": {
+    "clear_rate": 1.0,
+    "time_mean": 4733.4,
+    "time_std": 633.0,
+    "time_max": 6085.9,
+    "grid_triggers": 18,
+    "self_heal_success": 1.0,
+    "healed_tx": 394
+  },
+  "forced_grid": {
+    "clear_rate": 1.0,
+    "time_mean": 74833.4,
+    "time_std": 19973.5,
+    "time_max": 121435.9,
+    "grid_triggers": 630,
+    "self_heal_success": 1.0,
+    "healed_tx": 0
+  }
+}

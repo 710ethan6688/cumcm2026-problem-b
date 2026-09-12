@@ -1,0 +1,45 @@
+{
+  "loc_budget": {
+    "budget_1": {
+      "meb_conv_rate": 0.0,
+      "mean_time": 6016.9
+    },
+    "budget_2": {
+      "meb_conv_rate": 0.0,
+      "mean_time": 4586.0
+    },
+    "budget_3": {
+      "meb_conv_rate": 0.733,
+      "mean_time": 4609.0
+    },
+    "budget_4": {
+      "meb_conv_rate": 1.0,
+      "mean_time": 4604.7
+    }
+  },
+  "meb_thresh": {
+    "thresh_18.0": {
+      "mean_time": 5225.3
+    },
+    "thresh_19.0": {
+      "mean_time": 5215.5
+    },
+    "thresh_19.5": {
+      "mean_time": 5208.5
+    },
+    "thresh_20.0": {
+      "mean_time": 5197.7
+    }
+  },
+  "grid_step": {
+    "delta_g_20.0": {
+      "mean_time": 99865.2
+    },
+    "delta_g_26.0": {
+      "mean_time": 73835.5
+    },
+    "delta_g_28.0": {
+      "mean_time": 67675.4
+    }
+  }
+}

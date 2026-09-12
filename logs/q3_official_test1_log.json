@@ -1,0 +1,4169 @@
+[
+  {
+    "step": 1,
+    "virtual_time": 5.0,
+    "event_type": "direction_measurement",
+    "channel": 1,
+    "robot_pos": [
+      0.0,
+      0.0
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 2,
+    "virtual_time": 6.0,
+    "event_type": "channel_tune",
+    "channel": 2,
+    "robot_pos": [
+      0.0,
+      0.0
+    ],
+    "details": {
+      "from_channel": 1,
+      "to_channel": 2,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 3,
+    "virtual_time": 11.0,
+    "event_type": "direction_measurement",
+    "channel": 2,
+    "robot_pos": [
+      0.0,
+      0.0
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 4,
+    "virtual_time": 12.0,
+    "event_type": "channel_tune",
+    "channel": 3,
+    "robot_pos": [
+      0.0,
+      0.0
+    ],
+    "details": {
+      "from_channel": 2,
+      "to_channel": 3,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 5,
+    "virtual_time": 17.0,
+    "event_type": "direction_measurement",
+    "channel": 3,
+    "robot_pos": [
+      0.0,
+      0.0
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 6,
+    "virtual_time": 18.0,
+    "event_type": "channel_tune",
+    "channel": 4,
+    "robot_pos": [
+      0.0,
+      0.0
+    ],
+    "details": {
+      "from_channel": 3,
+      "to_channel": 4,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 7,
+    "virtual_time": 23.0,
+    "event_type": "direction_measurement",
+    "channel": 4,
+    "robot_pos": [
+      0.0,
+      0.0
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 8,
+    "virtual_time": 24.0,
+    "event_type": "channel_tune",
+    "channel": 5,
+    "robot_pos": [
+      0.0,
+      0.0
+    ],
+    "details": {
+      "from_channel": 4,
+      "to_channel": 5,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 9,
+    "virtual_time": 29.0,
+    "event_type": "direction_measurement",
+    "channel": 5,
+    "robot_pos": [
+      0.0,
+      0.0
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 10,
+    "virtual_time": 30.0,
+    "event_type": "channel_tune",
+    "channel": 6,
+    "robot_pos": [
+      0.0,
+      0.0
+    ],
+    "details": {
+      "from_channel": 5,
+      "to_channel": 6,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 11,
+    "virtual_time": 35.0,
+    "event_type": "direction_measurement",
+    "channel": 6,
+    "robot_pos": [
+      0.0,
+      0.0
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 12,
+    "virtual_time": 36.0,
+    "event_type": "channel_tune",
+    "channel": 7,
+    "robot_pos": [
+      0.0,
+      0.0
+    ],
+    "details": {
+      "from_channel": 6,
+      "to_channel": 7,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 13,
+    "virtual_time": 41.0,
+    "event_type": "direction_measurement",
+    "channel": 7,
+    "robot_pos": [
+      0.0,
+      0.0
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 14,
+    "virtual_time": 42.0,
+    "event_type": "channel_tune",
+    "channel": 8,
+    "robot_pos": [
+      0.0,
+      0.0
+    ],
+    "details": {
+      "from_channel": 7,
+      "to_channel": 8,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 15,
+    "virtual_time": 47.0,
+    "event_type": "direction_measurement",
+    "channel": 8,
+    "robot_pos": [
+      0.0,
+      0.0
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 16,
+    "virtual_time": 48.0,
+    "event_type": "channel_tune",
+    "channel": 9,
+    "robot_pos": [
+      0.0,
+      0.0
+    ],
+    "details": {
+      "from_channel": 8,
+      "to_channel": 9,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 17,
+    "virtual_time": 53.0,
+    "event_type": "direction_measurement",
+    "channel": 9,
+    "robot_pos": [
+      0.0,
+      0.0
+    ],
+    "details": {
+      "feedback": "direction",
+      "bearing_deg": -139.67,
+      "meb_center": [
+        -571.92,
+        -485.54
+      ],
+      "meb_radius": 750.23
+    }
+  },
+  {
+    "step": 18,
+    "virtual_time": 180.58,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      -606.72,
+      -196.99
+    ],
+    "details": {
+      "nominal_waypoint": [
+        -606.71,
+        -196.99
+      ],
+      "actual_pos": [
+        -606.72,
+        -196.99
+      ]
+    }
+  },
+  {
+    "step": 19,
+    "virtual_time": 185.58,
+    "event_type": "direction_measurement",
+    "channel": 9,
+    "robot_pos": [
+      -606.72,
+      -196.99
+    ],
+    "details": {
+      "feedback": "direction",
+      "bearing_deg": -97.95,
+      "meb_center": [
+        -657.8,
+        -559.06
+      ],
+      "meb_radius": 30.48
+    }
+  },
+  {
+    "step": 20,
+    "virtual_time": 263.31,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      -409.13,
+      -531.65
+    ],
+    "details": {
+      "nominal_waypoint": [
+        -408.75,
+        -531.9
+      ],
+      "actual_pos": [
+        -409.13,
+        -531.65
+      ]
+    }
+  },
+  {
+    "step": 21,
+    "virtual_time": 268.31,
+    "event_type": "direction_measurement",
+    "channel": 9,
+    "robot_pos": [
+      -409.13,
+      -531.65
+    ],
+    "details": {
+      "feedback": "direction",
+      "bearing_deg": -171.09,
+      "meb_center": [
+        -659.06,
+        -571.0
+      ],
+      "meb_radius": 9.34
+    }
+  },
+  {
+    "step": 22,
+    "virtual_time": 318.88,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      -658.94,
+      -570.73
+    ],
+    "details": {
+      "nominal_waypoint": [
+        -659.06,
+        -571.0
+      ],
+      "actual_pos": [
+        -658.94,
+        -570.73
+      ]
+    }
+  },
+  {
+    "step": 23,
+    "virtual_time": 323.88,
+    "event_type": "clear_attempt",
+    "channel": 9,
+    "robot_pos": [
+      -658.94,
+      -570.73
+    ],
+    "details": {
+      "result": "success",
+      "true_distance": 3.3,
+      "duration": 5.0
+    }
+  },
+  {
+    "step": 24,
+    "virtual_time": 408.99,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      -570.06,
+      -986.93
+    ],
+    "details": {
+      "nominal_waypoint": [
+        -570.0,
+        -987.27
+      ],
+      "actual_pos": [
+        -570.06,
+        -986.93
+      ]
+    }
+  },
+  {
+    "step": 25,
+    "virtual_time": 409.99,
+    "event_type": "channel_tune",
+    "channel": 1,
+    "robot_pos": [
+      -570.06,
+      -986.93
+    ],
+    "details": {
+      "from_channel": 9,
+      "to_channel": 1,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 26,
+    "virtual_time": 414.99,
+    "event_type": "direction_measurement",
+    "channel": 1,
+    "robot_pos": [
+      -570.06,
+      -986.93
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 27,
+    "virtual_time": 415.99,
+    "event_type": "channel_tune",
+    "channel": 2,
+    "robot_pos": [
+      -570.06,
+      -986.93
+    ],
+    "details": {
+      "from_channel": 1,
+      "to_channel": 2,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 28,
+    "virtual_time": 420.99,
+    "event_type": "direction_measurement",
+    "channel": 2,
+    "robot_pos": [
+      -570.06,
+      -986.93
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 29,
+    "virtual_time": 421.99,
+    "event_type": "channel_tune",
+    "channel": 3,
+    "robot_pos": [
+      -570.06,
+      -986.93
+    ],
+    "details": {
+      "from_channel": 2,
+      "to_channel": 3,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 30,
+    "virtual_time": 426.99,
+    "event_type": "direction_measurement",
+    "channel": 3,
+    "robot_pos": [
+      -570.06,
+      -986.93
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 31,
+    "virtual_time": 427.99,
+    "event_type": "channel_tune",
+    "channel": 4,
+    "robot_pos": [
+      -570.06,
+      -986.93
+    ],
+    "details": {
+      "from_channel": 3,
+      "to_channel": 4,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 32,
+    "virtual_time": 432.99,
+    "event_type": "direction_measurement",
+    "channel": 4,
+    "robot_pos": [
+      -570.06,
+      -986.93
+    ],
+    "details": {
+      "feedback": "direction",
+      "bearing_deg": 150.03,
+      "meb_center": [
+        -1185.03,
+        -617.91
+      ],
+      "meb_radius": 717.19
+    }
+  },
+  {
+    "step": 33,
+    "virtual_time": 556.15,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      -1181.55,
+      -914.33
+    ],
+    "details": {
+      "nominal_waypoint": [
+        -1181.47,
+        -914.2
+      ],
+      "actual_pos": [
+        -1181.55,
+        -914.33
+      ]
+    }
+  },
+  {
+    "step": 34,
+    "virtual_time": 561.15,
+    "event_type": "direction_measurement",
+    "channel": 4,
+    "robot_pos": [
+      -1181.55,
+      -914.33
+    ],
+    "details": {
+      "feedback": "direction",
+      "bearing_deg": 125.32,
+      "meb_center": [
+        -1521.02,
+        -437.31
+      ],
+      "meb_radius": 68.83
+    }
+  },
+  {
+    "step": 35,
+    "virtual_time": 655.05,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      -1612.07,
+      -727.09
+    ],
+    "details": {
+      "nominal_waypoint": [
+        -1612.07,
+        -726.63
+      ],
+      "actual_pos": [
+        -1612.07,
+        -727.09
+      ]
+    }
+  },
+  {
+    "step": 36,
+    "virtual_time": 660.05,
+    "event_type": "direction_measurement",
+    "channel": 4,
+    "robot_pos": [
+      -1612.07,
+      -727.09
+    ],
+    "details": {
+      "feedback": "direction",
+      "bearing_deg": 68.38,
+      "meb_center": [
+        -1504.64,
+        -455.39
+      ],
+      "meb_radius": 14.15
+    }
+  },
+  {
+    "step": 37,
+    "virtual_time": 718.48,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      -1504.75,
+      -455.33
+    ],
+    "details": {
+      "nominal_waypoint": [
+        -1504.64,
+        -455.39
+      ],
+      "actual_pos": [
+        -1504.75,
+        -455.33
+      ]
+    }
+  },
+  {
+    "step": 38,
+    "virtual_time": 723.48,
+    "event_type": "clear_attempt",
+    "channel": 4,
+    "robot_pos": [
+      -1504.75,
+      -455.33
+    ],
+    "details": {
+      "result": "success",
+      "true_distance": 10.86,
+      "duration": 5.0
+    }
+  },
+  {
+    "step": 39,
+    "virtual_time": 840.14,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      -1140.02,
+      -0.17
+    ],
+    "details": {
+      "nominal_waypoint": [
+        -1140.0,
+        0.0
+      ],
+      "actual_pos": [
+        -1140.02,
+        -0.17
+      ]
+    }
+  },
+  {
+    "step": 40,
+    "virtual_time": 841.14,
+    "event_type": "channel_tune",
+    "channel": 1,
+    "robot_pos": [
+      -1140.02,
+      -0.17
+    ],
+    "details": {
+      "from_channel": 4,
+      "to_channel": 1,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 41,
+    "virtual_time": 846.14,
+    "event_type": "direction_measurement",
+    "channel": 1,
+    "robot_pos": [
+      -1140.02,
+      -0.17
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 42,
+    "virtual_time": 847.14,
+    "event_type": "channel_tune",
+    "channel": 2,
+    "robot_pos": [
+      -1140.02,
+      -0.17
+    ],
+    "details": {
+      "from_channel": 1,
+      "to_channel": 2,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 43,
+    "virtual_time": 852.14,
+    "event_type": "direction_measurement",
+    "channel": 2,
+    "robot_pos": [
+      -1140.02,
+      -0.17
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 44,
+    "virtual_time": 853.14,
+    "event_type": "channel_tune",
+    "channel": 3,
+    "robot_pos": [
+      -1140.02,
+      -0.17
+    ],
+    "details": {
+      "from_channel": 2,
+      "to_channel": 3,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 45,
+    "virtual_time": 858.14,
+    "event_type": "direction_measurement",
+    "channel": 3,
+    "robot_pos": [
+      -1140.02,
+      -0.17
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 46,
+    "virtual_time": 859.14,
+    "event_type": "channel_tune",
+    "channel": 5,
+    "robot_pos": [
+      -1140.02,
+      -0.17
+    ],
+    "details": {
+      "from_channel": 3,
+      "to_channel": 5,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 47,
+    "virtual_time": 864.14,
+    "event_type": "direction_measurement",
+    "channel": 5,
+    "robot_pos": [
+      -1140.02,
+      -0.17
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 48,
+    "virtual_time": 865.14,
+    "event_type": "channel_tune",
+    "channel": 6,
+    "robot_pos": [
+      -1140.02,
+      -0.17
+    ],
+    "details": {
+      "from_channel": 5,
+      "to_channel": 6,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 49,
+    "virtual_time": 870.14,
+    "event_type": "direction_measurement",
+    "channel": 6,
+    "robot_pos": [
+      -1140.02,
+      -0.17
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 50,
+    "virtual_time": 871.14,
+    "event_type": "channel_tune",
+    "channel": 7,
+    "robot_pos": [
+      -1140.02,
+      -0.17
+    ],
+    "details": {
+      "from_channel": 6,
+      "to_channel": 7,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 51,
+    "virtual_time": 876.14,
+    "event_type": "direction_measurement",
+    "channel": 7,
+    "robot_pos": [
+      -1140.02,
+      -0.17
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 52,
+    "virtual_time": 877.14,
+    "event_type": "channel_tune",
+    "channel": 8,
+    "robot_pos": [
+      -1140.02,
+      -0.17
+    ],
+    "details": {
+      "from_channel": 7,
+      "to_channel": 8,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 53,
+    "virtual_time": 882.14,
+    "event_type": "direction_measurement",
+    "channel": 8,
+    "robot_pos": [
+      -1140.02,
+      -0.17
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 54,
+    "virtual_time": 883.14,
+    "event_type": "channel_tune",
+    "channel": 10,
+    "robot_pos": [
+      -1140.02,
+      -0.17
+    ],
+    "details": {
+      "from_channel": 8,
+      "to_channel": 10,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 55,
+    "virtual_time": 888.14,
+    "event_type": "direction_measurement",
+    "channel": 10,
+    "robot_pos": [
+      -1140.02,
+      -0.17
+    ],
+    "details": {
+      "feedback": "direction",
+      "bearing_deg": 127.53,
+      "meb_center": [
+        -1403.75,
+        355.84
+      ],
+      "meb_radius": 443.05
+    }
+  },
+  {
+    "step": 56,
+    "virtual_time": 982.36,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      -1578.29,
+      172.68
+    ],
+    "details": {
+      "nominal_waypoint": [
+        -1578.34,
+        172.46
+      ],
+      "actual_pos": [
+        -1578.29,
+        172.68
+      ]
+    }
+  },
+  {
+    "step": 57,
+    "virtual_time": 987.36,
+    "event_type": "direction_measurement",
+    "channel": 10,
+    "robot_pos": [
+      -1578.29,
+      172.68
+    ],
+    "details": {
+      "feedback": "direction",
+      "bearing_deg": 80.75,
+      "meb_center": [
+        -1525.09,
+        501.63
+      ],
+      "meb_radius": 21.42
+    }
+  },
+  {
+    "step": 58,
+    "virtual_time": 1062.91,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      -1292.41,
+      419.59
+    ],
+    "details": {
+      "nominal_waypoint": [
+        -1292.46,
+        419.77
+      ],
+      "actual_pos": [
+        -1292.41,
+        419.59
+      ]
+    }
+  },
+  {
+    "step": 59,
+    "virtual_time": 1067.91,
+    "event_type": "direction_measurement",
+    "channel": 10,
+    "robot_pos": [
+      -1292.41,
+      419.59
+    ],
+    "details": {
+      "feedback": "direction",
+      "bearing_deg": 161.6,
+      "meb_center": [
+        -1525.53,
+        497.26
+      ],
+      "meb_radius": 7.79
+    }
+  },
+  {
+    "step": 60,
+    "virtual_time": 1117.11,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      -1525.69,
+      497.65
+    ],
+    "details": {
+      "nominal_waypoint": [
+        -1525.53,
+        497.26
+      ],
+      "actual_pos": [
+        -1525.69,
+        497.65
+      ]
+    }
+  },
+  {
+    "step": 61,
+    "virtual_time": 1122.11,
+    "event_type": "clear_attempt",
+    "channel": 10,
+    "robot_pos": [
+      -1525.69,
+      497.65
+    ],
+    "details": {
+      "result": "success",
+      "true_distance": 4.21,
+      "duration": 5.0
+    }
+  },
+  {
+    "step": 62,
+    "virtual_time": 1248.11,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      -1139.95,
+      -0.44
+    ],
+    "details": {
+      "nominal_waypoint": [
+        -1140.0,
+        0.0
+      ],
+      "actual_pos": [
+        -1139.95,
+        -0.44
+      ]
+    }
+  },
+  {
+    "step": 63,
+    "virtual_time": 1249.11,
+    "event_type": "channel_tune",
+    "channel": 11,
+    "robot_pos": [
+      -1139.95,
+      -0.44
+    ],
+    "details": {
+      "from_channel": 10,
+      "to_channel": 11,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 64,
+    "virtual_time": 1254.11,
+    "event_type": "direction_measurement",
+    "channel": 11,
+    "robot_pos": [
+      -1139.95,
+      -0.44
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 65,
+    "virtual_time": 1255.11,
+    "event_type": "channel_tune",
+    "channel": 12,
+    "robot_pos": [
+      -1139.95,
+      -0.44
+    ],
+    "details": {
+      "from_channel": 11,
+      "to_channel": 12,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 66,
+    "virtual_time": 1260.11,
+    "event_type": "direction_measurement",
+    "channel": 12,
+    "robot_pos": [
+      -1139.95,
+      -0.44
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 67,
+    "virtual_time": 1261.11,
+    "event_type": "channel_tune",
+    "channel": 13,
+    "robot_pos": [
+      -1139.95,
+      -0.44
+    ],
+    "details": {
+      "from_channel": 12,
+      "to_channel": 13,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 68,
+    "virtual_time": 1266.11,
+    "event_type": "direction_measurement",
+    "channel": 13,
+    "robot_pos": [
+      -1139.95,
+      -0.44
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 69,
+    "virtual_time": 1267.11,
+    "event_type": "channel_tune",
+    "channel": 14,
+    "robot_pos": [
+      -1139.95,
+      -0.44
+    ],
+    "details": {
+      "from_channel": 13,
+      "to_channel": 14,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 70,
+    "virtual_time": 1272.11,
+    "event_type": "direction_measurement",
+    "channel": 14,
+    "robot_pos": [
+      -1139.95,
+      -0.44
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 71,
+    "virtual_time": 1273.11,
+    "event_type": "channel_tune",
+    "channel": 15,
+    "robot_pos": [
+      -1139.95,
+      -0.44
+    ],
+    "details": {
+      "from_channel": 14,
+      "to_channel": 15,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 72,
+    "virtual_time": 1278.11,
+    "event_type": "direction_measurement",
+    "channel": 15,
+    "robot_pos": [
+      -1139.95,
+      -0.44
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 73,
+    "virtual_time": 1279.11,
+    "event_type": "channel_tune",
+    "channel": 16,
+    "robot_pos": [
+      -1139.95,
+      -0.44
+    ],
+    "details": {
+      "from_channel": 15,
+      "to_channel": 16,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 74,
+    "virtual_time": 1284.11,
+    "event_type": "direction_measurement",
+    "channel": 16,
+    "robot_pos": [
+      -1139.95,
+      -0.44
+    ],
+    "details": {
+      "feedback": "direction",
+      "bearing_deg": 26.08,
+      "meb_center": [
+        -466.12,
+        329.42
+      ],
+      "meb_radius": 750.23
+    }
+  },
+  {
+    "step": 75,
+    "virtual_time": 1411.73,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      -716.43,
+      476.85
+    ],
+    "details": {
+      "nominal_waypoint": [
+        -716.65,
+        476.76
+      ],
+      "actual_pos": [
+        -716.43,
+        476.85
+      ]
+    }
+  },
+  {
+    "step": 76,
+    "virtual_time": 1416.73,
+    "event_type": "direction_measurement",
+    "channel": 16,
+    "robot_pos": [
+      -716.43,
+      476.85
+    ],
+    "details": {
+      "feedback": "direction",
+      "bearing_deg": -7.8,
+      "meb_center": [
+        -283.18,
+        418.23
+      ],
+      "meb_radius": 41.92
+    }
+  },
+  {
+    "step": 77,
+    "virtual_time": 1499.56,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      -416.2,
+      191.61
+    ],
+    "details": {
+      "nominal_waypoint": [
+        -416.12,
+        191.11
+      ],
+      "actual_pos": [
+        -416.2,
+        191.61
+      ]
+    }
+  },
+  {
+    "step": 78,
+    "virtual_time": 1504.56,
+    "event_type": "direction_measurement",
+    "channel": 16,
+    "robot_pos": [
+      -416.2,
+      191.61
+    ],
+    "details": {
+      "feedback": "direction",
+      "bearing_deg": 55.6,
+      "meb_center": [
+        -263.05,
+        414.91
+      ],
+      "meb_radius": 12.25
+    }
+  },
+  {
+    "step": 79,
+    "virtual_time": 1558.65,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      -263.4,
+      414.75
+    ],
+    "details": {
+      "nominal_waypoint": [
+        -263.05,
+        414.91
+      ],
+      "actual_pos": [
+        -263.4,
+        414.75
+      ]
+    }
+  },
+  {
+    "step": 80,
+    "virtual_time": 1563.65,
+    "event_type": "clear_attempt",
+    "channel": 16,
+    "robot_pos": [
+      -263.4,
+      414.75
+    ],
+    "details": {
+      "result": "success",
+      "true_distance": 1.14,
+      "duration": 5.0
+    }
+  },
+  {
+    "step": 81,
+    "virtual_time": 1661.9,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      -0.01,
+      0.04
+    ],
+    "details": {
+      "nominal_waypoint": [
+        0.0,
+        0.0
+      ],
+      "actual_pos": [
+        -0.01,
+        0.04
+      ]
+    }
+  },
+  {
+    "step": 82,
+    "virtual_time": 1662.9,
+    "event_type": "channel_tune",
+    "channel": 11,
+    "robot_pos": [
+      -0.01,
+      0.04
+    ],
+    "details": {
+      "from_channel": 16,
+      "to_channel": 11,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 83,
+    "virtual_time": 1667.9,
+    "event_type": "direction_measurement",
+    "channel": 11,
+    "robot_pos": [
+      -0.01,
+      0.04
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 84,
+    "virtual_time": 1668.9,
+    "event_type": "channel_tune",
+    "channel": 12,
+    "robot_pos": [
+      -0.01,
+      0.04
+    ],
+    "details": {
+      "from_channel": 11,
+      "to_channel": 12,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 85,
+    "virtual_time": 1673.9,
+    "event_type": "direction_measurement",
+    "channel": 12,
+    "robot_pos": [
+      -0.01,
+      0.04
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 86,
+    "virtual_time": 1674.9,
+    "event_type": "channel_tune",
+    "channel": 13,
+    "robot_pos": [
+      -0.01,
+      0.04
+    ],
+    "details": {
+      "from_channel": 12,
+      "to_channel": 13,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 87,
+    "virtual_time": 1679.9,
+    "event_type": "direction_measurement",
+    "channel": 13,
+    "robot_pos": [
+      -0.01,
+      0.04
+    ],
+    "details": {
+      "feedback": "direction",
+      "bearing_deg": -6.63,
+      "meb_center": [
+        745.21,
+        -86.55
+      ],
+      "meb_radius": 750.23
+    }
+  },
+  {
+    "step": 88,
+    "virtual_time": 1807.45,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      557.78,
+      -309.17
+    ],
+    "details": {
+      "nominal_waypoint": [
+        558.06,
+        -308.93
+      ],
+      "actual_pos": [
+        557.78,
+        -309.17
+      ]
+    }
+  },
+  {
+    "step": 89,
+    "virtual_time": 1812.45,
+    "event_type": "direction_measurement",
+    "channel": 13,
+    "robot_pos": [
+      557.78,
+      -309.17
+    ],
+    "details": {
+      "feedback": "direction",
+      "bearing_deg": 30.98,
+      "meb_center": [
+        900.57,
+        -104.05
+      ],
+      "meb_radius": 35.67
+    }
+  },
+  {
+    "step": 90,
+    "virtual_time": 1892.67,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      706.98,
+      63.11
+    ],
+    "details": {
+      "nominal_waypoint": [
+        706.88,
+        63.06
+      ],
+      "actual_pos": [
+        706.98,
+        63.11
+      ]
+    }
+  },
+  {
+    "step": 91,
+    "virtual_time": 1897.67,
+    "event_type": "direction_measurement",
+    "channel": 13,
+    "robot_pos": [
+      706.98,
+      63.11
+    ],
+    "details": {
+      "feedback": "direction",
+      "bearing_deg": -45.42,
+      "meb_center": [
+        882.18,
+        -114.5
+      ],
+      "meb_radius": 8.97
+    }
+  },
+  {
+    "step": 92,
+    "virtual_time": 1947.5,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      882.07,
+      -114.2
+    ],
+    "details": {
+      "nominal_waypoint": [
+        882.18,
+        -114.5
+      ],
+      "actual_pos": [
+        882.07,
+        -114.2
+      ]
+    }
+  },
+  {
+    "step": 93,
+    "virtual_time": 1952.5,
+    "event_type": "clear_attempt",
+    "channel": 13,
+    "robot_pos": [
+      882.07,
+      -114.2
+    ],
+    "details": {
+      "result": "success",
+      "true_distance": 3.96,
+      "duration": 5.0
+    }
+  },
+  {
+    "step": 94,
+    "virtual_time": 2008.91,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      1139.95,
+      -0.0
+    ],
+    "details": {
+      "nominal_waypoint": [
+        1140.0,
+        0.0
+      ],
+      "actual_pos": [
+        1139.95,
+        -0.0
+      ]
+    }
+  },
+  {
+    "step": 95,
+    "virtual_time": 2009.91,
+    "event_type": "channel_tune",
+    "channel": 1,
+    "robot_pos": [
+      1139.95,
+      -0.0
+    ],
+    "details": {
+      "from_channel": 13,
+      "to_channel": 1,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 96,
+    "virtual_time": 2014.91,
+    "event_type": "direction_measurement",
+    "channel": 1,
+    "robot_pos": [
+      1139.95,
+      -0.0
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 97,
+    "virtual_time": 2015.91,
+    "event_type": "channel_tune",
+    "channel": 2,
+    "robot_pos": [
+      1139.95,
+      -0.0
+    ],
+    "details": {
+      "from_channel": 1,
+      "to_channel": 2,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 98,
+    "virtual_time": 2020.91,
+    "event_type": "direction_measurement",
+    "channel": 2,
+    "robot_pos": [
+      1139.95,
+      -0.0
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 99,
+    "virtual_time": 2021.91,
+    "event_type": "channel_tune",
+    "channel": 3,
+    "robot_pos": [
+      1139.95,
+      -0.0
+    ],
+    "details": {
+      "from_channel": 2,
+      "to_channel": 3,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 100,
+    "virtual_time": 2026.91,
+    "event_type": "direction_measurement",
+    "channel": 3,
+    "robot_pos": [
+      1139.95,
+      -0.0
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 101,
+    "virtual_time": 2027.91,
+    "event_type": "channel_tune",
+    "channel": 5,
+    "robot_pos": [
+      1139.95,
+      -0.0
+    ],
+    "details": {
+      "from_channel": 3,
+      "to_channel": 5,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 102,
+    "virtual_time": 2032.91,
+    "event_type": "direction_measurement",
+    "channel": 5,
+    "robot_pos": [
+      1139.95,
+      -0.0
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 103,
+    "virtual_time": 2033.91,
+    "event_type": "channel_tune",
+    "channel": 6,
+    "robot_pos": [
+      1139.95,
+      -0.0
+    ],
+    "details": {
+      "from_channel": 5,
+      "to_channel": 6,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 104,
+    "virtual_time": 2038.91,
+    "event_type": "direction_measurement",
+    "channel": 6,
+    "robot_pos": [
+      1139.95,
+      -0.0
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 105,
+    "virtual_time": 2039.91,
+    "event_type": "channel_tune",
+    "channel": 7,
+    "robot_pos": [
+      1139.95,
+      -0.0
+    ],
+    "details": {
+      "from_channel": 6,
+      "to_channel": 7,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 106,
+    "virtual_time": 2044.91,
+    "event_type": "direction_measurement",
+    "channel": 7,
+    "robot_pos": [
+      1139.95,
+      -0.0
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 107,
+    "virtual_time": 2045.91,
+    "event_type": "channel_tune",
+    "channel": 8,
+    "robot_pos": [
+      1139.95,
+      -0.0
+    ],
+    "details": {
+      "from_channel": 7,
+      "to_channel": 8,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 108,
+    "virtual_time": 2050.91,
+    "event_type": "direction_measurement",
+    "channel": 8,
+    "robot_pos": [
+      1139.95,
+      -0.0
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 109,
+    "virtual_time": 2051.91,
+    "event_type": "channel_tune",
+    "channel": 11,
+    "robot_pos": [
+      1139.95,
+      -0.0
+    ],
+    "details": {
+      "from_channel": 8,
+      "to_channel": 11,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 110,
+    "virtual_time": 2056.91,
+    "event_type": "direction_measurement",
+    "channel": 11,
+    "robot_pos": [
+      1139.95,
+      -0.0
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 111,
+    "virtual_time": 2057.91,
+    "event_type": "channel_tune",
+    "channel": 12,
+    "robot_pos": [
+      1139.95,
+      -0.0
+    ],
+    "details": {
+      "from_channel": 11,
+      "to_channel": 12,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 112,
+    "virtual_time": 2062.91,
+    "event_type": "direction_measurement",
+    "channel": 12,
+    "robot_pos": [
+      1139.95,
+      -0.0
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 113,
+    "virtual_time": 2063.91,
+    "event_type": "channel_tune",
+    "channel": 14,
+    "robot_pos": [
+      1139.95,
+      -0.0
+    ],
+    "details": {
+      "from_channel": 12,
+      "to_channel": 14,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 114,
+    "virtual_time": 2068.91,
+    "event_type": "direction_measurement",
+    "channel": 14,
+    "robot_pos": [
+      1139.95,
+      -0.0
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 115,
+    "virtual_time": 2069.91,
+    "event_type": "channel_tune",
+    "channel": 15,
+    "robot_pos": [
+      1139.95,
+      -0.0
+    ],
+    "details": {
+      "from_channel": 14,
+      "to_channel": 15,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 116,
+    "virtual_time": 2074.91,
+    "event_type": "direction_measurement",
+    "channel": 15,
+    "robot_pos": [
+      1139.95,
+      -0.0
+    ],
+    "details": {
+      "feedback": "direction",
+      "bearing_deg": -1.38,
+      "meb_center": [
+        1469.98,
+        -13.69
+      ],
+      "meb_radius": 330.31
+    }
+  },
+  {
+    "step": 117,
+    "virtual_time": 2158.06,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      1483.54,
+      234.08
+    ],
+    "details": {
+      "nominal_waypoint": [
+        1483.75,
+        234.3
+      ],
+      "actual_pos": [
+        1483.54,
+        234.08
+      ]
+    }
+  },
+  {
+    "step": 118,
+    "virtual_time": 2163.06,
+    "event_type": "direction_measurement",
+    "channel": 15,
+    "robot_pos": [
+      1483.54,
+      234.08
+    ],
+    "details": {
+      "feedback": "direction",
+      "bearing_deg": -64.76,
+      "meb_center": [
+        1599.39,
+        -11.2
+      ],
+      "meb_radius": 12.29
+    }
+  },
+  {
+    "step": 119,
+    "virtual_time": 2217.31,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      1599.41,
+      -11.2
+    ],
+    "details": {
+      "nominal_waypoint": [
+        1599.39,
+        -11.2
+      ],
+      "actual_pos": [
+        1599.41,
+        -11.2
+      ]
+    }
+  },
+  {
+    "step": 120,
+    "virtual_time": 2222.31,
+    "event_type": "clear_attempt",
+    "channel": 15,
+    "robot_pos": [
+      1599.41,
+      -11.2
+    ],
+    "details": {
+      "result": "success",
+      "true_distance": 8.06,
+      "duration": 5.0
+    }
+  },
+  {
+    "step": 121,
+    "virtual_time": 2314.27,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      1139.78,
+      -0.23
+    ],
+    "details": {
+      "nominal_waypoint": [
+        1140.0,
+        0.0
+      ],
+      "actual_pos": [
+        1139.78,
+        -0.23
+      ]
+    }
+  },
+  {
+    "step": 122,
+    "virtual_time": 2315.27,
+    "event_type": "channel_tune",
+    "channel": 17,
+    "robot_pos": [
+      1139.78,
+      -0.23
+    ],
+    "details": {
+      "from_channel": 15,
+      "to_channel": 17,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 123,
+    "virtual_time": 2320.27,
+    "event_type": "direction_measurement",
+    "channel": 17,
+    "robot_pos": [
+      1139.78,
+      -0.23
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 124,
+    "virtual_time": 2321.27,
+    "event_type": "channel_tune",
+    "channel": 18,
+    "robot_pos": [
+      1139.78,
+      -0.23
+    ],
+    "details": {
+      "from_channel": 17,
+      "to_channel": 18,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 125,
+    "virtual_time": 2326.27,
+    "event_type": "direction_measurement",
+    "channel": 18,
+    "robot_pos": [
+      1139.78,
+      -0.23
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 126,
+    "virtual_time": 2327.27,
+    "event_type": "channel_tune",
+    "channel": 19,
+    "robot_pos": [
+      1139.78,
+      -0.23
+    ],
+    "details": {
+      "from_channel": 18,
+      "to_channel": 19,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 127,
+    "virtual_time": 2332.27,
+    "event_type": "direction_measurement",
+    "channel": 19,
+    "robot_pos": [
+      1139.78,
+      -0.23
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 128,
+    "virtual_time": 2333.27,
+    "event_type": "channel_tune",
+    "channel": 20,
+    "robot_pos": [
+      1139.78,
+      -0.23
+    ],
+    "details": {
+      "from_channel": 19,
+      "to_channel": 20,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 129,
+    "virtual_time": 2338.27,
+    "event_type": "direction_measurement",
+    "channel": 20,
+    "robot_pos": [
+      1139.78,
+      -0.23
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 130,
+    "virtual_time": 2566.23,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      569.75,
+      -987.29
+    ],
+    "details": {
+      "nominal_waypoint": [
+        570.0,
+        -987.27
+      ],
+      "actual_pos": [
+        569.75,
+        -987.29
+      ]
+    }
+  },
+  {
+    "step": 131,
+    "virtual_time": 2571.23,
+    "event_type": "direction_measurement",
+    "channel": 20,
+    "robot_pos": [
+      569.75,
+      -987.29
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 132,
+    "virtual_time": 2572.23,
+    "event_type": "channel_tune",
+    "channel": 1,
+    "robot_pos": [
+      569.75,
+      -987.29
+    ],
+    "details": {
+      "from_channel": 20,
+      "to_channel": 1,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 133,
+    "virtual_time": 2577.23,
+    "event_type": "direction_measurement",
+    "channel": 1,
+    "robot_pos": [
+      569.75,
+      -987.29
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 134,
+    "virtual_time": 2578.23,
+    "event_type": "channel_tune",
+    "channel": 2,
+    "robot_pos": [
+      569.75,
+      -987.29
+    ],
+    "details": {
+      "from_channel": 1,
+      "to_channel": 2,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 135,
+    "virtual_time": 2583.23,
+    "event_type": "direction_measurement",
+    "channel": 2,
+    "robot_pos": [
+      569.75,
+      -987.29
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 136,
+    "virtual_time": 2584.23,
+    "event_type": "channel_tune",
+    "channel": 3,
+    "robot_pos": [
+      569.75,
+      -987.29
+    ],
+    "details": {
+      "from_channel": 2,
+      "to_channel": 3,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 137,
+    "virtual_time": 2589.23,
+    "event_type": "direction_measurement",
+    "channel": 3,
+    "robot_pos": [
+      569.75,
+      -987.29
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 138,
+    "virtual_time": 2590.23,
+    "event_type": "channel_tune",
+    "channel": 5,
+    "robot_pos": [
+      569.75,
+      -987.29
+    ],
+    "details": {
+      "from_channel": 3,
+      "to_channel": 5,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 139,
+    "virtual_time": 2595.23,
+    "event_type": "direction_measurement",
+    "channel": 5,
+    "robot_pos": [
+      569.75,
+      -987.29
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 140,
+    "virtual_time": 2596.23,
+    "event_type": "channel_tune",
+    "channel": 6,
+    "robot_pos": [
+      569.75,
+      -987.29
+    ],
+    "details": {
+      "from_channel": 5,
+      "to_channel": 6,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 141,
+    "virtual_time": 2601.23,
+    "event_type": "direction_measurement",
+    "channel": 6,
+    "robot_pos": [
+      569.75,
+      -987.29
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 142,
+    "virtual_time": 2602.23,
+    "event_type": "channel_tune",
+    "channel": 7,
+    "robot_pos": [
+      569.75,
+      -987.29
+    ],
+    "details": {
+      "from_channel": 6,
+      "to_channel": 7,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 143,
+    "virtual_time": 2607.23,
+    "event_type": "direction_measurement",
+    "channel": 7,
+    "robot_pos": [
+      569.75,
+      -987.29
+    ],
+    "details": {
+      "feedback": "direction",
+      "bearing_deg": -133.7,
+      "meb_center": [
+        167.66,
+        -1393.64
+      ],
+      "meb_radius": 571.67
+    }
+  },
+  {
+    "step": 144,
+    "virtual_time": 2714.38,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      64.22,
+      -1164.62
+    ],
+    "details": {
+      "nominal_waypoint": [
+        64.62,
+        -1164.72
+      ],
+      "actual_pos": [
+        64.22,
+        -1164.62
+      ]
+    }
+  },
+  {
+    "step": 145,
+    "virtual_time": 2719.38,
+    "event_type": "direction_measurement",
+    "channel": 7,
+    "robot_pos": [
+      64.22,
+      -1164.62
+    ],
+    "details": {
+      "feedback": "direction",
+      "bearing_deg": -98.04,
+      "meb_center": [
+        5.07,
+        -1579.05
+      ],
+      "meb_radius": 35.44
+    }
+  },
+  {
+    "step": 146,
+    "virtual_time": 2800.92,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      258.4,
+      -1523.12
+    ],
+    "details": {
+      "nominal_waypoint": [
+        258.3,
+        -1523.34
+      ],
+      "actual_pos": [
+        258.4,
+        -1523.12
+      ]
+    }
+  },
+  {
+    "step": 147,
+    "virtual_time": 2805.92,
+    "event_type": "direction_measurement",
+    "channel": 7,
+    "robot_pos": [
+      258.4,
+      -1523.12
+    ],
+    "details": {
+      "feedback": "direction",
+      "bearing_deg": -172.07,
+      "meb_center": [
+        8.53,
+        -1558.06
+      ],
+      "meb_radius": 9.55
+    }
+  },
+  {
+    "step": 148,
+    "virtual_time": 2856.31,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      8.88,
+      -1558.01
+    ],
+    "details": {
+      "nominal_waypoint": [
+        8.53,
+        -1558.06
+      ],
+      "actual_pos": [
+        8.88,
+        -1558.01
+      ]
+    }
+  },
+  {
+    "step": 149,
+    "virtual_time": 2861.31,
+    "event_type": "clear_attempt",
+    "channel": 7,
+    "robot_pos": [
+      8.88,
+      -1558.01
+    ],
+    "details": {
+      "result": "success",
+      "true_distance": 2.31,
+      "duration": 5.0
+    }
+  },
+  {
+    "step": 150,
+    "virtual_time": 3021.43,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      569.98,
+      -986.95
+    ],
+    "details": {
+      "nominal_waypoint": [
+        570.0,
+        -987.27
+      ],
+      "actual_pos": [
+        569.98,
+        -986.95
+      ]
+    }
+  },
+  {
+    "step": 151,
+    "virtual_time": 3022.43,
+    "event_type": "channel_tune",
+    "channel": 8,
+    "robot_pos": [
+      569.98,
+      -986.95
+    ],
+    "details": {
+      "from_channel": 7,
+      "to_channel": 8,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 152,
+    "virtual_time": 3027.43,
+    "event_type": "direction_measurement",
+    "channel": 8,
+    "robot_pos": [
+      569.98,
+      -986.95
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 153,
+    "virtual_time": 3028.43,
+    "event_type": "channel_tune",
+    "channel": 11,
+    "robot_pos": [
+      569.98,
+      -986.95
+    ],
+    "details": {
+      "from_channel": 8,
+      "to_channel": 11,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 154,
+    "virtual_time": 3033.43,
+    "event_type": "direction_measurement",
+    "channel": 11,
+    "robot_pos": [
+      569.98,
+      -986.95
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 155,
+    "virtual_time": 3034.43,
+    "event_type": "channel_tune",
+    "channel": 12,
+    "robot_pos": [
+      569.98,
+      -986.95
+    ],
+    "details": {
+      "from_channel": 11,
+      "to_channel": 12,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 156,
+    "virtual_time": 3039.43,
+    "event_type": "direction_measurement",
+    "channel": 12,
+    "robot_pos": [
+      569.98,
+      -986.95
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 157,
+    "virtual_time": 3040.43,
+    "event_type": "channel_tune",
+    "channel": 14,
+    "robot_pos": [
+      569.98,
+      -986.95
+    ],
+    "details": {
+      "from_channel": 12,
+      "to_channel": 14,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 158,
+    "virtual_time": 3045.43,
+    "event_type": "direction_measurement",
+    "channel": 14,
+    "robot_pos": [
+      569.98,
+      -986.95
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 159,
+    "virtual_time": 3046.43,
+    "event_type": "channel_tune",
+    "channel": 17,
+    "robot_pos": [
+      569.98,
+      -986.95
+    ],
+    "details": {
+      "from_channel": 14,
+      "to_channel": 17,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 160,
+    "virtual_time": 3051.43,
+    "event_type": "direction_measurement",
+    "channel": 17,
+    "robot_pos": [
+      569.98,
+      -986.95
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 161,
+    "virtual_time": 3052.43,
+    "event_type": "channel_tune",
+    "channel": 18,
+    "robot_pos": [
+      569.98,
+      -986.95
+    ],
+    "details": {
+      "from_channel": 17,
+      "to_channel": 18,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 162,
+    "virtual_time": 3057.43,
+    "event_type": "direction_measurement",
+    "channel": 18,
+    "robot_pos": [
+      569.98,
+      -986.95
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 163,
+    "virtual_time": 3058.43,
+    "event_type": "channel_tune",
+    "channel": 19,
+    "robot_pos": [
+      569.98,
+      -986.95
+    ],
+    "details": {
+      "from_channel": 18,
+      "to_channel": 19,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 164,
+    "virtual_time": 3063.43,
+    "event_type": "direction_measurement",
+    "channel": 19,
+    "robot_pos": [
+      569.98,
+      -986.95
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 165,
+    "virtual_time": 3291.37,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      -0.06,
+      -0.04
+    ],
+    "details": {
+      "nominal_waypoint": [
+        0.0,
+        0.0
+      ],
+      "actual_pos": [
+        -0.06,
+        -0.04
+      ]
+    }
+  },
+  {
+    "step": 166,
+    "virtual_time": 3296.37,
+    "event_type": "direction_measurement",
+    "channel": 19,
+    "robot_pos": [
+      -0.06,
+      -0.04
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 167,
+    "virtual_time": 3297.37,
+    "event_type": "channel_tune",
+    "channel": 14,
+    "robot_pos": [
+      -0.06,
+      -0.04
+    ],
+    "details": {
+      "from_channel": 19,
+      "to_channel": 14,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 168,
+    "virtual_time": 3302.37,
+    "event_type": "direction_measurement",
+    "channel": 14,
+    "robot_pos": [
+      -0.06,
+      -0.04
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 169,
+    "virtual_time": 3303.37,
+    "event_type": "channel_tune",
+    "channel": 17,
+    "robot_pos": [
+      -0.06,
+      -0.04
+    ],
+    "details": {
+      "from_channel": 14,
+      "to_channel": 17,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 170,
+    "virtual_time": 3308.37,
+    "event_type": "direction_measurement",
+    "channel": 17,
+    "robot_pos": [
+      -0.06,
+      -0.04
+    ],
+    "details": {
+      "feedback": "direction",
+      "bearing_deg": 164.4,
+      "meb_center": [
+        -722.66,
+        201.7
+      ],
+      "meb_radius": 750.23
+    }
+  },
+  {
+    "step": 171,
+    "virtual_time": 3435.96,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      -633.6,
+      -75.04
+    ],
+    "details": {
+      "nominal_waypoint": [
+        -633.54,
+        -74.94
+      ],
+      "actual_pos": [
+        -633.6,
+        -75.04
+      ]
+    }
+  },
+  {
+    "step": 172,
+    "virtual_time": 3440.96,
+    "event_type": "direction_measurement",
+    "channel": 17,
+    "robot_pos": [
+      -633.6,
+      -75.04
+    ],
+    "details": {
+      "feedback": "direction",
+      "bearing_deg": 132.36,
+      "meb_center": [
+        -944.11,
+        264.3
+      ],
+      "meb_radius": 45.8
+    }
+  },
+  {
+    "step": 173,
+    "virtual_time": 3525.56,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      -688.09,
+      344.45
+    ],
+    "details": {
+      "nominal_waypoint": [
+        -688.01,
+        344.25
+      ],
+      "actual_pos": [
+        -688.09,
+        344.45
+      ]
+    }
+  },
+  {
+    "step": 174,
+    "virtual_time": 3530.56,
+    "event_type": "direction_measurement",
+    "channel": 17,
+    "robot_pos": [
+      -688.09,
+      344.45
+    ],
+    "details": {
+      "feedback": "direction",
+      "bearing_deg": -159.03,
+      "meb_center": [
+        -931.45,
+        251.38
+      ],
+      "meb_radius": 11.05
+    }
+  },
+  {
+    "step": 175,
+    "virtual_time": 3582.75,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      -931.91,
+      251.55
+    ],
+    "details": {
+      "nominal_waypoint": [
+        -931.45,
+        251.38
+      ],
+      "actual_pos": [
+        -931.91,
+        251.55
+      ]
+    }
+  },
+  {
+    "step": 176,
+    "virtual_time": 3587.75,
+    "event_type": "clear_attempt",
+    "channel": 17,
+    "robot_pos": [
+      -931.91,
+      251.55
+    ],
+    "details": {
+      "result": "success",
+      "true_distance": 4.81,
+      "duration": 5.0
+    }
+  },
+  {
+    "step": 177,
+    "virtual_time": 3653.0,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      -1139.65,
+      -0.03
+    ],
+    "details": {
+      "nominal_waypoint": [
+        -1140.0,
+        0.0
+      ],
+      "actual_pos": [
+        -1139.65,
+        -0.03
+      ]
+    }
+  },
+  {
+    "step": 178,
+    "virtual_time": 3654.0,
+    "event_type": "channel_tune",
+    "channel": 18,
+    "robot_pos": [
+      -1139.65,
+      -0.03
+    ],
+    "details": {
+      "from_channel": 17,
+      "to_channel": 18,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 179,
+    "virtual_time": 3659.0,
+    "event_type": "direction_measurement",
+    "channel": 18,
+    "robot_pos": [
+      -1139.65,
+      -0.03
+    ],
+    "details": {
+      "feedback": "direction",
+      "bearing_deg": -104.64,
+      "meb_center": [
+        -1278.59,
+        -572.4
+      ],
+      "meb_radius": 588.99
+    }
+  },
+  {
+    "step": 180,
+    "virtual_time": 3767.83,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      -1497.19,
+      -410.25
+    ],
+    "details": {
+      "nominal_waypoint": [
+        -1497.3,
+        -410.21
+      ],
+      "actual_pos": [
+        -1497.19,
+        -410.25
+      ]
+    }
+  },
+  {
+    "step": 181,
+    "virtual_time": 3772.83,
+    "event_type": "direction_measurement",
+    "channel": 18,
+    "robot_pos": [
+      -1497.19,
+      -410.25
+    ],
+    "details": {
+      "feedback": "direction",
+      "bearing_deg": -58.28,
+      "meb_center": [
+        -1321.11,
+        -695.87
+      ],
+      "meb_radius": 23.66
+    }
+  },
+  {
+    "step": 182,
+    "virtual_time": 3848.49,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      -1138.36,
+      -530.02
+    ],
+    "details": {
+      "nominal_waypoint": [
+        -1138.08,
+        -530.19
+      ],
+      "actual_pos": [
+        -1138.36,
+        -530.02
+      ]
+    }
+  },
+  {
+    "step": 183,
+    "virtual_time": 3853.49,
+    "event_type": "direction_measurement",
+    "channel": 18,
+    "robot_pos": [
+      -1138.36,
+      -530.02
+    ],
+    "details": {
+      "feedback": "direction",
+      "bearing_deg": -136.5,
+      "meb_center": [
+        -1317.88,
+        -700.53
+      ],
+      "meb_radius": 8.21
+    }
+  },
+  {
+    "step": 184,
+    "virtual_time": 3903.04,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      -1317.89,
+      -700.76
+    ],
+    "details": {
+      "nominal_waypoint": [
+        -1317.88,
+        -700.53
+      ],
+      "actual_pos": [
+        -1317.89,
+        -700.76
+      ]
+    }
+  },
+  {
+    "step": 185,
+    "virtual_time": 3908.04,
+    "event_type": "clear_attempt",
+    "channel": 18,
+    "robot_pos": [
+      -1317.89,
+      -700.76
+    ],
+    "details": {
+      "result": "success",
+      "true_distance": 3.46,
+      "duration": 5.0
+    }
+  },
+  {
+    "step": 186,
+    "virtual_time": 4052.56,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      -1140.24,
+      -0.34
+    ],
+    "details": {
+      "nominal_waypoint": [
+        -1140.0,
+        0.0
+      ],
+      "actual_pos": [
+        -1140.24,
+        -0.34
+      ]
+    }
+  },
+  {
+    "step": 187,
+    "virtual_time": 4053.56,
+    "event_type": "channel_tune",
+    "channel": 19,
+    "robot_pos": [
+      -1140.24,
+      -0.34
+    ],
+    "details": {
+      "from_channel": 18,
+      "to_channel": 19,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 188,
+    "virtual_time": 4058.56,
+    "event_type": "direction_measurement",
+    "channel": 19,
+    "robot_pos": [
+      -1140.24,
+      -0.34
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 189,
+    "virtual_time": 4059.56,
+    "event_type": "channel_tune",
+    "channel": 20,
+    "robot_pos": [
+      -1140.24,
+      -0.34
+    ],
+    "details": {
+      "from_channel": 19,
+      "to_channel": 20,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 190,
+    "virtual_time": 4064.56,
+    "event_type": "direction_measurement",
+    "channel": 20,
+    "robot_pos": [
+      -1140.24,
+      -0.34
+    ],
+    "details": {
+      "feedback": "direction",
+      "bearing_deg": 82.79,
+      "meb_center": [
+        -1046.09,
+        743.95
+      ],
+      "meb_radius": 750.23
+    }
+  },
+  {
+    "step": 191,
+    "virtual_time": 4192.18,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      -1306.59,
+      615.66
+    ],
+    "details": {
+      "nominal_waypoint": [
+        -1306.77,
+        615.42
+      ],
+      "actual_pos": [
+        -1306.59,
+        615.66
+      ]
+    }
+  },
+  {
+    "step": 192,
+    "virtual_time": 4197.18,
+    "event_type": "direction_measurement",
+    "channel": 20,
+    "robot_pos": [
+      -1306.59,
+      615.66
+    ],
+    "details": {
+      "feedback": "direction",
+      "bearing_deg": 57.4,
+      "meb_center": [
+        -1000.34,
+        1096.74
+      ],
+      "meb_radius": 66.75
+    }
+  },
+  {
+    "step": 193,
+    "virtual_time": 4289.94,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      -889.57,
+      818.7
+    ],
+    "details": {
+      "nominal_waypoint": [
+        -889.39,
+        818.47
+      ],
+      "actual_pos": [
+        -889.57,
+        818.7
+      ]
+    }
+  },
+  {
+    "step": 194,
+    "virtual_time": 4294.94,
+    "event_type": "direction_measurement",
+    "channel": 20,
+    "robot_pos": [
+      -889.57,
+      818.7
+    ],
+    "details": {
+      "feedback": "direction",
+      "bearing_deg": 106.54,
+      "meb_center": [
+        -980.55,
+        1126.12
+      ],
+      "meb_radius": 19.62
+    }
+  },
+  {
+    "step": 195,
+    "virtual_time": 4355.1,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      -793.39,
+      1103.71
+    ],
+    "details": {
+      "nominal_waypoint": [
+        -793.39,
+        1103.56
+      ],
+      "actual_pos": [
+        -793.39,
+        1103.71
+      ]
+    }
+  },
+  {
+    "step": 196,
+    "virtual_time": 4360.1,
+    "event_type": "direction_measurement",
+    "channel": 20,
+    "robot_pos": [
+      -793.39,
+      1103.71
+    ],
+    "details": {
+      "feedback": "direction",
+      "bearing_deg": 170.19,
+      "meb_center": [
+        -982.1,
+        1134.62
+      ],
+      "meb_radius": 5.8
+    }
+  },
+  {
+    "step": 197,
+    "virtual_time": 4398.34,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      -982.07,
+      1134.58
+    ],
+    "details": {
+      "nominal_waypoint": [
+        -982.1,
+        1134.62
+      ],
+      "actual_pos": [
+        -982.07,
+        1134.58
+      ]
+    }
+  },
+  {
+    "step": 198,
+    "virtual_time": 4403.34,
+    "event_type": "clear_attempt",
+    "channel": 20,
+    "robot_pos": [
+      -982.07,
+      1134.58
+    ],
+    "details": {
+      "result": "success",
+      "true_distance": 0.21,
+      "duration": 5.0
+    }
+  },
+  {
+    "step": 199,
+    "virtual_time": 4490.86,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      -570.0,
+      987.31
+    ],
+    "details": {
+      "nominal_waypoint": [
+        -570.0,
+        987.27
+      ],
+      "actual_pos": [
+        -570.0,
+        987.31
+      ]
+    }
+  },
+  {
+    "step": 200,
+    "virtual_time": 4491.86,
+    "event_type": "channel_tune",
+    "channel": 1,
+    "robot_pos": [
+      -570.0,
+      987.31
+    ],
+    "details": {
+      "from_channel": 20,
+      "to_channel": 1,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 201,
+    "virtual_time": 4496.86,
+    "event_type": "direction_measurement",
+    "channel": 1,
+    "robot_pos": [
+      -570.0,
+      987.31
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 202,
+    "virtual_time": 4497.86,
+    "event_type": "channel_tune",
+    "channel": 2,
+    "robot_pos": [
+      -570.0,
+      987.31
+    ],
+    "details": {
+      "from_channel": 1,
+      "to_channel": 2,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 203,
+    "virtual_time": 4502.86,
+    "event_type": "direction_measurement",
+    "channel": 2,
+    "robot_pos": [
+      -570.0,
+      987.31
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 204,
+    "virtual_time": 4503.86,
+    "event_type": "channel_tune",
+    "channel": 3,
+    "robot_pos": [
+      -570.0,
+      987.31
+    ],
+    "details": {
+      "from_channel": 2,
+      "to_channel": 3,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 205,
+    "virtual_time": 4508.86,
+    "event_type": "direction_measurement",
+    "channel": 3,
+    "robot_pos": [
+      -570.0,
+      987.31
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 206,
+    "virtual_time": 4509.86,
+    "event_type": "channel_tune",
+    "channel": 5,
+    "robot_pos": [
+      -570.0,
+      987.31
+    ],
+    "details": {
+      "from_channel": 3,
+      "to_channel": 5,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 207,
+    "virtual_time": 4514.86,
+    "event_type": "direction_measurement",
+    "channel": 5,
+    "robot_pos": [
+      -570.0,
+      987.31
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 208,
+    "virtual_time": 4515.86,
+    "event_type": "channel_tune",
+    "channel": 6,
+    "robot_pos": [
+      -570.0,
+      987.31
+    ],
+    "details": {
+      "from_channel": 5,
+      "to_channel": 6,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 209,
+    "virtual_time": 4520.86,
+    "event_type": "direction_measurement",
+    "channel": 6,
+    "robot_pos": [
+      -570.0,
+      987.31
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 210,
+    "virtual_time": 4521.86,
+    "event_type": "channel_tune",
+    "channel": 8,
+    "robot_pos": [
+      -570.0,
+      987.31
+    ],
+    "details": {
+      "from_channel": 6,
+      "to_channel": 8,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 211,
+    "virtual_time": 4526.86,
+    "event_type": "direction_measurement",
+    "channel": 8,
+    "robot_pos": [
+      -570.0,
+      987.31
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 212,
+    "virtual_time": 4527.86,
+    "event_type": "channel_tune",
+    "channel": 11,
+    "robot_pos": [
+      -570.0,
+      987.31
+    ],
+    "details": {
+      "from_channel": 8,
+      "to_channel": 11,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 213,
+    "virtual_time": 4532.86,
+    "event_type": "direction_measurement",
+    "channel": 11,
+    "robot_pos": [
+      -570.0,
+      987.31
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 214,
+    "virtual_time": 4533.86,
+    "event_type": "channel_tune",
+    "channel": 12,
+    "robot_pos": [
+      -570.0,
+      987.31
+    ],
+    "details": {
+      "from_channel": 11,
+      "to_channel": 12,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 215,
+    "virtual_time": 4538.86,
+    "event_type": "direction_measurement",
+    "channel": 12,
+    "robot_pos": [
+      -570.0,
+      987.31
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 216,
+    "virtual_time": 4539.86,
+    "event_type": "channel_tune",
+    "channel": 14,
+    "robot_pos": [
+      -570.0,
+      987.31
+    ],
+    "details": {
+      "from_channel": 12,
+      "to_channel": 14,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 217,
+    "virtual_time": 4544.86,
+    "event_type": "direction_measurement",
+    "channel": 14,
+    "robot_pos": [
+      -570.0,
+      987.31
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 218,
+    "virtual_time": 4545.86,
+    "event_type": "channel_tune",
+    "channel": 19,
+    "robot_pos": [
+      -570.0,
+      987.31
+    ],
+    "details": {
+      "from_channel": 14,
+      "to_channel": 19,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 219,
+    "virtual_time": 4550.86,
+    "event_type": "direction_measurement",
+    "channel": 19,
+    "robot_pos": [
+      -570.0,
+      987.31
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 220,
+    "virtual_time": 4778.79,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      569.63,
+      987.35
+    ],
+    "details": {
+      "nominal_waypoint": [
+        570.0,
+        987.27
+      ],
+      "actual_pos": [
+        569.63,
+        987.35
+      ]
+    }
+  },
+  {
+    "step": 221,
+    "virtual_time": 4783.79,
+    "event_type": "direction_measurement",
+    "channel": 19,
+    "robot_pos": [
+      569.63,
+      987.35
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 222,
+    "virtual_time": 4784.79,
+    "event_type": "channel_tune",
+    "channel": 1,
+    "robot_pos": [
+      569.63,
+      987.35
+    ],
+    "details": {
+      "from_channel": 19,
+      "to_channel": 1,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 223,
+    "virtual_time": 4789.79,
+    "event_type": "direction_measurement",
+    "channel": 1,
+    "robot_pos": [
+      569.63,
+      987.35
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 224,
+    "virtual_time": 4790.79,
+    "event_type": "channel_tune",
+    "channel": 2,
+    "robot_pos": [
+      569.63,
+      987.35
+    ],
+    "details": {
+      "from_channel": 1,
+      "to_channel": 2,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 225,
+    "virtual_time": 4795.79,
+    "event_type": "direction_measurement",
+    "channel": 2,
+    "robot_pos": [
+      569.63,
+      987.35
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 226,
+    "virtual_time": 4796.79,
+    "event_type": "channel_tune",
+    "channel": 3,
+    "robot_pos": [
+      569.63,
+      987.35
+    ],
+    "details": {
+      "from_channel": 2,
+      "to_channel": 3,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 227,
+    "virtual_time": 4801.79,
+    "event_type": "direction_measurement",
+    "channel": 3,
+    "robot_pos": [
+      569.63,
+      987.35
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 228,
+    "virtual_time": 4802.79,
+    "event_type": "channel_tune",
+    "channel": 5,
+    "robot_pos": [
+      569.63,
+      987.35
+    ],
+    "details": {
+      "from_channel": 3,
+      "to_channel": 5,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 229,
+    "virtual_time": 4807.79,
+    "event_type": "direction_measurement",
+    "channel": 5,
+    "robot_pos": [
+      569.63,
+      987.35
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 230,
+    "virtual_time": 4808.79,
+    "event_type": "channel_tune",
+    "channel": 6,
+    "robot_pos": [
+      569.63,
+      987.35
+    ],
+    "details": {
+      "from_channel": 5,
+      "to_channel": 6,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 231,
+    "virtual_time": 4813.79,
+    "event_type": "direction_measurement",
+    "channel": 6,
+    "robot_pos": [
+      569.63,
+      987.35
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 232,
+    "virtual_time": 4814.79,
+    "event_type": "channel_tune",
+    "channel": 8,
+    "robot_pos": [
+      569.63,
+      987.35
+    ],
+    "details": {
+      "from_channel": 6,
+      "to_channel": 8,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 233,
+    "virtual_time": 4819.79,
+    "event_type": "direction_measurement",
+    "channel": 8,
+    "robot_pos": [
+      569.63,
+      987.35
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 234,
+    "virtual_time": 4820.79,
+    "event_type": "channel_tune",
+    "channel": 11,
+    "robot_pos": [
+      569.63,
+      987.35
+    ],
+    "details": {
+      "from_channel": 8,
+      "to_channel": 11,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 235,
+    "virtual_time": 4825.79,
+    "event_type": "direction_measurement",
+    "channel": 11,
+    "robot_pos": [
+      569.63,
+      987.35
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 236,
+    "virtual_time": 4826.79,
+    "event_type": "channel_tune",
+    "channel": 12,
+    "robot_pos": [
+      569.63,
+      987.35
+    ],
+    "details": {
+      "from_channel": 11,
+      "to_channel": 12,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 237,
+    "virtual_time": 4831.79,
+    "event_type": "direction_measurement",
+    "channel": 12,
+    "robot_pos": [
+      569.63,
+      987.35
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 238,
+    "virtual_time": 4832.79,
+    "event_type": "channel_tune",
+    "channel": 14,
+    "robot_pos": [
+      569.63,
+      987.35
+    ],
+    "details": {
+      "from_channel": 12,
+      "to_channel": 14,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 239,
+    "virtual_time": 4837.79,
+    "event_type": "direction_measurement",
+    "channel": 14,
+    "robot_pos": [
+      569.63,
+      987.35
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 240,
+    "virtual_time": 5293.72,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      -569.87,
+      -987.11
+    ],
+    "details": {
+      "nominal_waypoint": [
+        -570.0,
+        -987.27
+      ],
+      "actual_pos": [
+        -569.87,
+        -987.11
+      ]
+    }
+  },
+  {
+    "step": 241,
+    "virtual_time": 5298.72,
+    "event_type": "direction_measurement",
+    "channel": 14,
+    "robot_pos": [
+      -569.87,
+      -987.11
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 242,
+    "virtual_time": 5299.72,
+    "event_type": "channel_tune",
+    "channel": 5,
+    "robot_pos": [
+      -569.87,
+      -987.11
+    ],
+    "details": {
+      "from_channel": 14,
+      "to_channel": 5,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 243,
+    "virtual_time": 5304.72,
+    "event_type": "direction_measurement",
+    "channel": 5,
+    "robot_pos": [
+      -569.87,
+      -987.11
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 244,
+    "virtual_time": 5305.72,
+    "event_type": "channel_tune",
+    "channel": 6,
+    "robot_pos": [
+      -569.87,
+      -987.11
+    ],
+    "details": {
+      "from_channel": 5,
+      "to_channel": 6,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 245,
+    "virtual_time": 5310.72,
+    "event_type": "direction_measurement",
+    "channel": 6,
+    "robot_pos": [
+      -569.87,
+      -987.11
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 246,
+    "virtual_time": 5311.72,
+    "event_type": "channel_tune",
+    "channel": 8,
+    "robot_pos": [
+      -569.87,
+      -987.11
+    ],
+    "details": {
+      "from_channel": 6,
+      "to_channel": 8,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 247,
+    "virtual_time": 5316.72,
+    "event_type": "direction_measurement",
+    "channel": 8,
+    "robot_pos": [
+      -569.87,
+      -987.11
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 248,
+    "virtual_time": 5317.72,
+    "event_type": "channel_tune",
+    "channel": 11,
+    "robot_pos": [
+      -569.87,
+      -987.11
+    ],
+    "details": {
+      "from_channel": 8,
+      "to_channel": 11,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 249,
+    "virtual_time": 5322.72,
+    "event_type": "direction_measurement",
+    "channel": 11,
+    "robot_pos": [
+      -569.87,
+      -987.11
+    ],
+    "details": {
+      "feedback": "direction",
+      "bearing_deg": -100.16,
+      "meb_center": [
+        -626.08,
+        -1335.83
+      ],
+      "meb_radius": 353.22
+    }
+  },
+  {
+    "step": 250,
+    "virtual_time": 5407.94,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      -870.5,
+      -1289.06
+    ],
+    "details": {
+      "nominal_waypoint": [
+        -870.34,
+        -1289.47
+      ],
+      "actual_pos": [
+        -870.5,
+        -1289.06
+      ]
+    }
+  },
+  {
+    "step": 251,
+    "virtual_time": 5412.94,
+    "event_type": "direction_measurement",
+    "channel": 11,
+    "robot_pos": [
+      -870.5,
+      -1289.06
+    ],
+    "details": {
+      "feedback": "direction",
+      "bearing_deg": -9.87,
+      "meb_center": [
+        -631.38,
+        -1330.75
+      ],
+      "meb_radius": 7.44
+    }
+  },
+  {
+    "step": 252,
+    "virtual_time": 5461.49,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      -631.35,
+      -1330.73
+    ],
+    "details": {
+      "nominal_waypoint": [
+        -631.38,
+        -1330.75
+      ],
+      "actual_pos": [
+        -631.35,
+        -1330.73
+      ]
+    }
+  },
+  {
+    "step": 253,
+    "virtual_time": 5466.49,
+    "event_type": "clear_attempt",
+    "channel": 11,
+    "robot_pos": [
+      -631.35,
+      -1330.73
+    ],
+    "details": {
+      "result": "success",
+      "true_distance": 1.11,
+      "duration": 5.0
+    }
+  },
+  {
+    "step": 254,
+    "virtual_time": 5536.27,
+    "event_type": "station_arrival",
+    "channel": null,
+    "robot_pos": [
+      -569.88,
+      -987.3
+    ],
+    "details": {
+      "nominal_waypoint": [
+        -570.0,
+        -987.27
+      ],
+      "actual_pos": [
+        -569.88,
+        -987.3
+      ]
+    }
+  },
+  {
+    "step": 255,
+    "virtual_time": 5537.27,
+    "event_type": "channel_tune",
+    "channel": 12,
+    "robot_pos": [
+      -569.88,
+      -987.3
+    ],
+    "details": {
+      "from_channel": 11,
+      "to_channel": 12,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 256,
+    "virtual_time": 5542.27,
+    "event_type": "direction_measurement",
+    "channel": 12,
+    "robot_pos": [
+      -569.88,
+      -987.3
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 257,
+    "virtual_time": 5543.27,
+    "event_type": "channel_tune",
+    "channel": 19,
+    "robot_pos": [
+      -569.88,
+      -987.3
+    ],
+    "details": {
+      "from_channel": 12,
+      "to_channel": 19,
+      "tune_time": 1.0
+    }
+  },
+  {
+    "step": 258,
+    "virtual_time": 5548.27,
+    "event_type": "direction_measurement",
+    "channel": 19,
+    "robot_pos": [
+      -569.88,
+      -987.3
+    ],
+    "details": {
+      "feedback": "no_signal",
+      "exclusion_radius": 1000.0
+    }
+  },
+  {
+    "step": 259,
+    "virtual_time": 5548.27,
+    "event_type": "certificate_issued",
+    "channel": null,
+    "robot_pos": [
+      -569.88,
+      -987.3
+    ],
+    "details": {
+      "certificate": "CERT_2_ALL_20_ACCOUNTED",
+      "cleared_count": 11,
+      "absent_count": 9
+    }
+  }
+]
