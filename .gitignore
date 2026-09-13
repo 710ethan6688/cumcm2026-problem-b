@@ -1,4 +1,4 @@
-﻿*.aux
+*.aux
 *.log
 *.out
 *.synctex.gz
@@ -12,3 +12,6 @@ main_with_*.pdf
 old_pdfs/
 page*.txt
 __pycache__/
+*.bak*
+scratch_*.tex
+sec6_7_*.tex

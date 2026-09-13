@@ -9,6 +9,21 @@
 
 \maketitle
 
+\begin{cumcmabstract}
+\vspace{-0.2em}
+针对突发性未知无线电干扰源的机动侦测与物理清除任务，本文结合计算几何理论、极值优化方法与在线序贯决策，构建了一套兼具理论保证与实时计算效率的机动搜索、定位与清除策略体系。
+
+针对\textbf{问题一}多站协同交会定位与圆盘覆盖判定，建立了基于测向误差确界的\textbf{极角排序半平面交与旋转卡壳算法}。将测向角域严格转化为半平面不等式组求解凸多边形极点序列；证明区域直径必在极点处取得，利用旋转卡壳法提取最远对踵点，求得基准算例下定位多边形几何直径为 $\mathbf{48.523\text{ m}}$。以最远点对连线为直径构造闭圆盘，由钝角三角形反例与点积判据严格证明了圆盘并非恒能覆盖定位区域；在 1000 组蒙特卡洛算例中，完全覆盖率为 $\mathbf{34.7\%}$。全顶点穷举对照表明算法一致率达 $\mathbf{100\%}$，8443 次单调性测试全部通过。
+
+针对\textbf{问题二}第二检测点优选，建立了以\textbf{最劣后验几何直径极小化}为目标的序贯优化模型。以初测示向角与物理感知确界划定外包络凸集并引入机动安全边界；通过角平分线正交基底消除对称关系，采用离散最坏场景采样全局寻优。基准算例下求得推荐第二检测点坐标为 $\mathbf{(839.64, 538.75)\text{ m}}$，机动距离为 $\mathbf{997.62\text{ m}}$，最劣后验直径由 $1500.23\text{ m}$ 降至 $\mathbf{111.90\text{ m}}$，不确定空间压缩比达 $\mathbf{92.5\%}$。扩展测试验证了拉大交会视角、抑制径向拉伸的几何机理。
+
+针对\textbf{问题三}全向干扰源全域自主搜索清除任务，提出基于\textbf{七点蜂窝拓扑骨架}与\textbf{在线协同贪心决策}的主算法。证明了间距 $1732.05\text{ m}$ 的正六边形蜂窝测站对半径 $1800\text{ m}$ 目标圆形区域的无盲区覆盖，以及交会凸多边形恒包含目标真实位置；确立了以最小外接圆半径 $\mathbf{19.5\text{ m}}$ 为阈值的精确定位清除判据，设计了有限网格兜底策略与全频道单向吸收退出准则，证明了系统在有限步内必以 100\% 清除率终止。规范模拟器三次测试清除率均达 $\mathbf{100\%}$，平均任务时间 $\mathbf{5127.3\text{ s}}$，单步决策低于 $\mathbf{0.001\text{ s}}$。
+
+针对\textbf{问题四}全向与半平面定向混合源非对称遮蔽挑战，提出\textbf{25点双环三角网骨架}与\textbf{双轨驱动清除策略}。证明了双环三角网测站（最大间距 $\mathbf{983.60\text{ m}}$，全域内切圆半径 $\mathbf{1806.28\text{ m}}$）对任意未知朝向目标提供视场覆盖保证；构建由全局基准搜索组成的理论保证主链，结合自适应尾部前瞻探测构成的轻量启发支路，抑制盲侧无效机动与网格长尾。100 组配对消融实验平均缩减任务时间 $\mathbf{109.8\text{ s}}$（难例降低 $\mathbf{646.5\text{ s}}$），无效尝试减少 $\mathbf{40.2\%}$；官方接口 17 轮演练保持 $\mathbf{100\%}$ 清除率，单源平均耗时 $\mathbf{530.41\text{ s}}$。
+
+\cumcmkeywords{交会定位；半平面交；旋转卡壳；蜂窝覆盖；双环三角网；在线协同调度}
+\end{cumcmabstract}
+
 \section{问题重述}
 
 \subsection{问题背景}
@@ -545,7 +560,7 @@
 \begin{equation}
     \operatorname{lex}\min \left\{ 1 - \eta_{\mathrm{clear}},\; T_{\mathrm{total}} \right\}
 \end{equation}
-其中 $\eta_{\mathrm{clear}} = K/N = 1$。为此，本文兼顾理论完备性与在线调度时效性：一方面建立涵盖全域几何覆盖、真值区域包含、安全清除与自主退出的理论保证，在数学上杜绝目标遗漏；另一方面采用极小极大几何收缩准则与动态优先级评估，实现多频道目标在线交错搜索、追踪与就地清除，大幅压缩行进与测向时间。
+其中 $\eta_{\mathrm{clear}} = K/N = 1$。为此，本文兼顾数学理论推导与在线调度时效：一方面建立涵盖全域几何覆盖、真值区域包含、安全清除与自主退出的理论保证，在数学上杜绝目标遗漏；另一方面采用极小极大几何收缩准则与动态优先级评估，实现多频道目标在线交错搜索、追踪与就地清除，大幅压缩行进与测向时间。
 
 \subsection{状态空间与观测更新模型}
 
@@ -682,7 +697,7 @@
 
 \subsubsection{在线自主控制主算法流程}
 
-综合状态演化、完备性检验与滚动调度，整体在线自主控制算法如算法 1 所示。考虑到实际运行中可能出现的无线通信延迟或指令丢包，系统向环境派发的每个动作请求附带唯一标识编号。若遇到未决状态（$\mathrm{pending}$），系统暂缓派发新任务，并重新发送当前动作指令进行状态同步，重试上限设为 $N_{\mathrm{retry}} = 3$ 次，以保证状态一致性并避免程序陷入等待死锁。
+综合状态演化、完全清除条件检验与滚动调度，整体在线自主控制算法如算法 1 所示。考虑到实际运行中可能出现的无线通信延迟或指令丢包，系统向环境派发的每个动作请求附带唯一标识编号。若遇到未决状态（$\mathrm{pending}$），系统暂缓派发新任务，并重新发送当前动作指令进行状态同步，重试上限设为 $N_{\mathrm{retry}} = 3$ 次，以保证状态一致性并避免程序陷入等待死锁。
 
 \begin{table}[htbp]
     \centering
@@ -788,5 +803,344 @@ $\mathcal{Q}_7$ 基准搜索任务至多 $7 \times 20 = 140$ 步且不重复；�
     \item \textbf{退出条件触发规律一致}：测试 1 与测试 2 触发准则 2 第二判定条件（确认全部空置频道后退出），测试 3 在清除第 16 个目标后触发第一判定条件即刻退出，与理论推导吻合；
     \item \textbf{时间合规与实时高效}：全任务虚拟时间最长为 $5884.9\text{ s}$（约 98 分钟），完全处于 100 分钟限制之内；单步决策计算耗时低于 $0.1\text{ ms}$，完全满足在线实时决策要求。
 \end{enumerate}
+
+
+\vspace{-0.4em}
+\section{问题四：全向—定向混合源的搜索与保证清除策略}
+\setlength{\abovedisplayskip}{3.5pt}
+\setlength{\belowdisplayskip}{3.5pt}
+
+\subsection{问题分析与总体思路}
+
+问题四在问题三的物理机制基础上，进一步引入半平面定向干扰源。各干扰源独占单一频道的客观物理规律保持不变，总数依然处于 $10\sim 16$ 个之间，但其中定向干扰源的具体数目及其各自的辐射主瓣朝向均完全未知。其余运动速度、天线调谐与测向耗时、测向角度确定性误差区间 $[-1^\circ, 1^\circ]$、以及 $20\text{ m}$ 光学精确定位与激光清除等约束条件与前述问题完全一致。
+
+由全向辐射拓展至非对称定向辐射后，系统面临三大核心机理挑战：
+\begin{enumerate}[leftmargin=2.5em, itemsep=0.06em, topsep=0.05em]
+    \item \textbf{背向静默与无信号的多重成因分析}：定向干扰源仅在其未知辐射朝向确定的 $180^\circ$ 闭半平面内发射电磁信号。当机器狗停靠检测未收到信号时，该观测反馈不再等价于空间距离超出物理覆盖上限，而可能由频道空置、目标已清除、空间距离超距、或测站落入目标辐射盲侧四类互斥物理状态析取而成。因此，不能依据单次检测无信号直接排除几何空间。
+    \item \textbf{单一测站覆盖准则失效与多视角包围要求}：在全向辐射条件下，任意测站与其周围 $1000\text{ m}$ 圆盘内的目标均可建立双向通信；而在定向辐射条件下，即使测站与目标距离小于 $1000\text{ m}$，若测站位于目标背向则依然无法探测。要对任意未知朝向的目标实现无遗漏发现，目标必须被周围多个邻近测站几何包围，从而使得无论目标朝向何方，至少存在一个测站落入其有效发射半平面内。
+    \item \textbf{有限探测成本与长尾清除耗时的权衡}：在获得初始示向后，若直接机动至候选测站可能再次陷入目标发射盲侧而失联；若完全依赖网格搜索，则会导致任务时间随网格单元遍历而急剧膨胀。因此，必须在理论保证主链之外，建立能够识别盲侧并自适应终止追加测向的轻量决策支路。
+\end{enumerate}
+
+为此，本文确立保证链与效率支路协同求解思路：一方面构建具备多视角局部凸包包围特性的基准搜索骨架，在数学上证明对任意未知朝向目标的完备发现能力；另一方面构建集距离安全选点、对称镜像重捕获与自适应尾部前瞻于一体的在线决策体系，在确保全部清除的前提下降低任务耗时。
+
+\subsection{混合辐射空间与信息状态模型建立}
+
+\subsubsection{目标物理状态与活动指示变量}
+
+设系统包含 20 个离散频道，频道集合记为 $\mathcal{C} = \{1, 2, \dots, 20\}$。对于实际存在物理目标的频道（$e_c = 1$），其物理状态由五元组表征：
+\begin{equation}
+    \mathbf{X}_c = (e_c, \mathbf{x}_c, R_{c}, \tau_c, \mathbf{u}_c), \quad c \in \mathcal{C}, \; e_c = 1
+\end{equation}
+其中 $e_c \in \{0, 1\}$ 表示频道 $c$ 是否客观存在物理目标（总目标数满足 $N = \sum_{c=1}^{20} e_c \in [10, 16]$；若 $e_c = 0$ 则后序分量无物理定义）；目标二维空间坐标记为 $\mathbf{x}_c = (x_{c,1}, x_{c,2})^\top \in \Omega$；$R_{c} \in [1000, 1500]\text{ m}$ 为该目标的实际最大电磁覆盖半径；$\tau_c \in \{\mathrm{O}, \mathrm{D}\}$ 表征天线辐射类型（$\mathrm{O}$ 为全向辐射，$\mathrm{D}$ 为半平面定向辐射）；$\mathbf{u}_c = (\cos\phi_c, \sin\phi_c)^\top$ 为定向目标的单位法向辐射方向向量（若 $\tau_c = \mathrm{O}$ 则该项不具方向约束）。
+
+为严谨刻画作业过程中目标被清除后的状态演化，引入清除指示变量 $h_c^k \in \{0, 1\}$（初始为 0，成功清除后置为 1），并定义离散时间步 $k$ 处的动态活动指示变量：
+\begin{equation}
+    a_c^k = e_c (1 - h_c^k) \in \{0, 1\}
+\end{equation}
+初始时刻 $a_c^0 = e_c$；当机器狗在目标附近 $20\text{ m}$ 范围内成功实施激光清除后，$h_c^k$ 置为 1，使 $a_c^k$ 单向跃迁为 0。
+
+\subsubsection{互斥完备的几何接收与观测模型}
+
+对于处于活动状态的目标（$a_c^k = 1$），定义其在二维空间检测位置 $\mathbf{q} = (q_1, q_2)^\top$ 处的几何可接收谓词 $\mathcal{V}_c(\mathbf{q})$：
+\begin{equation}
+    \mathcal{V}_c(\mathbf{q}) = \Big[ \|\mathbf{q} - \mathbf{x}_c\| \le R_{c} \Big] \land \Big[ \tau_c = \mathrm{O} \;\lor\; \mathbf{u}_c^\top (\mathbf{q} - \mathbf{x}_c) \ge 0 \Big]
+\end{equation}
+式中包含边界 $\mathbf{u}_c^\top (\mathbf{q} - \mathbf{x}_c) = 0$ 的平角扇区均具备正常发射接收能力；若目标与检测点重合（$\mathbf{q} = \mathbf{x}_c$），约定内积为 0，计入有效视场。
+
+为消除歧义，将无信号观测事件分解为四类两两不相交的物理事件之并：$E_{\mathrm{none}} = E_0 \cup E_1 \cup E_2 \cup E_3$（$E_i \cap E_j = \emptyset, \forall i \neq j$）。其中：$E_0 = \{e_c = 0\}$（频道未布设目标）；$E_1 = \{e_c = 1, h_c^k = 1\}$（目标此前已被清除）；$E_2 = \{a_c^k = 1, \|\mathbf{q} - \mathbf{x}_c\| > R_c\}$（目标存活但超出接收半径）；$E_3 = \{a_c^k = 1, \|\mathbf{q} - \mathbf{x}_c\| \le R_c, \tau_c = \mathrm{D}, \mathbf{u}_c^\top (\mathbf{q} - \mathbf{x}_c) < 0\}$（目标存活且在视距内但处于发射盲侧）。
+
+测站 $\mathbf{q}$ 处对频道 $c$ 在时步 $k$ 的实测反馈 $y_c^k(\mathbf{q})$ 严格划分为三个互斥完备分支：
+\begin{equation}
+    y_c^k(\mathbf{q}) = \begin{cases}
+        \texttt{no\_signal}, & E_0 \lor E_1 \lor E_2 \lor E_3, \\
+        \texttt{near}, & a_c^k = 1 \;\land\; \mathcal{V}_c(\mathbf{q}) \;\land\; \|\mathbf{q} - \mathbf{x}_c\| \le 5\text{ m}, \\
+        \texttt{direction}(\hat{\theta}_c), & a_c^k = 1 \;\land\; \mathcal{V}_c(\mathbf{q}) \;\land\; \|\mathbf{q} - \mathbf{x}_c\| > 5\text{ m}
+    \end{cases}
+\end{equation}
+当返回有效示向角 $\hat{\theta}_c$ 时，真实方位角 $\theta_c^\ast = \operatorname{atan2}(x_{c,2} - q_2, x_{c,1} - q_1)$ 与实测示向角满足圆周角距离有界约束：$d_{\mathbb{S}^1}(\theta_c^\ast, \hat{\theta}_c) = |\operatorname{wrap}_{[-180^\circ, 180^\circ)}(\theta_c^\ast - \hat{\theta}_c)| \le \varepsilon = 1^\circ$。算法在数值交会中采用 $\varepsilon_{\mathrm{tol}} = 1.005^\circ$ 的微小数值容差，避免浮点截断真实解集。作业全流程中各测量分支均实行统一的近距终止准则：若任意测站检测返回 $\texttt{near}$（确证目标处于 $5\text{ m} \le 20\text{ m}$ 清除覆盖区），机器狗即刻在当前停靠位置直接实施激光清除，并置该频道状态为已清除，闭合所有在线反馈状态分支。
+
+\subsubsection{频道追踪信息状态与物理时间模型}
+
+机器狗针对每个频道 $c \in \mathcal{C}$ 独立维护五元追踪信息状态 $\mathcal{I}_c^k = (s_c^k, P_c^k, \mathcal{M}_c^k, \mathcal{V}_c^{\mathrm{hist}}, \mathcal{B}_c^{\mathrm{hist}})$：包含离散状态标示 $s_c^k \in \{\text{未探明}, \text{已发现}, \text{定位中}, \text{网格兜底}, \text{已清除}, \text{确证空置}\}$；紧致凸多边形位置外包 $P_c^k \subset \mathbb{R}^2$（初始为目标圆外切正四十八边形）；25 点骨架完成集 $\mathcal{M}_c^k \subseteq \{1, \dots, 25\}$；以及历史正观测站集 $\mathcal{V}_c^{\mathrm{hist}}$ 与盲侧测站集 $\mathcal{B}_c^{\mathrm{hist}}$。
+
+赛题规定的虚拟物理总时间由位移、天线调谐、停靠检测、以及光学清除耗时累加确定：
+\begin{equation}
+    T_{\mathrm{virtual}} = \frac{L}{v} + 5 N_{\mathrm{meas}} + 1 N_{\mathrm{switch}} + 3 N_{\mathrm{clear}}^{\mathrm{fail}} + 5 N_{\mathrm{clear}}^{\mathrm{succ}}
+\end{equation}
+式中平台速度 $v = 5\text{ m/s}$；$N_{\mathrm{meas}}$ 为检测总次数（每次 $5\text{ s}$）；$N_{\mathrm{switch}}$ 为切频次数（每次 $1\text{ s}$）；清除成功耗时 $5\text{ s}$（$3\text{ s}$ 光学定位与 $2\text{ s}$ 激光发射），未命中消耗 $3\text{ s}$。客观运行时间受赛题规程约束：算法决策与通信总耗时 $T_{\mathrm{wall}} \le 20\text{ min}$。
+
+\subsection{完全清除的几何保证与判定准则}
+
+\subsubsection{多视角包围理论与 25 点双环拓扑剖分}
+
+针对半平面定向天线背向静默的物理特点，首先从几何学角度给出测站分布对未知朝向目标的可探测保证准则：
+
+\noindent\textbf{命题 5（局部测站闭凸包包围对半平面定向目标的探测保证）}\quad 给定固定物理接收半径 $r > 0$ 与有限测站集合 $\mathcal{S}$。对于任意空间目标位置 $\mathbf{x}$，定义其局部有效测站子集为 $\mathcal{S}_r(\mathbf{x}) = \{\mathbf{q} \in \mathcal{S} \mid \|\mathbf{q} - \mathbf{x}\| \le r\}$。在 $180^\circ$ 闭半平面辐射模型下，该目标在任意未知朝向单位向量 $\mathbf{u}$ 下均至少能被 $\mathcal{S}_r(\mathbf{x})$ 中一个测站有效探测，充要条件为目标位置属于该局部测站子集的闭凸包：$\mathbf{x} \in \operatorname{conv}( \mathcal{S}_r(\mathbf{x}) )$。
+
+\begin{cumcmproof}
+充分性：设 $\mathbf{x} \in \operatorname{conv}(\mathcal{S}_r(\mathbf{x}))$，存在权值 $\lambda_i \ge 0$ 且 $\sum_{i=1}^m \lambda_i = 1$，使 $\mathbf{x} = \sum_{i=1}^m \lambda_i \mathbf{q}_i$。与任意单位向量 $\mathbf{u}$ 作内积得 $\sum_{i=1}^m \lambda_i \mathbf{u}^\top (\mathbf{q}_i - \mathbf{x}) = \mathbf{u}^\top \mathbf{0} = 0$。由权值非负且和为 1，不可能所有内积项均严格小于零，必存在 $\mathbf{q}_k \in \mathcal{S}_r(\mathbf{x})$ 满足 $\mathbf{u}^\top (\mathbf{q}_k - \mathbf{x}) \ge 0$ 且 $\|\mathbf{q}_k - \mathbf{x}\| \le r$，保证可被探测。
+
+必要性：若 $\mathbf{x} \notin C = \operatorname{conv}(\mathcal{S}_r(\mathbf{x}))$，由于 $\mathcal{S}_r(\mathbf{x})$ 为有限点集，$C$ 为平面上的紧凸集。由严格分离超平面定理，存在非零向量 $\mathbf{v}$，使得对任意 $\mathbf{q} \in C$ 均有 $\mathbf{v}^\top (\mathbf{q} - \mathbf{x}) < 0$。选取目标辐射朝向 $\mathbf{u} = \mathbf{v} / \|\mathbf{v}\|$，则对所有局部测站 $\mathbf{q}_i \in \mathcal{S}_r(\mathbf{x})$ 恒有 $\mathbf{u}^\top (\mathbf{q}_i - \mathbf{x}) < 0$。此时距离不超过 $r$ 的所有测站均落入该目标的严格发射盲侧，故不存在可接收测站。
+\end{cumcmproof}
+
+\noindent\textbf{推论 1（最小接收半径下的稳健充分保证）}\quad 针对接收半径确界 $R_c \in [1000, 1500]\text{ m}$ 工况，若在保底半径 $R_{\min} = 1000\text{ m}$ 下满足 $\mathbf{x} \in \operatorname{conv}(\mathcal{S}_{1000}(\mathbf{x}))$，则是目标在全工况下全方向可被发现的统一充分条件。
+
+基于命题 5 与推论 1，在目标区域 $\Omega$ 内构造由 25 个特征测站组成的双环三角剖分拓扑构型：中心测站位于原点 $(0, 0)$；内环 12 点分布于半径 $R_1 = 950\text{ m}$ 圆周，极角为 $i \times 30^\circ$；外环 12 点分布于半径 $R_2 = 1870\text{ m}$ 圆周，极角交错旋转 $15^\circ$（$j \times 30^\circ + 15^\circ$）。中心点与内环构成 12 个三角形，内外环交错构成 24 个三角形，共 36 个三角形单元。几何构型如图 \ref{fig:q4_25point_coverage} 所示，参数验证汇总于表 \ref{tab:q4_topology_params}。
+
+\begin{figure}[htbp]
+    \centering
+    \vspace{-0.3em}
+    \includegraphics[width=0.22\linewidth]{images/fig_q4_25point_coverage.png}
+    \vspace{-0.4em}
+    \caption{25 点双环拓扑剖分与多视角凸包方向完备覆盖构型}
+    \label{fig:q4_25point_coverage}
+    \vspace{-0.4em}
+\end{figure}
+
+该剖分涵盖四类连接边长：中心至内环边长 $d_1 = 950\text{ m}$（12 条）；内环相邻边长 $d_2 = 2 R_1 \sin(15^\circ) \approx 491.76\text{ m}$（12 条）；外环相邻边长 $d_3 = 2 R_2 \sin(15^\circ) \approx 968.02\text{ m}$（12 条）；内外环跨接边长 $d_4 = \sqrt{R_1^2 + R_2^2 - 2 R_1 R_2 \cos(15^\circ)} \approx 983.60\text{ m}$（24 条）。因此 36 个三角形内部的所有边长均不超过 $d_{\max} = \max\{d_1, d_2, d_3, d_4\} = 983.60\text{ m} < 1000\text{ m}$。对于区域 $\Omega$ 内的任意点 $\mathbf{x}$，必落入某一三角形内，其到该三角形 3 个顶点的距离均不超过该单元最长边（$\le 983.60\text{ m}$），故 3 个顶点均属于 $\mathcal{S}_{1000}(\mathbf{x})$ 且将该点包含在闭凸包内，满足推论 1 覆盖条件。外环正十二边形内切圆半径为 $R_2 \cos(15^\circ) \approx 1806.28\text{ m} > 1800\text{ m}$，实现对搜索圆域的完全包络。
+
+\begin{table}[htbp]
+    \centering
+    \footnotesize
+    \vspace{-0.4em}
+    \vspace{-0.3em}
+    \caption{25 点双环拓扑几何参数与方向完备验证表}
+    \label{tab:q4_topology_params}
+    \renewcommand{\arraystretch}{0.65}
+    \setlength{\tabcolsep}{2.5pt}
+    \begin{tabularx}{\linewidth}{l c c X}
+        \toprule[1.5pt]
+        \textbf{几何拓扑参数项} & \textbf{解析表达式 / 理论值} & \textbf{数值计算结果} & \textbf{全域探测保证判定结论} \\
+        \midrule
+        外环正十二边形内切圆半径 & $R_2 \cos(15^\circ) = 1870 \times 0.9659$ & $1806.28\text{ m}$ & 大于目标圆半径 $1800\text{ m}$，实现全域几何包络 \\
+        剖分三角形最大边长 $d_{\max}$ & $\sqrt{R_1^2 + R_2^2 - 2 R_1 R_2 \cos(15^\circ)}$ & $983.60\text{ m}$ & 小于保底半径 $1000\text{ m}$，具备 $16.40\text{ m}$ 探测裕度 \\
+        三角形单元几何顶点测距 & 任意内点至三顶点距离均 $\le d_{\max}$ & $\le 983.60\text{ m}$ & 每个单元内部点均能被其所在三角形 3 顶点有效覆盖 \\
+        未知朝向多视角凸包判定 & 目标恒处于所在三角形三顶点闭凸包内 & 满足命题 5 条件 & 任意未知朝向至少落入一个顶点的有效视场内 \\
+        \bottomrule[1.5pt]
+    \end{tabularx}
+\end{table}
+
+\subsubsection{目标真值包含与距离安全选点准则}
+
+当在测站 $\mathbf{q}_1$ 处首次捕获频道 $c$ 的有效示向角 $\hat{\theta}_1$ 时，构建包含真实目标坐标的初始紧致凸多边形位置外包：$P_c^1 = P_{\Omega}^{\mathrm{out}} \cap \mathcal{B}^{\mathrm{out}}(\mathbf{q}_1, 1500) \cap \mathcal{W}(\mathbf{q}_1, \hat{\theta}_1, \varepsilon_{\mathrm{tol}})$。其中 $P_{\Omega}^{\mathrm{out}}$ 为半径 $1800\text{ m}$ 目标圆的外切正四十八边形；$\mathcal{B}^{\mathrm{out}}(\mathbf{q}_1, 1500)$ 为测站最大覆盖圆的外切多边形；$\mathcal{W}(\mathbf{q}_1, \hat{\theta}_1, \varepsilon_{\mathrm{tol}})$ 为包含实测示向角在内、半张角为 $1.005^\circ$ 的角楔区域。
+
+\noindent\textbf{引理 1（确定性测向误差下交会凸多边形维持目标真值包含）}\quad 设初始几何外包满足真实位置 $\mathbf{x}_c \in P_c^1$。在后续各测站 $\mathbf{q}_k$ 处获取的有效测向角域 $\mathcal{W}_k$ 严格覆盖真实物理方位角，且仅使用有效正示向通过半平面求交更新，则生成的凸多边形序列恒满足真值包含关系：$P_c^{k+1} = P_c^k \cap \mathcal{W}_k \implies \mathbf{x}_c \in P_c^{k+1}, \forall k \ge 1$。
+
+第二检测点选取遵循凸包顶点距离安全准则：对于候选测站 $\mathbf{q}$ 与紧致凸多边形 $P_c^k$，欧氏距离函数 $\|\mathbf{q} - \mathbf{x}\|$ 是关于 $\mathbf{x}$ 的凸函数，其在有界闭凸集上的最大值必在其极值点（顶点集 $\operatorname{Vert}(P_c^k)$）处取得：
+\begin{equation}
+    d_{\max}(\mathbf{q}, P_c^k) = \max_{\mathbf{x} \in P_c^k} \|\mathbf{q} - \mathbf{x}\| = \max_{\mathbf{v} \in \operatorname{Vert}(P_c^k)} \|\mathbf{q} - \mathbf{v}\|
+\end{equation}
+算法筛选满足 $d_{\max}(\mathbf{q}, P_c^k) \le 995\text{ m}$ 的候选测站，从而在数学上确证对可行域内任意可能位置 $\mathbf{x}_c$ 均有 $\|\mathbf{q} - \mathbf{x}_c\| \le 995\text{ m} < 1000\text{ m} \le R_c$，严格排除超出接收半径丢信号的伪盲区。
+
+\subsubsection{双阈值清除与有限网格兜底判据}
+
+\noindent\textbf{判据 2（双阈值直接清除与 26 米正方形网格遍历兜底）}\quad 针对频道 $c$ 凸多边形可行域 $P_c^k$，采用 Welzl 算法计算其最小外接圆半径 $\rho(P_c^k)$ 及圆心 $\mathbf{c}_c$：
+\begin{enumerate}[leftmargin=2.5em, itemsep=0.04em, topsep=0.04em]
+    \item \textbf{常规定位提前清除}：若 $\rho(P_c^k) \le 19.5\text{ m}$，机动至 $\mathbf{c}_c$ 实施激光清除。其中 $20.0\text{ m}$ 为理想执行条件下的理论充分清除半径，采用 $19.5\text{ m}$ 预留 $0.5\text{ m}$ 的数值计算与机动执行工程裕量；
+    \item \textbf{尾部探测后清除}：在完成最后一次尾部追加探测后，若后验外接圆半径满足理想执行充分清除界 $\rho(P_c^{k+1}) \le 20.0\text{ m}$，直接机动至新圆心实施清除；
+    \item \textbf{有限网格遍历兜底}：若未达上述条件，对 $P_c^k$ 的外接水平矩形作边长 $\Delta g = 26\text{ m}$ 正方形网格划分，完整保留所有与 $P_c^k$ 存在几何相交的网格单元，沿蛇形次序依次遍历各相交单元中心实施清除。
+\end{enumerate}
+
+\noindent\textbf{引理 2（有限网格遍历清除保证）}\quad 边长 $\Delta g = 26\text{ m}$ 正方形网格中心至单元内任意点的最大距离为半对角线长 $r_{\mathrm{cell}} = \frac{\sqrt{2}}{2} \times 26 = 18.385\text{ m} < 20.0\text{ m}$。只要真实目标包含于相交单元并集内，有限步遍历各单元中心点必能成功实现清除。
+
+\subsubsection{混合源全场无残留自主退出准则}
+
+\noindent\textbf{准则 3（混合干扰源全域完全清除充分退出证书）}\quad 系统仅在以下任一充分证书成立时，签发任务完成证书并终止主循环：
+\begin{enumerate}[leftmargin=2.5em, itemsep=0.04em, topsep=0.04em]
+    \item \textbf{目标全数证书}：累计成功清除的独立目标频道数达到理论上限 $|\mathcal{C}^{\mathrm{clear}}| = 16$；
+    \item \textbf{频道完备结案证书}：所有已捕获目标均已成功清除，且其余频道在 25 点基准测站中均完成实测且全部明确返回 $\texttt{no\_signal}$，即满足 $\forall c \in \mathcal{C}, c \in \mathcal{C}^{\mathrm{clear}} \lor [ \mathcal{M}_c = \{1, \dots, 25\} \land \forall i \in \{1, \dots, 25\}, y_{c,i} = \texttt{no\_signal} ]$。通信超时或响应未知不得计入 $\texttt{no\_signal}$。
+\end{enumerate}
+
+\subsection{双轨协同在线搜索与清除算法设计}
+
+\subsubsection{对称镜像重捕获与自适应尾部前瞻探测}
+
+对已确认存在且尚未清除的活动频道，在位置外包包含真值、候选测站对整个外包满足顶点距离安全（$d_{\max} \le 995\text{ m}$）、且明确返回无信号的条件下，可排除超距原因，该次未接收反馈对应于目标辐射盲侧。系统启动两项效率优化机制：
+\begin{enumerate}[leftmargin=2.5em, itemsep=0.05em, topsep=0.04em]
+    \item \textbf{条件对称镜像重捕获}：若主动测向预算尚未耗尽，算法沿首次示向中轴线将失联测站对称反射至对侧几何位置 $\mathbf{q}_{\mathrm{mirror}} = \mathbf{q}_1 + 2 [ (\mathbf{q}_2 - \mathbf{q}_1)^\top \mathbf{u}(\hat{\theta}_1) ] \mathbf{u}(\hat{\theta}_1) - (\mathbf{q}_2 - \mathbf{q}_1)$，在重新校验顶点距离安全后前往探测，提高落入有效发射半平面的概率。
+    \item \textbf{自适应尾部前瞻探测}：在可行域内离散生成 96 个位置与 36 个法向朝向样本构成的集合，构建相容于历史观测的样本子集 $\mathcal{H}_k$。若 $\mathcal{H}_k = \emptyset$ 则不触发前瞻；否则定义候选测站的等权几何相容状态代理量：
+    \begin{equation}
+        p_v(\mathbf{q}) = \frac{\#\{(\mathbf{x}_i, \mathbf{u}_j) \in \mathcal{H}_k \mid \mathbf{q} \text{ 对该状态满足可接收条件}\}}{\#\mathcal{H}_k} \in [0, 1]
+    \end{equation}
+\end{enumerate}
+
+\noindent\textbf{判据 3（基于几何相容代理与单步前瞻成本权衡的尾部探测）}\quad 设当前相交网格遍历耗时预估为 $T_{\mathrm{grid}}$（包含网格进入位移、试探与最终清除时间），候选探测耗时为 $T_{\mathrm{probe}} = d/v + 5\text{ s} + \mathbb{I}_{\mathrm{switch}} \times 1\text{ s}$（$\mathbb{I}_{\mathrm{switch}}$ 为切频指示），非空相交示向集为 $\Theta_k^+(\mathbf{q}) = \{\theta \in \Theta_{\mathrm{sample}} \mid P_c^k \cap \mathcal{W}(\mathbf{q}, \theta, \varepsilon_{\mathrm{tol}}) \neq \emptyset\}$，样本化后验最劣直径代理为 $D_{\mathrm{post}} = \max_{\theta \in \Theta_k^+(\mathbf{q})} \operatorname{diam}(P_c^k \cap \mathcal{W}(\mathbf{q}, \theta, \varepsilon_{\mathrm{tol}}))$（若 $\Theta_k^+(\mathbf{q}) = \emptyset$ 则不触发前瞻），当前直径为 $D$。当几何相容代理量满足固定门槛 $p_v \ge 0.30$ 且代理收益高于探测代价时，追加一次终端探测：
+\begin{equation}
+    T_{\mathrm{probe}} < T_{\mathrm{grid}} \cdot p_v \left[ 1 - \left( \frac{D_{\mathrm{post}}}{D} \right)^2 \right], \quad p_v \ge 0.30
+\end{equation}
+若探测返回 $\texttt{near}$ 则在当前测站实施激光清除；若探测获取有效示向，则完成位置外包最后一次裁剪，并在其最小外接圆半径满足 $\rho(P_c^{k+1}) \le 20.0\text{ m}$ 时机动至新圆心直接清除，否则转入 26 米相交网格遍历清除；若再次返回 $\texttt{no\_signal}$ 或判据不成立，则终止追加测向，立即转入相交网格遍历清除。
+
+\subsubsection{双轨协同系统架构与算法主流程}
+
+系统协同架构如图 \ref{fig:q4_system_architecture} 所示，算法流程汇总于表 \ref{tab:q4_algorithm}。
+
+\begin{figure}[htbp]
+    \centering
+    \vspace{-0.3em}
+    \includegraphics[width=0.26\linewidth]{images/fig_q4_system_architecture.png}
+    \vspace{-0.4em}
+    \caption{全向—定向混合干扰源自主协同搜索与保证清除系统架构图}
+    \label{fig:q4_system_architecture}
+    \vspace{-0.4em}
+\end{figure}
+
+\begin{table}[htbp]
+    \centering
+    \footnotesize
+    \vspace{-0.4em}
+    \vspace{-0.3em}
+    \caption{混合干扰源多视角搜索与保证清除算法流程表}
+    \label{tab:q4_algorithm}
+    \renewcommand{\arraystretch}{0.65}
+    \begin{tabularx}{\linewidth}{l X}
+        \toprule[1.5pt]
+        \multicolumn{2}{l}{\textbf{算法 2：} 基于多视角拓扑包围与自适应前瞻的混合干扰源清除算法} \\
+        \midrule
+        \textbf{输入：} & 目标区域 $\Omega$，25 点双环拓扑 $\mathcal{S}_{25}$，物理动作时间模型，主动测向预算 $N_{\mathrm{loc\_max}}=2$ \\
+        \textbf{输出：} & 机器狗动作序列，目标清除记录表，任务总虚拟时间 $T_{\mathrm{virtual}}$ \\
+        步骤 1 & 初始化位姿 $\mathbf{p}_0 = (0,0)$，频道信息状态 $\mathcal{I}_c^0$，规划 25 点基准搜索测站巡航次序； \\
+        步骤 2 & 检查准则 3 退出证书：若满足则结束任务并输出报告，否则进入调度循环； \\
+        步骤 3 & 优先检查是否存在满足直接清除条件频道（$\rho \le 19.5\text{ m}$）：若存在则机动至圆心实施清除； \\
+        步骤 4 & 检查定位中频道（主动测向 $< 2$ 次）：选取顶点距离安全（$d_{\max} \le 995\text{ m}$）测站机动测向；若反馈 $\texttt{near}$ 则在当前位置直接清除；若获示向则求交裁剪；若无信号则评估对称镜像点； \\
+        步骤 5 & 检查未收敛频道：评估判据 3 尾部探测条件，满足则执行追加测向（反馈 $\texttt{near}$ 直接清除，获示向且 $\rho \le 20.0\text{ m}$ 直接清除，否则网格遍历）；不满足则直接对该频道相交网格遍历清除； \\
+        步骤 6 & 若无待处理定位频道，沿基准拓扑机动至下一骨架测站，扫描未结案频道； \\
+        步骤 7 & 接收物理动作反馈，单向更新频道状态、凸多边形外包及 25 点检测记录，返回步骤 2； \\
+        \bottomrule[1.5pt]
+    \end{tabularx}
+\end{table}
+
+\subsubsection{任务完全清除与有限步终止证明}
+
+\noindent\textbf{命题 6（理想同步执行条件下混合干扰源搜索清除有限步终止）}\quad 在目标空间静止、单源单频、总目标数不超过 16、最小接收半径不小于 1000 米、确定性测向误差确界为 1 度、通信响应确定、调度公平无饥饿、及无外部提前终止的理想同步条件下，算法 2 必在有限离散动作步数内完成全部实际存在目标的清除并安全退出。
+
+\begin{cumcmproof}
+在搜索清除任务全过程中，系统可生成的离散决策动作总量存在有限确定上界：全向—定向 25 点基准搜索任务至多 $20 \times 25 = 500$ 次；实际存在目标至多 16 个，每个目标常规主动测向至多 2 次、尾部探测至多 1 次；根据引理 1，凸多边形始终维持真值包含；对于进入网格阶段的目标，由于其位置外包紧致有界，其 26 米相交网格单元数必然有限，且每个单元至多访问一次。在无饥饿公平调度策略下，系统执行动作持续单调消耗未完成任务集合，绝不陷入死循环，算法必在有限离散动作步数内完成全部实际存在目标的清除并触发准则 3 退出证书。
+\end{cumcmproof}
+
+\subsection{算例求解与模拟测试结果}
+
+\subsubsection{100 组配对场景消融实验与效率分析}
+
+为检验自适应尾部前瞻探测对缩减任务耗时的具体作用，在 100 组随机生成的同分布场景（随机种子 0 至 99）下开展同场景配对消融实验，对比未启用尾部探测的方案（V2）与本文完整方案（V3）。统计数据汇总于表 \ref{tab:q4_ablation_results}。
+
+\begin{table}[htbp]
+    \centering
+    \footnotesize
+    \vspace{-0.4em}
+    \vspace{-0.3em}
+    \caption{V2 与 V3 算法在 100 组配对场景下的消融对比表}
+    \label{tab:q4_ablation_results}
+    \renewcommand{\arraystretch}{0.65}
+    \setlength{\tabcolsep}{2.5pt}
+    \begin{tabularx}{\linewidth}{l c c X}
+        \toprule[1.5pt]
+        \textbf{性能评估指标项} & \textbf{未启用尾部前瞻方案 (V2)} & \textbf{本文完整方案 (V3)} & \textbf{配对测试增益分析} \\
+        \midrule
+        全场景目标清除率 & 100\%（100 / 100 场） & 100\%（100 / 100 场） & 保持 100\% 完备清除底线 \\
+        全任务虚拟总时间均值 & $7323.1\text{ s}$ & $7213.3\text{ s}$ & 配对平均缩减 $109.8\text{ s}$ \\
+        虚拟总时间 95\% 置信区间 & $[7148.2, 7498.0]\text{ s}$ & $[7042.8, 7383.8]\text{ s}$ & 均值差配对区间 $[-158.7, -60.9]\text{ s}$ \\
+        样本最劣场景任务总时间 & $10094.6\text{ s}$（种子 43） & $9448.1\text{ s}$（种子 43） & 样本最劣工况耗时减少 $646.5\text{ s}$ \\
+        单场平均无效清除尝试次数 & $46.78\text{ 次}$ & $27.99\text{ 次}$ & 无效网格遍历减少 40.2\% \\
+        逐案例耗时胜平负统计分布 & 基准方案低 6 场 & 本文方案低 35 场 & 59 场耗时相同 \\
+        \bottomrule[1.5pt]
+    \end{tabularx}
+\end{table}
+
+实验数据表明，在 100 组配对样本中，两种方案目标清除率均达到 100\%；V3 相对 V2 耗时降低、相同和升高的场数分别为 35、59 和 6；全场平均无效清除尝试由 46.78 次降至 27.99 次，样本集中最长耗时减少 $646.5\text{ s}$。
+
+\subsubsection{17 轮真实接口规范演练测试表现与正式测试说明}
+
+在接入比赛官方评测环境的连续批次中，算法进行了 17 轮全流程实测演练，检验在不同目标数目（涵盖 $10\sim 16$ 个各档位）下的运行指标，实测数据汇总于表 \ref{tab:q4_rehearsal_summary}。
+
+\begin{table}[htbp]
+    \centering
+    \footnotesize
+    \vspace{-0.4em}
+    \vspace{-0.3em}
+    \caption{17 轮真实接口规范演练测试结果汇总表}
+    \label{tab:q4_rehearsal_summary}
+    \renewcommand{\arraystretch}{0.65}
+    \setlength{\tabcolsep}{2.5pt}
+    \begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}l c c c c c}
+        \toprule[1.5pt]
+        \textbf{演练测试轮次区间} & \textbf{测试场次} & \textbf{累计清除源数} & \textbf{全场清除率} & \textbf{加权平均单源耗时} & \textbf{单源耗时中位数} \\
+        \midrule
+        少目标工况（$10\sim 11$ 源） & 4 场 & 42 个 & 100\% & $612.8\text{ s/源}$ & $598.2\text{ s/源}$ \\
+        中目标工况（$12\sim 14$ 源） & 8 场 & 104 个 & 100\% & $523.4\text{ s/源}$ & $496.5\text{ s/源}$ \\
+        多目标工况（$15\sim 16$ 源） & 5 场 & 75 个 & 100\% & $493.6\text{ s/源}$ & $481.0\text{ s/源}$ \\
+        \midrule
+        \textbf{17 轮全演练总体汇总} & \textbf{17 场} & \textbf{221 个} & \textbf{100\%} & \textbf{530.41 s/源} & \textbf{502.43 s/源} \\
+        \bottomrule[1.5pt]
+    \end{tabular*}
+\end{table}
+
+实测表明，在累计 221 个未知全向与定向混合目标中，系统清除率达到 100\%。按照赛题规范，正式提交前需执行三次正式测试并按表 \ref{tab:q4_official_tests} 结构填报。
+
+\begin{table}[htbp]
+    \centering
+    \footnotesize
+    \vspace{-0.4em}
+    \vspace{-0.3em}
+    \caption{赛题规范三次测试结果记录表（格式预留）}
+    \label{tab:q4_official_tests}
+    \renewcommand{\arraystretch}{0.65}
+    \setlength{\tabcolsep}{2.5pt}
+    \begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}l c c c c}
+        \toprule[1.5pt]
+        \textbf{正式测试案例编码} & \textbf{清除目标数量} & \textbf{平均定位清除时间 / s} & \textbf{虚拟任务总时间 / s} & \textbf{程序算法运行时间 / s} \\
+        \midrule
+        正式测试案例 1 & 待填 & 待填 & 待填 & 待填 \\
+        正式测试案例 2 & 待填 & 待填 & 待填 & 待填 \\
+        正式测试案例 3 & 待填 & 待填 & 待填 & 待填 \\
+        \bottomrule[1.5pt]
+    \end{tabular*}
+\end{table}
+
+\vspace{-0.5em}
+\section{模型的评价、改进与推广}
+
+\subsection{模型的优点与特色}
+\begin{enumerate}[leftmargin=2.2em, itemsep=0.01em, topsep=0.01em]
+    \item \textbf{几何覆盖保障与数理推导}：不依赖目标先验分布假设，基于平面几何凸包包含定理与极值分离性质，构建完备覆盖与真值包含关系；
+    \item \textbf{保证主链与效率支路协同分工}：以基准多视角覆盖和有限网格遍历承担完备清除保证，以距离安全探测和尾部前瞻优化动作次序；
+    \item \textbf{计算效率与在线实测表现}：算法单步决策计算处于毫秒级，全任务在线决策累计耗时低于 3 秒，100 组配对样本与 17 轮演练记录了实际运行指标。
+\end{enumerate}
+
+\subsection{模型的局限与改进方向}
+\begin{enumerate}[leftmargin=2.2em, itemsep=0.01em, topsep=0.01em]
+    \item \textbf{极端多径退化对多边形求交的数值扰动}：当极端测量噪声导致测向角域畸变时，半平面求交可能出现微小退化多边形，需进一步增强近退化边界的自适应拓扑容差修复机制。
+    \item \textbf{通信异常恢复状态机仍需增强}：当前模型假设通信偶发中断单次重试成功，若出现长时间信道离线且服务端事务未决，需进一步补充本地持久化恢复协议。
+\end{enumerate}
+
+\subsection{模型的推广与应用场景}
+本文建立的凸包覆盖证书与误差集交会在线决策体系，可推广应用于：
+\begin{enumerate}[leftmargin=2.2em, itemsep=0.01em, topsep=0.01em]
+    \item 复杂电磁环境下的无人地面平台自主搜寻与干扰源定位；
+    \item 具有半平面辐射特性与角度测向约束的地面无线电信标协同搜索；
+    \item 有限视场角约束下的多移动机器人协同搜索与环境信标定位。
+\end{enumerate}
+
+\vspace{-0.4em}
+
+
+\begin{thebibliography}{99}
+\setlength{\itemsep}{-1.5pt}
+\setlength{\itemsep}{-1.5pt}
+\setlength{\parskip}{0pt}
+\zihao{-5}
+\bibitem{gholami2013} GHOLAMI M R, GEZICI S, STROM E G. Worst-case positioning error and sensor placement for range-difference based localization[J]. IEEE Transactions on Signal Processing, 2013, 61(14): 3532-3546.
+\bibitem{tokekar2015} TOKEKAR P, ISLER V. Sensor placement for target localization with bounded error[C]//IEEE International Conference on Robotics and Automation (ICRA). Seattle: IEEE, 2015: 3514-3519.
+\bibitem{vanderhook2014} VANDER HOOK P, TOKEKAR P, ISLER V. Cautious greedy strategy for active localization with bounded-error sensors[C]//IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS). Chicago: IEEE, 2014: 4320-4325.
+\bibitem{welzl1991} WELZL E. Smallest enclosing disks (balls and ellipsoids)[M]//New Results and New Trends in Computer Science. Berlin: Springer, 1991: 359-370.
+\bibitem{choset2001} CHOSET H. Coverage for robotics - a survey of recent results[J]. Annals of Mathematics and Artificial Intelligence, 2001, 31(1): 113-126.
+\bibitem{koch2014} KOCH W. Tracking and sensor data fusion: methodological framework and selected applications[M]. Berlin: Springer, 2014: 185-210.
+\bibitem{guvensan2011} GUVENSAN M A, YAVUZ A G. On coverage issues in directional sensor networks: a survey[J]. Computer Networks, 2011, 55(15): 3358-3378.
+\bibitem{bercea2022} BERCEA M, CHEN X, LIU Y. Cooperative multi-agent search under directional and visibility constraints[J]. Autonomous Robots, 2022, 46(3): 415-432.
+\bibitem{bai2015} BAI H, ATANASOV N, PAPPAS G J. Non-myopic active information acquisition for target localization[C]//American Control Conference (ACC). Chicago: IEEE, 2015: 4125-4130.
+\bibitem{ryan2010} RYAN A, HEDRICK J K. Particle filter based information-theoretic active sensing[J]. Robotics and Autonomous Systems, 2010, 58(5): 574-584.
+\end{thebibliography}
+
+\vspace{-0.8em}
+\CumcmAIUsed{代码辅助排版、语法检查与测试数据整理}
 
 \end{document}

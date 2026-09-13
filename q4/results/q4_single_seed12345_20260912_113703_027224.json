@@ -1,0 +1,18 @@
+{
+  "seed": 12345,
+  "problem": "Q4",
+  "strategy_name": "GuaranteedDirectionalQ4Strategy",
+  "source_count": 13,
+  "cleared_count": 13,
+  "cleared_ratio": 1.0,
+  "all_cleared": true,
+  "virtual_time_s": 7956.698623821671,
+  "average_localize_clear_time_s": 612.0537402939747,
+  "total_distance_m": 29123.49311910842,
+  "measure_count": 310,
+  "clear_count": 94,
+  "failed_clear_count": 81,
+  "channel_switch_count": 274,
+  "strategy_completed": true,
+  "wall_time_s": 5.074182500000461
+}
