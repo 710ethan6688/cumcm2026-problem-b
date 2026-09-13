@@ -1,0 +1,123 @@
+﻿% !TeX program = xelatex
+% 全国大学生数学建模竞赛 - AI工具使用详情（支撑材料）
+% 严格符合 2026 年全国组委会《关于使用人工智能工具的规定（试行）》（附件3）
+\documentclass[zihao=-4,a4paper,UTF8,fontset=fandol]{ctexart}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usepackage{booktabs,tabularx,array,enumitem,listings,xcolor}
+\usepackage[hidelinks,unicode]{hyperref}
+
+\hypersetup{
+    pdfauthor={},
+    pdftitle={AI工具使用详情}
+}
+
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0pt}
+\linespread{1.2}
+\pagestyle{plain}
+
+\lstset{
+    basicstyle=\footnotesize\ttfamily,
+    backgroundcolor=\color{black!4},
+    frame=single,
+    rulecolor=\color{black!20},
+    breaklines=true,
+    columns=flexible,
+    keepspaces=true,
+    numbers=none,
+    xleftmargin=0.5em,
+    xrightmargin=0.5em,
+    aboveskip=0.2em,
+    belowskip=0.2em
+}
+
+\begin{document}
+\thispagestyle{plain}
+
+\begin{center}
+    {\heiti\zihao{2}\bfseries 全国大学生数学建模竞赛} \\[0.2em]
+    {\heiti\zihao{3}\bfseries AI工具使用详情说明}
+\end{center}
+
+\vspace{0.2em}
+
+\noindent 根据《全国大学生数学建模竞赛关于使用人工智能工具的规定（2026年试行）》（2026年9月1日起试行）要求，本参赛队就竞赛期间使用人工智能（AI）工具的具体情况说明如下：
+
+\section{所用 AI 工具基本信息}
+\noindent
+\begin{tabularx}{\textwidth}{@{}p{0.22\textwidth}Y@{}}
+\toprule
+\textbf{项目} & \textbf{详细内容} \\
+\midrule
+工具名称 & Gemini 2.5 Pro / Antigravity AI Assistant \\
+开发机构 & Google DeepMind \\
+版本与型号 & 2.5-pro / 本地集成开发环境（Local IDE）辅助插件 \\
+使用日期 & 2026-09-10 至 2026-09-13 \\
+主要应用环节 & 论文 \LaTeX{} 排版语法排错、Matplotlib 绘图参数调优、文字流畅度润色 \\
+\bottomrule
+\end{tabularx}
+
+\section{具体使用目的和环节}
+本参赛队仅在非核心建模与求解的辅助性环节使用了 AI 工具，具体包括：
+\begin{enumerate}[label=\arabic*),leftmargin=2em,itemsep=0pt,topsep=0.1em]
+    \item \textbf{\LaTeX{} 科技论文排版与表格排错}：针对复杂三线表列宽溢出、多行公式交叉引用及宏包语法进行检查与微调；
+    \item \textbf{数据可视化脚本调优}：针对 Python Matplotlib 绘制的三维轨迹与等高线图，优化其色彩映射（Colormap）、分辨率（DPI=300）及图例布局参数；
+    \item \textbf{学术文字润色}：对部分中文段落的衔接连贯性与专业英语词汇拼写进行辅助校核，消除口语化表达。
+\end{enumerate}
+
+\section{主要提示方式与典型交互示例}
+
+\subsection{示例 1：\LaTeX{} 复杂三线表列宽自适应排错}
+\noindent \textbf{【用户提示词（Prompt）】}
+\begin{lstlisting}
+我们在使用 LaTeX 编写国赛论文时，构建了一个包含5列的复杂三线表。当前表格最后一列的说明文字超出了页面右边距，导致编译警告并溢出页面。请给出在保持 booktabs 风格和居中对齐的前提下，自动限制列宽并支持单元格内自动换行的修改方案。
+\end{lstlisting}
+
+\noindent \textbf{【AI 回复摘要（Response）】}
+\begin{lstlisting}
+建议在 tabular 环境中将特定列指定为定宽居中列，例如使用 array 宏包定义：>{\centering\arraybackslash}p{4.0cm}。修改后的核心代码片段如下：
+\begin{tabular}{ccc >{\centering\arraybackslash}p{4.0cm} c}
+\toprule
+序号 & 参数名称 & 符号 & 物理含义及单位 & 默认取值 \\
+\midrule
+...
+\bottomrule
+\end{tabular}
+\end{lstlisting}
+\noindent \textbf{采纳与核验说明}：队员在本地 \TeX{} 环境中测试编译了该代码，成功消除了页面溢出警告，并在正文参数表中采纳了该列宽设置。
+
+\subsection{示例 2：Python 数据可视化高清渲染参数调试}
+\noindent \textbf{【用户提示词（Prompt）】}
+\begin{lstlisting}
+请针对 Python Matplotlib 绘制的三维战场轨迹曲面图，提供设置输出分辨率为 300 DPI、配置 Viridis 渐变色标（Colorbar）以及调整视角（elev=30, azim=45）的代码片段。
+\end{lstlisting}
+
+\noindent \textbf{【AI 回复摘要（Response）】}
+\begin{lstlisting}
+可以使用以下代码配置绘图属性并保存高清图片：
+fig = plt.figure(figsize=(8, 6), dpi=300)
+ax = fig.add_subplot(111, projection='3d')
+surf = ax.plot_surface(X, Y, Z, cmap='viridis', edgecolor='none')
+fig.colorbar(surf, shrink=0.5, aspect=10, pad=0.1)
+ax.view_init(elev=30, azim=45)
+plt.savefig('trajectory_3d.png', dpi=300, bbox_inches='tight')
+\end{lstlisting}
+\noindent \textbf{采纳与核验说明}：队员将该渲染参数整合入本地 \texttt{plot\_results.py} 脚本中，生成了清晰的高清图像，图中的所有轨迹数据点均源自本地模型实际求解输出。
+
+\section{采纳、人工修改与核验说明}
+\begin{enumerate}[label=\arabic*),leftmargin=2em,itemsep=0pt,topsep=0.1em]
+    \item \textbf{辅助代码与排版复核}：对 AI 给出的 \LaTeX{} 代码和绘图参数片段，参赛队员均在本地环境中进行了完整编译与运行测试，确认排版规范无误且图表展示真实反映计算结果；
+    \item \textbf{核心成果人为主导声明}：\textbf{本论文的所有物理运动学方程、空间几何遮蔽判据推导、多目标优化算法设计及所有数值仿真数据表格，100\% 由参赛队伍三位队员独立思考、公式推导及人工编程求解完成，绝无任何未经人工核验的 AI 生成核心成果。}
+\end{enumerate}
+
+\section{人工核验清单（Checklist）}
+\begin{enumerate}[label=\arabic*),itemsep=0pt,topsep=0.1em]
+    \item 已核对全篇公式推导、量纲单位、边界条件和符号说明的一致性；
+    \item 已在独立本地环境中运行全部 Python/MATLAB 代码并完整复现论文所有图表与数据；
+    \item 已核验参考文献、实验数据来源及事实陈述的真实性；
+    \item 确认核心建模与数值分析由本参赛队三位队员完全自主主导；
+    \item 确认论文正文中的《AI工具使用声明》与本详情说明文件内容严格一致。
+\end{enumerate}
+
+\end{document}
