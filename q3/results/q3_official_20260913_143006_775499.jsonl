@@ -1,0 +1,14 @@
+{"local_timestamp_ms": 1789281006776, "event": "request", "attempt": 1, "path": "/enter", "payload": {"arena_id": "default", "robot_id": "202619001270", "request_id": "enter-000001"}}
+{"local_timestamp_ms": 1789281006859, "event": "transport_error", "attempt": 1, "path": "/enter", "error": "ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。"}
+{"local_timestamp_ms": 1789281007060, "event": "request", "attempt": 2, "path": "/enter", "payload": {"arena_id": "default", "robot_id": "202619001270", "request_id": "enter-000001"}}
+{"local_timestamp_ms": 1789281007079, "event": "transport_error", "attempt": 2, "path": "/enter", "error": "URLError: <urlopen error [WinError 10053] 你的主机中的软件中止了一个已建立的连接。>"}
+{"local_timestamp_ms": 1789281007481, "event": "request", "attempt": 3, "path": "/enter", "payload": {"arena_id": "default", "robot_id": "202619001270", "request_id": "enter-000001"}}
+{"local_timestamp_ms": 1789281007481, "event": "transport_error", "attempt": 3, "path": "/enter", "error": "ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。"}
+{"local_timestamp_ms": 1789281007482, "event": "pending_request", "path": "/enter", "request_id": "enter-000001", "attempt_count": 3}
+{"local_timestamp_ms": 1789281007483, "event": "request", "attempt": 1, "path": "/enter", "payload": {"arena_id": "default", "robot_id": "202619001270", "request_id": "enter-000001"}}
+{"local_timestamp_ms": 1789281007484, "event": "transport_error", "attempt": 1, "path": "/enter", "error": "ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。"}
+{"local_timestamp_ms": 1789281007685, "event": "request", "attempt": 2, "path": "/enter", "payload": {"arena_id": "default", "robot_id": "202619001270", "request_id": "enter-000001"}}
+{"local_timestamp_ms": 1789281007700, "event": "transport_error", "attempt": 2, "path": "/enter", "error": "URLError: <urlopen error [WinError 10053] 你的主机中的软件中止了一个已建立的连接。>"}
+{"local_timestamp_ms": 1789281008101, "event": "request", "attempt": 3, "path": "/enter", "payload": {"arena_id": "default", "robot_id": "202619001270", "request_id": "enter-000001"}}
+{"local_timestamp_ms": 1789281008121, "event": "transport_error", "attempt": 3, "path": "/enter", "error": "URLError: <urlopen error [WinError 10053] 你的主机中的软件中止了一个已建立的连接。>"}
+{"local_timestamp_ms": 1789281008121, "event": "pending_request", "path": "/enter", "request_id": "enter-000001", "attempt_count": 3}

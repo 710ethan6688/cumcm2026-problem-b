@@ -1,0 +1,62 @@
+{
+  "result_status": "INCOMPLETE",
+  "strategy_name": "GuaranteedRollingQ3Strategy",
+  "strategy_completed": false,
+  "strategy_note": "environment ended before the completion certificate: OfficialTransportError: no response for /enter after 3 attempts; the same request_id was reused: 'enter-000001';pending_request=True;state_version=0",
+  "successful_clear_count": 0,
+  "measure_count": 0,
+  "clear_count": 0,
+  "unique_request_count": 1,
+  "http_attempt_count": 6,
+  "virtual_time_s": 0.0,
+  "wall_time_s": 1.3468188000006194,
+  "entered_remaining_real_duration_s": null,
+  "remaining_real_duration_s": null,
+  "final_position": {
+    "x": 0.0,
+    "y": 0.0
+  },
+  "final_measurement_channel": 1,
+  "environment_finished": false,
+  "cleanup_error": null,
+  "pending_request": {
+    "action": "enter",
+    "path": "/enter",
+    "request_id": "enter-000001"
+  },
+  "completion_certificate": {
+    "valid": false,
+    "state_version": 0,
+    "built_from_version": 0,
+    "history_consistent": true,
+    "pending_request_empty": false,
+    "cleared_channels": [],
+    "absent_channels": [],
+    "per_channel_reasons": {
+      "1": "unknown",
+      "2": "unknown",
+      "3": "unknown",
+      "4": "unknown",
+      "5": "unknown",
+      "6": "unknown",
+      "7": "unknown",
+      "8": "unknown",
+      "9": "unknown",
+      "10": "unknown",
+      "11": "unknown",
+      "12": "unknown",
+      "13": "unknown",
+      "14": "unknown",
+      "15": "unknown",
+      "16": "unknown",
+      "17": "unknown",
+      "18": "unknown",
+      "19": "unknown",
+      "20": "unknown"
+    },
+    "per_channel_evidence": {},
+    "global_reason": null
+  },
+  "request_log": "D:\\1A-project\\mcm-2026\\contest\\2026mcm\\q3\\results\\q3_official_20260913_143006_775499.jsonl",
+  "output": "D:\\1A-project\\mcm-2026\\contest\\2026mcm\\q3\\results\\q3_official_20260913_143006_775499.json"
+}

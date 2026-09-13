@@ -1,0 +1,18 @@
+{
+  "seed": 12345,
+  "problem": "Q3",
+  "strategy_name": "GuaranteedRollingQ3Strategy",
+  "source_count": 13,
+  "cleared_count": 13,
+  "cleared_ratio": 1.0,
+  "all_cleared": true,
+  "virtual_time_s": 6938.197766064074,
+  "average_localize_clear_time_s": 533.7075204664673,
+  "total_distance_m": 30515.988830320366,
+  "measure_count": 131,
+  "clear_count": 13,
+  "failed_clear_count": 0,
+  "channel_switch_count": 115,
+  "strategy_completed": true,
+  "wall_time_s": 2.2502097000106005
+}
