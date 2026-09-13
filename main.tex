@@ -111,7 +111,7 @@
 
 \subsection{测向误差角域与半平面模型}
 
-为实现上述交会定位与几何解算流程，首要环节是将物理测向数据转化为严密的几何约束。在实际测向中，由于测向仪存在物理角度误差，检测点获得的观测并非单条理想射线，而是具有一定张角的扇形角域；多站协同交会定位的本质，即求取所有测向角域在二维平面上的公共重叠区域。为此，本节利用双向半平面刻画单个检测点的前向观测角域，进而将联合交会定位区域 $\mathcal{R}$ 严格表示为有限闭半平面的交集，为后续多边形顶点解算与几何直径计算提供标准的不等式输入。
+为实现上述交会定位与几何解算流程，首要环节是将物理测向数据转化为严密的几何约束。在实际测向中，由于测向仪存在物理角度误差，检测点获得的观测并非单条理想射线，而是具有一定张角的扇形角域；多站协同交会定位的本质，即求取所有测向角域在二维平面上的公共重叠区域。为此，本节利用双向半平面刻画单个检测点的前向观测角域，进而将联合交会定位区域 $\mathcal{R}$ 严格表示为有限闭半平面的交集 \cite{gholami2013}，为后续多边形顶点解算与几何直径计算提供标准的不等式输入。
 
 设参与协同交会定位的已知检测点数量为 $n$。对于第 $i$ 个检测点，其空间平面位置记为 $\mathbf{p}_i$，实测示向度记为 $\hat\theta_i$（$i=1, \dots, n$）。设真实辐射源的目标位置为 $\mathbf{s}$，其相对于检测点 $\mathbf{p}_i$ 的理论真值方位极角记为 $\theta_i^*$。在测向仪物理误差半宽 $\varepsilon = 1^\circ$ 的有界约束下，实测示向度与真实方位极角满足：
 \begin{equation}
@@ -168,7 +168,7 @@
 由于双重凸组合系数满足 $\sum_{j=0}^{h-1}\sum_{k=0}^{h-1} \lambda_j \mu_k = 1$，连续区域内任意两点间的欧氏间距上界必不超过有限极点对间的最大距离；又由极点包含性 $\mathcal{V} \subset \mathcal{R}$，该极大值在极点集上严格可达，证毕。
 \end{cumcmproof}
 
-命题 1 将连续搜索降维至 $\binom{h}{2}$ 对离散顶点比较，但全顶点穷举计算复杂度仍为 $O(h^2)$。根据对踵几何特征，两点最大间距必在相互平行的外切支撑线接触点（对踵点对）处取得。为此引入旋转卡壳算法，通过一对平行卡尺绕多边形旋转步进，仅需在 $O(h)$ 线性时间内遍历全部对踵候选，即可精确提取区域几何直径 $D$ 及最远顶点对 $(\mathbf{a}^*, \mathbf{b}^*)$。
+命题 1 将连续搜索降维至 $\binom{h}{2}$ 对离散顶点比较，但全顶点穷举计算复杂度仍为 $O(h^2)$。根据对踵几何特征，两点最大间距必在相互平行的外切支撑线接触点（对踵点对）处取得。为此引入旋转卡壳算法 \cite{toussaint1983}，通过一对平行卡尺绕多边形旋转步进，仅需在 $O(h)$ 线性时间内遍历全部对踵候选，即可精确提取区域几何直径 $D$ 及最远顶点对 $(\mathbf{a}^*, \mathbf{b}^*)$。
 
 \subsection{直径圆盘覆盖判定与反例构造}
 
@@ -176,7 +176,7 @@
 \begin{equation}
     \mathcal{C}^* = \left\{ \mathbf{x} \in \mathbb{R}^2 : \|\mathbf{x} - \mathbf{c}^*\|_2 \le \frac{D}{2} \right\}
 \end{equation}
-直觉常误以为直径既然是区域内最大间距，该圆盘便理应包含多边形全部点。然而严密分析表明：\textbf{以最远点间距为直径构造的闭圆盘，并不能恒定保证完全覆盖定位多边形。}
+直觉常误以为直径既然是区域内最大间距，该圆盘便理应包含多边形全部点。然而基于平面凸多边形的包含几何理论 \cite{welzl1991}，严密分析表明：\textbf{以最远点间距为直径构造的闭圆盘，并不能恒定保证完全覆盖定位多边形。}
 
 构造理论反例予以证明：设交会定位区域为边长为 $D$ 的正三角形 $\triangle ABC$。由正三角形几何性质可知，其任意两点间距离的最大值即为边长，故该凸多边形的几何直径为 $D$。若取底边端点 $A, B$ 作为最远点对构造闭圆盘 $\mathcal{C}^*$，圆心为其几何中点 $\mathbf{c}^* = (\mathbf{v}_A + \mathbf{v}_B)/2$，半径 $R = 0.5D$。第三个顶点 $C$ 到圆心 $\mathbf{c}^*$ 的距离为该三角形的高：
 \begin{equation}
@@ -305,7 +305,7 @@
 在问题二中，机器狗在第一检测点 $\mathbf{p}_1$ 测得某干扰源的初始示向度 $\hat\theta_1$。题设要求确定第二检测点 $\mathbf{p}_2$ 的选择策略与较优候选区域。基于问题一所建立的测向角域半平面交会模型与多边形几何直径解算算法，第二检测点的选择需兼顾以下两点：
 \begin{enumerate}[leftmargin=2.5em, itemsep=0.2em]
     \item \textbf{信号接收保证：}干扰源覆盖半径 $R \in [1000, 1500]\text{ m}$ 未知。为获得不依赖未知实际覆盖半径的确定性接收保证，本文选取如下充分安全条件：第二检测点到该干扰源所有相容位置的距离均不得超过最小覆盖半径 $R_{\min} = 1000\text{ m}$。
-    \item \textbf{定位效果最优：}在目标先验分布未知的情况下，以两次交会后最坏情况下的定位多边形几何直径衡量定位效果，采用极小化极大（Min-Max）准则使该最差后验直径达到最小。
+    \item \textbf{定位效果最优：}在目标先验分布未知的情况下，以两次交会后最坏情况下的定位多边形几何直径衡量定位效果，采用极小化极大（Min-Max）准则使该最差后验直径达到最小 \cite{tokekar2013}。
 \end{enumerate}
 
 选点以两次交会后的最坏后验定位效果为主目标，并将移动距离与安全余量作为次级优化准则。
@@ -431,7 +431,7 @@
     \vspace{-0.4em}
 \end{figure}
 
-图 \ref{fig:q2_candidate_region} 展示了保守安全域 $\mathcal{U}$ 的几何形态及推荐测点分布。从几何机理来看，推荐测点分布于第一示向线两侧，其核心优势在于拉大空间交会角，有效避免小角度交会造成的后验多边形径向过度拉伸；更为关键的是，该构型并非人为机械预设固定的正交夹角，而是由最差后验几何直径指标内生驱动得出的最优决策。
+图 \ref{fig:q2_candidate_region} 展示了保守安全域 $\mathcal{U}$ 的几何形态及推荐测点分布。从几何机理来看，推荐测点分布于第一示向线两侧，其核心优势在于拉大空间交会角，有效避免小角度交会造成的后验多边形径向过度拉伸 \cite{dogancay2008}，并在机动距离与定位精度间实现综合折中 \cite{vanderhook2014}；更为关键的是，该构型并非人为机械预设固定的正交夹角，而是由最差后验几何直径指标内生驱动得出的最优决策。
 
 为进一步检验算法对不同几何构型的适应性，对圆心、偏置、切向及圆外等 6 个代表性测试场景开展求解，结果如表 \ref{tab:q2_scenarios} 所示。
 
@@ -566,7 +566,7 @@
 \begin{equation}
     \operatorname{lex}\min \left\{ 1 - \eta_{\mathrm{clear}},\; T_{\mathrm{total}} \right\}
 \end{equation}
-其中 $\eta_{\mathrm{clear}} = K/N = 1$。为此，本文兼顾数学理论推导与在线调度时效：一方面建立涵盖全域几何覆盖、真值区域包含、安全清除与自主退出的理论保证，在数学上杜绝目标遗漏；另一方面采用极小极大几何收缩准则与动态优先级评估，实现多频道目标在线交错搜索、追踪与就地清除，大幅压缩行进与测向时间。
+其中 $\eta_{\mathrm{clear}} = K/N = 1$。为此，本文兼顾数学理论推导与在线调度时效：一方面建立涵盖全域几何覆盖 \cite{choset2001}、真值区域包含、安全清除与自主退出的理论保证，在数学上杜绝目标遗漏；另一方面采用极小极大几何收缩准则与动态优先级评估，实现多频道目标在线交错搜索、追踪与就地清除 \cite{song2012}，大幅压缩行进与测向时间。
 
 \subsection{状态空间与观测更新模型}
 
@@ -829,7 +829,7 @@ $\mathcal{Q}_7$ 基准搜索任务至多 $7 \times 20 = 140$ 步且不重复；�
     \item \textbf{追加测向耗时与网格遍历成本的平衡}：初次发现目标后，若盲目追加测向可能再次落入盲侧而徒劳失联；若完全依赖网格遍历，时间成本又过高。因此需要在基准搜索之外，建立轻量自适应决策逻辑。
 \end{enumerate}
 
-为此，本文采取兼顾发现保证与搜索效率的协同求解思路：首先设计由 25 个特征测站构成的双环测站网络，利用凸包包围性质确保对任意未知朝向目标均能可靠发现；在此基础上，引入安全距离选点、对称镜像探测与自适应尾部探测，在确保完全清除的前提下尽量减少机动与网格遍历时间。
+为此，本文采取兼顾发现保证与搜索效率的协同求解思路 \cite{guvensan2011}：首先设计由 25 个特征测站构成的双环测站网络，利用凸包包围性质确保对任意未知朝向目标均能可靠发现；在此基础上，引入安全距离选点、对称镜像探测与自适应尾部探测，在确保完全清除的前提下尽量减少机动与网格遍历时间。
 
 \subsection{混合辐射空间与信息状态模型建立}
 
@@ -1040,7 +1040,7 @@ $\mathcal{Q}_7$ 基准搜索任务至多 $7 \times 20 = 140$ 步且不重复；�
 
 \subsection{双轨协同在线搜索与清除算法设计}
 
-第 6.3 节建立的 25 点基准拓扑、距离安全交会与网格遍历构成了确保 100\% 清除的理论保证主链。然而，若系统单纯依赖基准测站巡航与大范围网格遍历，一旦在第二测站遇到定向盲侧便直接退化为网格扫描，将消耗过多的机动与清除时间。为此，本节在理论保证主链的基础上，设计轻量自适应决策支路：一方面在盲侧失联时实施对称镜像二次探测，另一方面在多边形较大时自适应评估尾部追加探测的收益，从而在确保完全清除的前提下显著压缩任务总时间。
+第 6.3 节建立的 25 点基准拓扑、距离安全交会与网格遍历构成了确保 100\% 清除的理论保证主链。然而，若系统单纯依赖基准测站巡航与大范围网格遍历，一旦在第二测站遇到定向盲侧便直接退化为网格扫描，将消耗过多的机动与清除时间。为此，本节在理论保证主链的基础上，设计轻量自适应决策支路 \cite{bercea2016}：一方面在盲侧失联时实施对称镜像二次探测，另一方面在多边形较大时自适应评估尾部追加探测的收益，从而在确保完全清除的前提下显著压缩任务总时间。
 
 \subsubsection{对称镜像探测与自适应尾部探测}
 
@@ -1239,16 +1239,16 @@ $\mathcal{Q}_7$ 基准搜索任务至多 $7 \times 20 = 140$ 步且不重复；�
 \setlength{\itemsep}{-1.5pt}
 \setlength{\parskip}{0pt}
 \zihao{-5}
-\bibitem{gholami2013} GHOLAMI M R, GEZICI S, STROM E G. Worst-case positioning error and sensor placement for range-difference based localization[J]. IEEE Transactions on Signal Processing, 2013, 61(14): 3532-3546.
-\bibitem{tokekar2015} TOKEKAR P, ISLER V. Sensor placement for target localization with bounded error[C]//IEEE International Conference on Robotics and Automation (ICRA). Seattle: IEEE, 2015: 3514-3519.
-\bibitem{vanderhook2014} VANDER HOOK P, TOKEKAR P, ISLER V. Cautious greedy strategy for active localization with bounded-error sensors[C]//IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS). Chicago: IEEE, 2014: 4320-4325.
+\bibitem{gholami2013} GHOLAMI M R, GEZICI S, STR\"OM E G. Worst-case positioning error and sensor placement for range-difference based localization[J]. IEEE Transactions on Signal Processing, 2013, 61(14): 3532-3546.
+\bibitem{toussaint1983} TOUSSAINT G T. Solving geometric problems with the rotating calipers[C]//Proceedings of IEEE MELECON '83. Athens: IEEE, 1983: 1-8.
 \bibitem{welzl1991} WELZL E. Smallest enclosing disks (balls and ellipsoids)[M]//New Results and New Trends in Computer Science. Berlin: Springer, 1991: 359-370.
-\bibitem{choset2001} CHOSET H. Coverage for robotics - a survey of recent results[J]. Annals of Mathematics and Artificial Intelligence, 2001, 31(1): 113-126.
-\bibitem{koch2014} KOCH W. Tracking and sensor data fusion: methodological framework and selected applications[M]. Berlin: Springer, 2014: 185-210.
-\bibitem{guvensan2011} GUVENSAN M A, YAVUZ A G. On coverage issues in directional sensor networks: a survey[J]. Computer Networks, 2011, 55(15): 3358-3378.
-\bibitem{bercea2022} BERCEA M, CHEN X, LIU Y. Cooperative multi-agent search under directional and visibility constraints[J]. Autonomous Robots, 2022, 46(3): 415-432.
-\bibitem{bai2015} BAI H, ATANASOV N, PAPPAS G J. Non-myopic active information acquisition for target localization[C]//American Control Conference (ACC). Chicago: IEEE, 2015: 4125-4130.
-\bibitem{ryan2010} RYAN A, HEDRICK J K. Particle filter based information-theoretic active sensing[J]. Robotics and Autonomous Systems, 2010, 58(5): 574-584.
+\bibitem{tokekar2013} TOKEKAR P, ISLER V. Sensor placement and selection for bearing sensors with bounded uncertainty[C]//IEEE International Conference on Robotics and Automation (ICRA). Karlsruhe: IEEE, 2013: 2515-2520.
+\bibitem{dogancay2008} DO\u{G}AN\c{C}AY K, HMAM H. Optimal angular sensor separation for AOA localization[J]. Signal Processing, 2008, 88(3): 648-660.
+\bibitem{vanderhook2014} VANDER HOOK P, TOKEKAR P, ISLER V. Cautious greedy strategy for active localization with bounded-error sensors[C]//IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS). Chicago: IEEE, 2014: 4320-4325.
+\bibitem{choset2001} CHOSET H. Coverage for robotics: A survey of recent results[J]. Annals of Mathematics and Artificial Intelligence, 2001, 31(1): 113-126.
+\bibitem{song2012} SONG D, KIM C Y, YI J. Simultaneous localization of multiple unknown and transient radio sources using a mobile robot[J]. IEEE Transactions on Robotics, 2012, 28(3): 668-680.
+\bibitem{guvensan2011} GUVENSAN M A, YAVUZ A G. On coverage issues in directional sensor networks: A survey[J]. Computer Networks, 2011, 55(15): 3358-3378.
+\bibitem{bercea2016} BERCEA I O, ISLER V, KHULLER S. Minimizing uncertainty through sensor placement with angle constraints[C]//Proceedings of the 28th Canadian Conference on Computational Geometry (CCCG). Vancouver: Simon Fraser University, 2016: 28-34.
 \end{thebibliography}
 
 \end{document}
