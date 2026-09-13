@@ -19,7 +19,7 @@
 
 针对\textbf{问题三}全向干扰源全域自主搜索清除任务，提出基于\textbf{七点蜂窝拓扑骨架}与\textbf{在线协同贪心决策}的主算法。证明了间距 $1732.05\text{ m}$ 的正六边形蜂窝测站对半径 $1800\text{ m}$ 目标圆形区域的无盲区覆盖，以及交会凸多边形恒包含目标真实位置；确立了以最小外接圆半径 $\mathbf{19.5\text{ m}}$ 为阈值的精确定位清除判据，设计了有限网格兜底策略与全频道单向吸收退出准则，证明了系统在有限步内必以 100\% 清除率终止。规范模拟器三次测试清除率均达 $\mathbf{100\%}$，平均任务时间 $\mathbf{5127.3\text{ s}}$，单步决策低于 $\mathbf{0.001\text{ s}}$。
 
-针对\textbf{问题四}全向与半平面定向混合源非对称遮蔽挑战，提出\textbf{25点双环三角网骨架}与\textbf{双轨驱动清除策略}。证明了双环三角网测站（最大间距 $\mathbf{983.60\text{ m}}$，全域内切圆半径 $\mathbf{1806.28\text{ m}}$）对任意未知朝向目标提供视场覆盖保证；构建由全局基准搜索组成的理论保证主链，结合自适应尾部前瞻探测构成的轻量启发支路，抑制盲侧无效机动与网格长尾。100 组配对消融实验平均缩减任务时间 $\mathbf{109.8\text{ s}}$（难例降低 $\mathbf{646.5\text{ s}}$），无效尝试减少 $\mathbf{40.2\%}$；官方接口 17 轮演练保持 $\mathbf{100\%}$ 清除率，单源平均耗时 $\mathbf{530.41\text{ s}}$。
+针对\textbf{问题四}全向与半平面定向混合源非对称遮蔽挑战，提出\textbf{25点双环三角网骨架}与\textbf{双轨驱动清除策略}。证明了双环三角网测站（最大间距 $\mathbf{983.60\text{ m}}$，全域内切圆半径 $\mathbf{1806.28\text{ m}}$）对任意未知朝向目标提供视场覆盖保证；构建由全局基准搜索组成的理论保证主链，结合自适应尾部前瞻探测构成的轻量启发支路，抑制盲侧无效机动与网格长尾。100 组配对对照实验平均缩减任务时间 $\mathbf{109.8\text{ s}}$（难例降低 $\mathbf{646.5\text{ s}}$），无效尝试减少 $\mathbf{40.2\%}$；官方接口 17 轮演练保持 $\mathbf{100\%}$ 清除率，单源平均耗时 $\mathbf{530.41\text{ s}}$。
 
 \cumcmkeywords{交会定位；半平面交；旋转卡壳；蜂窝覆盖；双环三角网；在线协同调度}
 \end{cumcmabstract}
@@ -1226,11 +1226,10 @@ $\mathcal{Q}_7$ 基准搜索任务至多 $7 \times 20 = 140$ 步且不重复；�
     \item 有限视场角约束下的多移动机器人协同搜索与环境信标定位。
 \end{enumerate}
 
-\vspace{-0.4em}
-
+\section*{AI工具使用声明}
+本参赛队在竞赛过程中使用了人工智能（AI）工具，主要用于论文排版语法检查、可视化绘图代码调试与部分文字措辞润色，详细使用情况见支撑材料《AI工具使用详情.pdf》。本论文的核心数学建模、公式推导、算法求解及数值分析均由本参赛队三位队员独立主导完成，并对全篇内容进行了完整的人工核验。
 
 \begin{thebibliography}{99}
-\setlength{\itemsep}{-1.5pt}
 \setlength{\itemsep}{-1.5pt}
 \setlength{\parskip}{0pt}
 \zihao{-5}
@@ -1245,8 +1244,5 @@ $\mathcal{Q}_7$ 基准搜索任务至多 $7 \times 20 = 140$ 步且不重复；�
 \bibitem{bai2015} BAI H, ATANASOV N, PAPPAS G J. Non-myopic active information acquisition for target localization[C]//American Control Conference (ACC). Chicago: IEEE, 2015: 4125-4130.
 \bibitem{ryan2010} RYAN A, HEDRICK J K. Particle filter based information-theoretic active sensing[J]. Robotics and Autonomous Systems, 2010, 58(5): 574-584.
 \end{thebibliography}
-
-\vspace{-0.8em}
-\CumcmAIUsed{代码辅助排版、语法检查与测试数据整理}
 
 \end{document}
