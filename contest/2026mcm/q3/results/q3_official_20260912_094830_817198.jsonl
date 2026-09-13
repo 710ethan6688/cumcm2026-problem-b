@@ -1,0 +1,6 @@
+{"local_timestamp_ms": 1789177710818, "event": "request", "attempt": 1, "path": "/enter", "payload": {"arena_id": "default", "robot_id": "202619001270", "request_id": "enter-000001"}}
+{"local_timestamp_ms": 1789177712907, "event": "transport_error", "attempt": 1, "path": "/enter", "error": "URLError: <urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。>"}
+{"local_timestamp_ms": 1789177713108, "event": "request", "attempt": 2, "path": "/enter", "payload": {"arena_id": "default", "robot_id": "202619001270", "request_id": "enter-000001"}}
+{"local_timestamp_ms": 1789177715162, "event": "transport_error", "attempt": 2, "path": "/enter", "error": "URLError: <urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。>"}
+{"local_timestamp_ms": 1789177715565, "event": "request", "attempt": 3, "path": "/enter", "payload": {"arena_id": "default", "robot_id": "202619001270", "request_id": "enter-000001"}}
+{"local_timestamp_ms": 1789177717626, "event": "transport_error", "attempt": 3, "path": "/enter", "error": "URLError: <urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。>"}

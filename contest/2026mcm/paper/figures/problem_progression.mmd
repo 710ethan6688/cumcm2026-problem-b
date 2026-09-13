@@ -1,0 +1,19 @@
+%%{init: {'theme': 'base', 'themeVariables': {'fontFamily': 'Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif', 'fontSize': '19px', 'lineColor': '#5F6368', 'primaryTextColor': '#2B2B2B'}, 'flowchart': {'curve': 'basis', 'nodeSpacing': 30, 'rankSpacing': 42, 'htmlLabels': true}}}%%
+flowchart LR
+    Q1["<b>问题一</b><br/>定位区域求解<br/>直径与覆盖判定"]
+    Q2["<b>问题二</b><br/>第二测点选择<br/>安全区域与效果优化"]
+    Q3["<b>问题三</b><br/>全向源搜索<br/>在线定位与清除"]
+    Q4["<b>问题四</b><br/>混合源搜索<br/>定向盲侧处理"]
+
+    Q1 -- 几何评价 --> Q2
+    Q2 -- 主动定位 --> Q3
+    Q3 -- 定向扩展 --> Q4
+
+    classDef q1 fill:#FFF1B8,stroke:#C99A00,color:#2B2B2B,stroke-width:1.8px;
+    classDef q2 fill:#E8D9F5,stroke:#7A52A3,color:#2B2B2B,stroke-width:1.8px;
+    classDef q34 fill:#D9EFD8,stroke:#4D8B55,color:#2B2B2B,stroke-width:1.8px;
+
+    class Q1 q1;
+    class Q2 q2;
+    class Q3,Q4 q34;
+    linkStyle default stroke:#5F6368,stroke-width:1.6px;

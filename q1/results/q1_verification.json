@@ -1,0 +1,21 @@
+{
+  "verification_status": "PASS",
+  "model_scope": "angle-only bearing intersection; no distance or artificial box clipping",
+  "base_seed": 20260911,
+  "random_case_count": 1000,
+  "counts": {
+    "valid_cases": 1000,
+    "covered_cases": 347,
+    "not_covered_cases": 653,
+    "order_checks": 1000,
+    "duplicate_checks": 1000,
+    "rigid_transform_checks": 100,
+    "monotonicity_checks": 8443,
+    "tolerance_sensitivity_checks": 50
+  },
+  "maximum_order_diameter_difference_m": 0.0,
+  "elapsed_seconds": 3.2415237999994133,
+  "mean_seconds_per_random_case": 0.003241523799999413,
+  "python_version": "3.12.10",
+  "platform": "Windows-11-10.0.26200-SP0"
+}

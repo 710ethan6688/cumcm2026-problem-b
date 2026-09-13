@@ -1,0 +1,3513 @@
+[
+    {
+        "type": "text",
+        "text": "Simultaneous Localization of Multiple Unknown and Transient Radio Sources Using a Mobile Robot",
+        "text_level": 1,
+        "bbox": [
+            70,
+            73,
+            934,
+            138
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Dezhen Song, Senior Member, IEEE, Chang-Young Kim, Student Member, IEEE,",
+        "bbox": [
+            195,
+            150,
+            804,
+            166
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "and Jingang Yi, Senior Member, IEEE",
+        "bbox": [
+            356,
+            167,
+            648,
+            183
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Abstract—We report system and algorithm developments that utilize a single mobile robot to simultaneously localize multiple unknown transient radio sources. Because of signal source anonymity, short transmission durations, and dynamic transmission patterns, the robot cannot treat the radio sources as continuous radio beacons. To deal with this challenging localization problem, we model the radio source behaviors using a novel spatiotemporal probability occupancy grid that captures transient characteristics of radio transmissions and tracks posterior probability distributions of radio sources. As a Monte Carlo method, a ridge walking motion planning algorithm is proposed to enable the robot to efficiently traverse the high-probability regions to accelerate the convergence of the posterior probability distribution. We also formally show that the time to find a radio source is insensitive to the number of radio sources, and hence, our algorithm has great scalability. We have implemented the algorithms and extensively tested them in comparison with two heuristic methods: a random walk and a fixed-route patrol. The localization time of our algorithms is consistently shorter than that of the two heuristic methods.",
+        "bbox": [
+            65,
+            222,
+            496,
+            463
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Index Terms—Localization, networked robots, wireless sensor network.",
+        "bbox": [
+            65,
+            468,
+            494,
+            494
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "I. INTRODUCTION",
+        "text_level": 2,
+        "bbox": [
+            217,
+            522,
+            343,
+            536
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "A WIRELESS sensor network is usually composed of alarge number of miniature wireless sensor nodes with selfconfigurable ad hoc networking capabilities. Its ability to collect and gather information remotely over a large region makes it a powerful tool in many applications. It may be used as a new espionage tool that threatens our security and privacy. For example, an enemy may deploy a sensor network in a battlefield to detect our troop movements. We need a countermeasure for the potential misuse of the fast-developing sensor-network technology.",
+        "bbox": [
+            63,
+            542,
+            496,
+            695
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "From a listener perspective, a wireless sensor network is a large set of multiple unknown transient radio sources. Here, we report system and algorithm developments that enable a single mobile robot to simultaneously localize multiple unknown transient radio sources (see Fig. 1). Since the robot is equipped with a directional antenna and on-board positional sensors, the robot knows its own position and can detect received signal strengths (RSS) as it travels in the field of radio sources. When the radio sources and communication protocols are unknown, the robot cannot treat the radio sources as continuous radio beacons. More specifically,",
+        "bbox": [
+            63,
+            695,
+            496,
+            741
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "image",
+        "img_path": "images/c3914723f588fe2ed0edb1c11096108616ab374811a06a09c58733726e5841da.jpg",
+        "image_caption": [
+            "Fig. 1. Schematics of deployment of a single mobile robot to localize unknown transient radio sources. The radio sources with dashed circles indicate that they are sending radio signals."
+        ],
+        "image_footnote": [],
+        "bbox": [
+            538,
+            219,
+            905,
+            367
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            506,
+            443,
+            939,
+            563
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "1) the number of radio sources is unknown,",
+        "bbox": [
+            525,
+            563,
+            828,
+            578
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "2) the periods of radio transmission are short,",
+        "bbox": [
+            523,
+            578,
+            840,
+            593
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "3) the signal source cannot be identified, and",
+        "bbox": [
+            523,
+            593,
+            836,
+            608
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "4) radio sources transmit intermittently.",
+        "bbox": [
+            523,
+            608,
+            801,
+            622
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "To deal with this challenging localization problem, we model the radio source behaviors using a novel spatiotemporal probability occupancy grid (SPOG) that captures transient characteristics of radio transmissions and tracks their posterior probability distributions. We then propose an SPOG update algorithm that incrementally updates the SPOG as radio transmissions are intercepted. We also propose a Monte Carlo ridge walking motion planning algorithm that enables the robot to efficiently traverse high-probability regions to accelerate the convergence of the posterior probability distributions of radio source locations. We formally show that the time to find a radio source is insensitive to the number of radio sources, and hence, our algorithm has great scalability. We have implemented the algorithms and extensively tested them in comparison with two heuristics: a random walk and a fixed-route patrol. In experiments, the localization time of our algorithms is consistently shorter than that of the two heuristic methods.",
+        "bbox": [
+            506,
+            623,
+            939,
+            880
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "The rest of the paper is organized as follows. We begin with a review of related work in Section II. We present the system architecture and the problem definition in Section III. In Section IV, we introduce the sensing model. Building on the outcome of the sensing model, a robot motion planer is introduced in Section V. The overall algorithms and localization time bounds are presented in Section VI. We validate our model and algorithm through experiments in Section VII. We conclude the paper in Section VIII.",
+        "bbox": [
+            506,
+            880,
+            941,
+            940
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "footer",
+        "text": "1552-3098/\\$31.00 © 2012 IEEE",
+        "bbox": [
+            414,
+            952,
+            592,
+            964
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "page_number",
+        "text": "668",
+        "bbox": [
+            67,
+            40,
+            89,
+            50
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "header",
+        "text": "IEEE TRANSACTIONS ON ROBOTICS, VOL. 28, NO. 3, JUNE 2012",
+        "bbox": [
+            590,
+            37,
+            937,
+            51
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "page_footnote",
+        "text": "Manuscript received June 14, 2011; revised November 15, 2011; accepted January 3, 2012. Date of publication February 3, 2012; date of current version June 1, 2012. This paper was recommended for publication by Associate Editor J. A. Castellanos and Editor D. Fox upon evaluation of the reviewers’ comments. This work was supported in part by the National Science Foundation under CAREER Grant IIS-0643298 and Grant MRI-0923203.",
+        "bbox": [
+            65,
+            780,
+            496,
+            848
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "page_footnote",
+        "text": "D. Song and C.-Y. Kim are with the Department of Computer Science and Engineering, Texas A&M University, College Station, TX 77843 USA (e-mail: dzsong@cs.tamu.edu; kcyoung@cs.tamu.edu).",
+        "bbox": [
+            65,
+            848,
+            494,
+            882
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "page_footnote",
+        "text": "J. Yi is with the Department of Mechanical and Aerospace Engineering, Rutgers University, Piscataway, NJ 08854 USA (e-mail: jgyi@rutgers.edu).",
+        "bbox": [
+            65,
+            882,
+            494,
+            906
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "page_footnote",
+        "text": "Color versions of one or more of the figures in this paper are available online at http://ieeexplore.ieee.org.",
+        "bbox": [
+            65,
+            905,
+            494,
+            928
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "page_footnote",
+        "text": "Digital Object Identifier 10.1109/TRO.2012.2183069",
+        "bbox": [
+            79,
+            926,
+            373,
+            940
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            57,
+            80,
+            488,
+            156
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "II. RELATED WORK",
+        "text_level": 2,
+        "bbox": [
+            202,
+            179,
+            343,
+            193
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "Localization of unknown transient radio sources relates to three research fields that includes radio frequency (RF)-based localization, simultaneous localization and mapping (SLAM), and occupancy grid methods.",
+        "bbox": [
+            57,
+            200,
+            488,
+            261
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "RF-based localization has witnessed fast development as wireless communication technologies grow rapidly [1]–[5]. Signal strength, the time or the time difference of arrival [6], [7], angle/bearing [6], and phase shift are commonly used in deriving the locations of signal sources using triangulation-based approaches. Researchers in sensor and wireless network communities have studied the RF-based localization problem extensively [8]–[14]. In their problem setup, sensors usually have some prior knowledge about radio signals, such as source identification, packet length, network protocols/configurations, source signal strength, and transmission rates. For example, recent developments of range-free localization use the prior knowledge or part of it to estimate sensor locations by network connectivity [15]–[18]. Nonparametric belief propagation [19] and the sequence-based localization [20] methods are proposed. Recent work also focuses on distributed solutions [21]–[24].",
+        "bbox": [
+            57,
+            261,
+            488,
+            502
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "As a very relevant work, in [2], the authors use a network of wireless access points to localize a mobile unit. This can be viewed as a dual version of our problem. They use multiple static listeners to localize a single mobile transmitter, while we try to localize multiple static transmitters using a mobile listener. As another closely related work, in [11], the authors try to localize sensor-network nodes with a mobile beacon. The mobile beacon and the sensor-network nodes are assumed to share the network information. This type of work can be viewed as the localization of “friendly” radio sources.",
+        "bbox": [
+            57,
+            502,
+            488,
+            654
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "In robotics research, the SLAM is defined as the process of mapping the environment and localizing robot position at the same time [25]–[27]. Although both SLAM and our approach are built on the Bayesian methods, the SLAM assumes that the environment is static or close to static. Directly applying the SLAM methods to our problem is not appropriate because networked radio sources create a highly dynamic environment, where the signal-transmission patterns change quickly. Although recent advance in the SLAM allows tracking of moving objects [28], the environment largely remains static.",
+        "bbox": [
+            57,
+            654,
+            488,
+            804
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "Since the authors introduce occupancy grid maps as a probabilistic sensor model in [29] and [30], the occupancy grid has been proved to be an elegant representation of the sensor coverage for mobile robot applications, such as localization and mapping [25]. Recent work further improves occupancy grid maps to incorporate multisensor fusion, an inverse sensor model, and a forward sensor model. Occupancy grid-based methods have recently been adapted to a variety of applications including gas/odor source localization [31]. The existing occupancy grid-based methods focus on using the spatial probabilistic representation to describe sensing uncertainty and are not capable of dealing with time-variant environments. In this study, we extend the occupancy grid methods into the temporal dimension to deal with the dynamic characteristics of the transient radio transmissions.",
+        "bbox": [
+            57,
+            805,
+            489,
+            941
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            500,
+            80,
+            932,
+            170
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "In [32], the authors also work on a similar problem that enables a robot to search for multiple radio transmitters. In their setup, the robot needs to find all transmitters in an indoor environment. Again, all transmitters are treated as continuous beacons. The main focus of their approach is to provide a robust gradient-based method to guide the robot to search for the transmitters at the presence of complex and noise indoor signal fields. The transient behaviors and signal correspondence are not concerns of the approach.",
+        "bbox": [
+            500,
+            170,
+            932,
+            306
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "We work on localization of unknown and transient radio sources [33], [34]. In our previous works [35] and [36], we use a single mobile robot that is equipped with a log-periodic dipole array antenna to localize unknown networked sensor nodes. By the usage of a particle-filter approach, we assume that the carrier sensing multiple access (CSMA)-based protocol is used among the networked radio sources. However, this method suffers from the restrictive assumption on the CSMA protocol and scalability issue of the particle-filter method. In this paper, we relax the assumption and develop a protocol-independent localization scheme that extends our previous conference paper [37] by adding new convergence analysis and experimental results.",
+        "bbox": [
+            500,
+            306,
+            932,
+            489
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "III. SYSTEM DESIGN AND PROBLEM DEFINTION",
+        "text_level": 2,
+        "bbox": [
+            552,
+            503,
+            880,
+            518
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "A. System Architecture",
+        "text_level": 2,
+        "bbox": [
+            500,
+            526,
+            666,
+            541
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "Fig. 2(a) illustrates the hybrid system architecture. The robot knows its own position from the Global Positioning System or other localization sensors and wants to search/localize the unknown signal sources. From the robot perspective, the input is the RSS readings from the directional antenna with the corresponding antenna orientations. The output of the system is the planned trajectory for the robot to execute in the following period. The entire system is built around the SPOG, which tracks each cell’s probability of containing a radio source and its transmission rate.",
+        "bbox": [
+            500,
+            547,
+            932,
+            699
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "The system updates the SPOG whenever a radio transmission is detected by the antenna. The antenna model outputs the posterior probability distribution of the signal source as the inputs to the SPOG. This update process is described by a continuous time system. As a convention in this paper, we use t to denote the continuous time.",
+        "bbox": [
+            500,
+            699,
+            932,
+            789
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "On the other hand, the robot plans its motion periodically. We denote the period length by τ0, which is carefully chosen to ensure that the robot has enough time to execute the planned trajectory. At the beginning of each period, the robot plans its trajectory based on the current SPOG. This decision-making process is a discrete time system. We denote the discrete time index variable by $k \\in \\mathbb N$",
+        "bbox": [
+            500,
+            789,
+            932,
+            895
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "Fig. 2(b) illustrates the relationship between the continuous time system and the discrete time system. Let $t ^ { k } \\in \\mathbb { R }$ be the exact time at the moment of the discrete time k. We define the kth period as the time interval between $t ^ { k - 1 }$ and $t ^ { k }$ . Hence, $t ^ { k } - t ^ { k - 1 } = \\tau _ { 0 }$ for $k > 1$ . We also define $t _ { j } ^ { k } \\in \\mathbb { R }$ as the exact time when the jth radio transmission occurs in the kth period: $t ^ { k - 1 } \\leq t _ { i } ^ { k } < t ^ { k }$ . The index variable $j$ is reset to zero at the beginning of each period.",
+        "bbox": [
+            500,
+            895,
+            932,
+            940
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "header",
+        "text": "SONG et al.: SIMULTANEOUS LOCALIZATION OF MULTIPLE UNKNOWN AND TRANSIENT RADIO SOURCES USING A MOBILE ROBOT",
+        "bbox": [
+            57,
+            39,
+            782,
+            51
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "page_number",
+        "text": "669",
+        "bbox": [
+            907,
+            40,
+            929,
+            50
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "image",
+        "img_path": "images/f96c27c9d388225af84440c786380153f61f53c29ea9a0fd4bdab2e77aa2affb.jpg",
+        "image_caption": [
+            "× : The moment when a wireless transmission occurs. (b)",
+            "Fig. 2. (a) System diagram and (b) system timing."
+        ],
+        "image_footnote": [],
+        "bbox": [
+            97,
+            79,
+            464,
+            243
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            63,
+            335,
+            494,
+            412
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "B. Problem Setup",
+        "text_level": 2,
+        "bbox": [
+            65,
+            429,
+            195,
+            444
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "To formulate the localization problem, we make the following assumptions.",
+        "bbox": [
+            65,
+            449,
+            494,
+            479
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "1) Both the robot and radio sources are located in an obstaclefree 2-D Euclidean space. Radio sources are stationary and can be treated as points. In the later section, we will discuss how to handle obstacles.",
+        "bbox": [
+            80,
+            479,
+            494,
+            540
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "2) The network traffic is light and each transmission is short. This is the typical characteristic of a low-power sensor network.",
+        "bbox": [
+            80,
+            540,
+            494,
+            585
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "3) Each radio transmission is transmitted at the same power level. This assumption can be relaxed if the robot is equipped with an orthogonal antenna pair, which can provide directional information regardless of the transmission power. For example, in recent works [38] and [39], the authors show how to obtain distance to a radio source using multiple antennas with different polarizations and/or signal ratios.",
+        "bbox": [
+            80,
+            585,
+            494,
+            705
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "4) The radiation pattern of the radio sources is circular because most miniature wireless sensors are equipped with omnidirectional antennas.",
+        "bbox": [
+            80,
+            707,
+            494,
+            751
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "Because of the transient transmission and the fact that the robot cannot associate a signal with its source, the robot cannot simply triangulate the signal source. Since only one robot is considered, the single robot perspective makes it more difficult than the cases where multiple robots or receivers are used.",
+        "bbox": [
+            63,
+            751,
+            494,
+            829
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "C. Spatiotemporal Probability Occupancy Grid",
+        "text_level": 2,
+        "bbox": [
+            65,
+            843,
+            397,
+            858
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "We introduce the SPOG to track the posterior spatiotemporal distributions of radio sources. To define the SPOG, we partition the entire field into equally sized square cells using a grid. Let us define cell index set $I : = \\{ 1 , \\ldots , n \\}$ , where n is the total number of cells. Define $i \\in I$ as a cell index variable. The size of each cell is determined by the RSS resolution of the antenna. Inside each cell, we approximate radio source locations using locations of the cell center. Define $C _ { i }$ as the event that cell i contains at least one radio source and $P ( C _ { i } )$ as the probability that event $C _ { i }$ occurs. Hence, $\\textstyle \\sum _ { i \\in I } P ( C _ { i } )$ equals the number of cells that contain radio sources if $P ( C _ { i } )$ converges to a correct value in the Monte Carlo localization process. $P ( C _ { i } )$ tracks the radio source location distribution and is the spatial component of the SPOG. Localizing radio sources becomes finding cells that ensure $P ( C _ { i } ) > 0$",
+        "bbox": [
+            63,
+            864,
+            496,
+            940
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            506,
+            79,
+            939,
+            231
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "At time $t _ { j } ^ { k }$ , a transmission occurs. We define $C _ { i } ^ { 1 }$ as the event that cell i is the active radio source at time $t _ { j } ^ { k }$ . Define $C _ { i } ^ { 0 }$ as the event that cell i is inactive at time $t _ { j } ^ { k }$ . Hence",
+        "bbox": [
+            506,
+            229,
+            939,
+            280
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/3a66174cad0cfb625318984537e76e49dda3d915cc842c622a583c1e3dc8dc2c.jpg",
+        "text": "$$\nP ( C _ { i } ^ { 0 } ) + P ( C _ { i } ^ { 1 } ) = 1 \\mathrm { a n d } \\sum _ { i \\in I } P ( C _ { i } ^ { 1 } ) = 1\\tag{1}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            577,
+            290,
+            868,
+            323
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "because there is only one active transmission when the transmission is detected. We ignore the collision case because we take an RSS measurement as soon as the transmission is initiated. The probability of two or more transmissions that are initiated at the exact same moment is negligible in a light-traffic network. $C _ { i } ^ { 1 }$ is determined by the relative radio transmission rate and is the temporal part of the SPOG. Unlike a regular occupancy grid, the SPOG is unique because each cell is described by two types of correlated random events: the spatial event $C _ { i }$ and the temporal events $C _ { i } ^ { 0 }$ and $C _ { i } ^ { 1 }$",
+        "bbox": [
+            505,
+            329,
+            939,
+            483
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "D. Problem Formulation",
+        "text_level": 2,
+        "bbox": [
+            508,
+            498,
+            685,
+            513
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "Fig. 2(a) suggests that the overall localization problem can be divided into two subproblems: a sensing problem and a motion planning problem. Let a random variable $Z _ { j } ^ { k } \\in \\mathbb { N }$ be the corresponding RSS reading at time $t _ { j } ^ { k }$ . Note that the RSS readings are from a receiver with a discrete resolution. Define $\\mathbf { Z } ( Z _ { i } ^ { k } )$ as the set of all RSS values sensed from the beginning of the localization process to the moment when $Z _ { j } ^ { k }$ is sensed. We also define a set $\\mathbf { Z } ^ { - } ( Z _ { j } ^ { k } ) : = \\mathbf { Z } ( Z _ { j } ^ { k } ) \\setminus \\{ Z _ { j } ^ { k } \\}$ , which is the set of all RSS readings from the beginning of the localization process to the moment right before $Z _ { j } ^ { k }$ is sensed. Define $P ( C _ { i } | \\mathbf { Z } ( Z _ { j } ^ { k } ) )$ as the conditional probability that cell i contains at least one radio source given the RSS set $\\mathbf { Z } ( Z _ { j } ^ { k } )$ ). Following the same convention, we define the conditional probabilities $P ( C _ { i } | \\mathbf { Z } ^ { - } ( Z _ { j } ^ { k } ) )$ , $P ( C _ { i } ^ { 1 } | \\mathbf { Z } ( Z _ { i } ^ { k } ) )$ , and $P ( C _ { i } ^ { 1 } | \\mathbf { Z } ^ { - } ( Z _ { j } ^ { k } ) )$ . The sensing problem updates the SPOG when a new transmission is detected.",
+        "bbox": [
+            506,
+            520,
+            939,
+            753
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "Problem 1 (Sensing Problem): Given the current RSS $Z _ { j } ^ { k }$ the previous RSS set $\\mathbf { Z } ^ { - } ( Z _ { j } ^ { k } )$ , $P ( C _ { i } | \\mathbf { Z } ^ { - } ( Z _ { j } ^ { k } ) )$ , $\\dot { P ( C _ { i } ^ { 1 } | \\mathbf { Z } ^ { - } ( Z _ { j } ^ { k } ) ) }$ , and the corresponding robot configurations, compute $P ( \\tilde { C } _ { i } | \\mathbf { Z } ( Z _ { i } ^ { k } ) )$ and $P ( C _ { i } ^ { 1 } | \\mathbf { Z } ( Z _ { j } ^ { k } ) )$ ) for each cell i.",
+        "bbox": [
+            508,
+            756,
+            936,
+            820
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "At the beginning of each period $k ,$ we plan the robot trajectory. Let us define the robot position and orientation as ${ \\bf \\bar { r } } ( t ) = [ x ( t ) , y ( t ) , \\theta ( t ) ] ^ { T } \\in \\mathbb { R } ^ { 2 } \\times \\bar { S }$ , where $S = ( - \\pi , \\pi ]$ is the orientation angle set. Since the antenna is fixed on the robot and points to the robot forwarding direction, $\\theta ( t )$ is also the antenna orientation. Define $j _ { \\mathrm { m a x } }$ as the index for the last transmission sensed in period k. Therefore, we can define the motion planning problem for time $k ( \\mathrm { o r } t ^ { k } )$ as follows.",
+        "bbox": [
+            506,
+            820,
+            939,
+            941
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "page_number",
+        "text": "670",
+        "bbox": [
+            67,
+            40,
+            90,
+            50
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "header",
+        "text": "IEEE TRANSACTIONS ON ROBOTICS, VOL. 28, NO. 3, JUNE 2012",
+        "bbox": [
+            590,
+            37,
+            937,
+            51
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "image",
+        "img_path": "images/d3ca9506d045dea57854bb3617d92bbc6968e79bb4469a66e0e5571efc06ed63.jpg",
+        "image_caption": [],
+        "image_footnote": [],
+        "bbox": [
+            84,
+            104,
+            205,
+            224
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "chart",
+        "img_path": "images/5c4c9d8c7d22fb81894f303e1d36bc15c798a6321e6fbfc18c7ffda74d971b8a.jpg",
+        "content": "",
+        "chart_caption": [
+            "(a)",
+            "(b)",
+            "Fig. 3. HyperGain HG2415G parabolic directional antenna properties. (a) Antenna photo and (b) calibrated radiation pattern."
+        ],
+        "chart_footnote": [],
+        "bbox": [
+            230,
+            80,
+            464,
+            223
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Problem 2 (Radio Source Localization Motion Planning): Given the current SPOG, which are the sets $\\{ P ( C _ { i } | \\bar { \\mathbf { Z } } ( Z _ { j _ { \\operatorname* { m a x } } } ^ { k } ) ) | i \\in I \\}$ and $\\{ P ( C _ { i } ^ { 1 } | \\mathbf { Z } ( Z _ { j _ { \\operatorname* { m a x } } } ^ { k } ) ) | i \\in I \\}$ , plan the robot trajectory $\\{ \\mathbf { r } ( t ) | t ^ { k } \\leq t < t ^ { k + 1 } \\}$ that enables the robot to quickly localize radio sources.",
+        "bbox": [
+            57,
+            301,
+            488,
+            378
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "This overall approach is a Monte Carlo method with following localization condition.",
+        "bbox": [
+            57,
+            378,
+            488,
+            409
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Definition 1 (Localization Condition): A radio source is believed to be located at cell i if $P ( C _ { i } | \\mathbf { Z } ( Z _ { j } ^ { k } ) ) \\geq p _ { t }$ for a given probability threshold $p _ { t }$",
+        "bbox": [
+            57,
+            409,
+            488,
+            455
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "IV. SENSING MODELING",
+        "text_level": 2,
+        "bbox": [
+            186,
+            469,
+            360,
+            484
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "We address the sensing problem first. The sensing problem actually has two components: an antenna model and an SPOG update process.",
+        "bbox": [
+            57,
+            491,
+            488,
+            537
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "A. Antenna Model",
+        "text_level": 2,
+        "bbox": [
+            57,
+            553,
+            193,
+            568
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "The antenna model describes the property of the directional antenna. As illustrated in Fig. 3, we use a HyperGain HG2415G parabolic antenna in our system. We have introduced the antenna model in [36]. For completeness, we briefly reiterate the model here.",
+        "bbox": [
+            57,
+            574,
+            488,
+            648
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Bearing and distance are the two most important variables in an antenna model [40]. Let $( x _ { j } ^ { k } , y _ { j } ^ { k } , \\theta _ { j } ^ { k } )$ be the robot configuration when the jth radio transmission in the kth period is sensed. Let $( x _ { i } , y _ { i } )$ be the location of cell center. Define $d _ { i j } ^ { k }$ as the distance from the robot to the center of the cell:",
+        "bbox": [
+            57,
+            650,
+            488,
+            726
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/91c915758f20e7344031b4a8a94b6d026293b6a9960f6233de5f783590473c44.jpg",
+        "text": "$$\nd _ { i j } ^ { k } = \\sqrt { ( x _ { j } ^ { k } - x _ { i } ) ^ { 2 } + ( y _ { j } ^ { k } - y _ { i } ) ^ { 2 } } .\\tag{2}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            153,
+            732,
+            390,
+            755
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Let $\\phi _ { i j } ^ { k }$ be the bearing of the cell with respect to the robot:",
+        "bbox": [
+            57,
+            762,
+            456,
+            780
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/a9834251bfdf5745d06666efdffff161c27b8cb0230b5a6754f2655d93d586f2.jpg",
+        "text": "$$\n\\phi _ { i j } ^ { k } = \\mathrm { a t a n } 2 ( y _ { j } ^ { k } - y _ { i } , x _ { j } ^ { k } - x _ { i } ) - \\theta _ { j } ^ { k } .\\tag{3}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            146,
+            787,
+            398,
+            808
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "By the assumption that the active radio source is located in cell i, the expected RSS $s _ { i }$ of the directional antenna is given as",
+        "bbox": [
+            57,
+            814,
+            488,
+            844
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/18ddb2e408da036bf434c616530b7738497c958e55e4f179683c924c09f4bbf4.jpg",
+        "text": "$$\ns _ { i } = c \\cdot ( d _ { i j } ^ { k } ) ^ { - \\beta } \\varphi ( \\phi _ { i j } ^ { k } )\\tag{4}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            193,
+            849,
+            351,
+            869
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "where c is a constant depending on radio transmission power, and $( d _ { i j } ^ { k } ) ^ { - \\beta }$ is the signal decay function. The directivity of the antenna is captured by the term $\\varphi ( \\phi _ { i j } ^ { k } )$ , which describes the radiation pattern of the antenna. Note that $d _ { i j } ^ { k } > d _ { a }$ , where $d _ { a }$ is the length of the longest physical dimension of the antenna. We obtain $c = 6 3 . 0 9$ and the decay factor $\\beta = 2 . 5 3$ for our antenna from the calibration process. Our $\\beta$ value conforms to the widely accepted notion that the decay factor is between 2 and 4 [41].",
+        "bbox": [
+            57,
+            876,
+            488,
+            941
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            500,
+            79,
+            932,
+            155
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Since our receiver uses dBm as an RSS unit, we have to take a $1 0 \\log _ { 1 0 }$ with respect to (4):",
+        "bbox": [
+            500,
+            155,
+            930,
+            186
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/1bb41494763eb4c30cc42c96fa8dda4c3e02b9bb323eef5e099693e90ca18934.jpg",
+        "text": "$$\n\\mu _ { i } = 1 0 \\big ( \\log _ { 1 0 } c - \\beta \\log _ { 1 0 } d _ { i j } ^ { k } + \\log _ { 1 0 } \\varphi ( \\phi _ { i j } ^ { k } ) \\big )\\tag{5}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            553,
+            198,
+            875,
+            217
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "where $\\mu _ { i }$ is the expected RSS in units of dBm. From the antenna theory and the results from the antenna calibration, we perform curve fitting to obtain the radiation pattern function as illustrated in Fig. 3(b):",
+        "bbox": [
+            500,
+            228,
+            932,
+            290
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/809464db668158e037c7eef11a59fd989f53e4a986aee3f768bced126f617d78.jpg",
+        "text": "$$\n\\varphi ( \\phi _ { i j } ^ { k } ) = \\left\\{ \\begin{array} { l l } { 1 , } & { \\mathrm { i f ~ } d _ { i j } ^ { k } \\leq d _ { a } , } \\\\ { \\cos ^ { 2 } \\big ( 4 \\phi _ { i j } ^ { k } \\big ) , } & { \\mathrm { i f ~ } \\phi _ { i j } ^ { k } \\in [ \\pm 2 0 ^ { \\circ } ] \\mathrm { ~ a n d ~ } d _ { i j } ^ { k } > d _ { a } } \\\\ { \\cos ^ { 2 } \\big ( 8 0 ^ { \\circ } \\big ) , } & { \\mathrm { ~ o t h e r w i s e . } } \\end{array} \\right.\\tag{6}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            508,
+            301,
+            897,
+            361
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Note that the peak at the zero bearing in Fig. 3(b) is about 15 dB·m higher than the average of nonpeak regions, which confirms antenna specifications.",
+        "bbox": [
+            500,
+            372,
+            930,
+            417
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Equations (5) and (6) describe the expected RSS given that the radio transmission is from cell i. However, the RSS is not a constant but a random variable because of the uncertainties in radio transmissions, receiver resolution, and background noises. Therefore, the mean value of $Z _ { j } ^ { k }$ is $\\mu _ { i }$ . From the antenna calibration, we know that the distribution of $Z _ { j } ^ { k }$ can be approximated by a normal distribution with a density function of",
+        "bbox": [
+            498,
+            417,
+            932,
+            526
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/490703571cbb68d4e45d905c71122c49ab25e93e96345029760cbb1593570d32.jpg",
+        "text": "$$\ng _ { i } ( \\zeta ) \\approx \\frac { 1 } { \\sqrt { 2 \\pi \\sigma ^ { 2 } } } e ^ { - \\frac { ( \\zeta - \\mu _ { i } ) ^ { 2 } } { 2 \\sigma ^ { 2 } } }\\tag{7}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            624,
+            536,
+            804,
+            570
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "where the value of $\\sigma$ is 3.3 that is obtained from the antenna calibration.",
+        "bbox": [
+            500,
+            580,
+            930,
+            611
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Let",
+        "bbox": [
+            518,
+            612,
+            548,
+            625
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/004fdb86ccd628a87ce5ff4b0bd070368cf470eaad36b1b148cc3363f4db2f05.jpg",
+        "text": "$$\nG _ { i } ( z ) : = \\int _ { - \\infty } ^ { z } g _ { i } ( \\zeta ) d \\zeta\\tag{8}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            634,
+            635,
+            796,
+            669
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "be the cumulative density function of the normal distribution, where z is the RSS value.",
+        "bbox": [
+            500,
+            679,
+            929,
+            709
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Define $P ( Z _ { j } ^ { k } = z | C _ { i } ^ { 1 } )$ ) as the conditional probability that the RSS is an integer z given cell i contains at least an active radio source. $P ( Z _ { j } ^ { k } = z | C _ { i } ^ { 1 } )$ actually is the overall antenna model. Since $Z _ { j } ^ { k }$ can only take integer values, we have",
+        "bbox": [
+            500,
+            709,
+            930,
+            773
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/99df6a4daf7eac359fa5edd1f9e7e46c1b80115356e7ce0ab3664d3c1eb73ddf.jpg",
+        "text": "$$\n\\begin{array} { l } { { P ( Z _ { j } ^ { k } = z | C _ { i } ^ { 1 } ) = G _ { i } ( z + 0 . 5 ) - G _ { i } ( z - 0 . 5 ) } } \\\\ { { \\displaystyle = \\int _ { z - 0 . 5 } ^ { z + 0 . 5 } g _ { i } ( \\zeta ) d \\zeta } } \\end{array}\\tag{9}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            557,
+            787,
+            873,
+            847
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "as a function of $z$ and $\\mu _ { i }$ . Because of high antenna resolution and small integration intervals, (9) can be further approximated as",
+        "bbox": [
+            500,
+            858,
+            930,
+            902
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/15d346c9311b35995b8afa76913fa33bd8f942274a5c5e61dc7ccf9072fcc2d0.jpg",
+        "text": "$$\nP ( Z _ { j } ^ { k } = z | C _ { i } ^ { 1 } ) \\approx \\alpha g _ { i } ( z )\\tag{10}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            626,
+            915,
+            804,
+            934
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "header",
+        "text": "SONG et al.: SIMULTANEOUS LOCALIZATION OF MULTIPLE UNKNOWN AND TRANSIENT RADIO SOURCES USING A MOBILE ROBOT",
+        "bbox": [
+            57,
+            39,
+            782,
+            51
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "page_number",
+        "text": "671",
+        "bbox": [
+            907,
+            40,
+            929,
+            50
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "where $\\alpha = \\frac { 1 } { \\sum _ { z = z _ { \\mathrm { m i n } } } ^ { z _ { \\mathrm { m a x } } } g _ { i } \\left( z \\right) }$ is the normalization factor that ensures",
+        "bbox": [
+            63,
+            79,
+            494,
+            114
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/eb5c0813b724db6f78afec9ae0eadfa23741c67d4c293ecc9093b175ec83b6ad.jpg",
+        "text": "$$\n\\sum _ { z = z _ { \\mathrm { m i n } } } ^ { z _ { \\mathrm { m a x } } } P ( Z _ { j } ^ { k } = z | C _ { i } ^ { 1 } ) = 1 .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            185,
+            119,
+            375,
+            161
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "Here, $z _ { \\mathrm { m i n } }$ and $z _ { \\mathrm { m a x } }$ are the minimum and the maximum RSS that the antenna can sense, respectively. In fact, the antenna sensitivity is tuned to satisfy the following condition:",
+        "bbox": [
+            63,
+            166,
+            494,
+            212
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/a26aa9330735f7ef173d8c1e4a2c6bb27c6e8ed57c91e7ed2aeca5bbd72efaf7.jpg",
+        "text": "$$\nz _ { \\mathrm { m a x } } \\le 1 0 \\log _ { 1 0 } c : = \\mu _ { \\mathrm { m a x } }\\tag{11}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            185,
+            218,
+            375,
+            234
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "so that we can fully utilize the sensitivity and resolution of the antenna. Any RSS that is stronger than $z _ { \\mathrm { m a x } }$ is perceived as zmax .",
+        "bbox": [
+            63,
+            241,
+            494,
+            287
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "B. Determining Grid Resolution",
+        "text_level": 2,
+        "bbox": [
+            65,
+            303,
+            292,
+            318
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "The variance of reception σ in (7) can also be used to choose an appropriate cell size. More cells mean more computation. Indeed, later we will show that the overall algorithm is $O ( n ^ { 2 } )$ On the other hand, a sparse grid would lead to low localization resolution. We use a 2σ-separation rule as follows. Let cell i and cell s be two adjacent cells. If a radio source that is located at cell i emits a signal, then the expected RSS values from robots that are located at cells i and s would be $\\mu _ { i }$ and $\\mu _ { s }$ , respectively. In addition, $\\mu _ { i } = \\mu _ { \\operatorname* { m a x } }$ because of the signal saturation. The 2σ-separation rule is that we choose the cell size such that",
+        "bbox": [
+            63,
+            323,
+            496,
+            476
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/8a71beab91c213c5a750d0d391ba844416f47913279fb245e7a3b092945193e9.jpg",
+        "text": "$$\n\\mu _ { i } - \\mu _ { s } = 2 \\sigma .\\tag{12}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            227,
+            483,
+            333,
+            498
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "Define $d _ { i s }$ the distance between adjacent centers of cells i and s. From (5) and (12), we have",
+        "bbox": [
+            63,
+            503,
+            494,
+            535
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/b5bc12707f97958d332be82724cb8741b48ef4b4492b434e14a156e9a755cd5a.jpg",
+        "text": "$$\nd _ { i s } = 1 0 ^ { \\frac { 1 } { \\beta } \\left( 0 . 2 \\sigma + \\log _ { 1 0 } \\cos ^ { 2 } \\left( 8 0 ^ { \\circ } \\right) \\right) } .\\tag{13}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            171,
+            540,
+            387,
+            559
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "C. Updating the SPOG",
+        "text_level": 2,
+        "bbox": [
+            65,
+            574,
+            232,
+            590
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "When a radio transmission with an RSS level of z is sensed, we are interested in $P ( C _ { i } | Z _ { i } ^ { k } = z )$ which is the conditional probability that cell i contains at least one radio source given the RSS is z. According to (1), we have",
+        "bbox": [
+            63,
+            595,
+            494,
+            656
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/e4891de2a37633fd8224be1b099ee5e79f637816bfd9a3045cdbf8c761ab978d.jpg",
+        "text": "$$\nP ( C _ { i } | Z _ { j } ^ { k } = z ) = P ( C _ { i } , C _ { i } ^ { 1 } | Z _ { j } ^ { k } = z ) + P ( C _ { i } , C _ { i } ^ { 0 } | Z _ { j } ^ { k } = z ) .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            75,
+            662,
+            484,
+            681
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "Since event ${ C } _ { i } ^ { 1 }$ implies event $C _ { i }$ , the joint event $( C _ { i } , C _ { i } ^ { 1 } )$ is the same as $C _ { i } ^ { 1 }$ . Hence,",
+        "bbox": [
+            63,
+            685,
+            494,
+            717
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/b45f1a11ba14c0009a3ecf5db080e86897bc739f49f99ee2ca8c489e62252acc.jpg",
+        "text": "$$\nP ( C _ { i } | Z _ { j } ^ { k } = z ) = P ( C _ { i } ^ { 1 } | Z _ { j } ^ { k } = z ) + P ( C _ { i } , C _ { i } ^ { 0 } | Z _ { j } ^ { k } = z ) .\\tag{14}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            87,
+            722,
+            471,
+            742
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "According to Bayes’ theorem",
+        "bbox": [
+            65,
+            755,
+            271,
+            770
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/a1973a7c53139b9abe88b8ad77c382f9f8c8f8904facf113466e4b8dfa8ab8b4.jpg",
+        "text": "$$\nP ( C _ { i } ^ { 1 } | Z _ { j } ^ { k } = z ) = \\frac { P ( Z _ { j } ^ { k } = z | C _ { i } ^ { 1 } ) P ( C _ { i } ^ { 1 } ) } { \\sum _ { i \\in I } P ( Z _ { j } ^ { k } = z | C _ { i } ^ { 1 } ) P ( C _ { i } ^ { 1 } ) } .\\tag{15}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            99,
+            776,
+            430,
+            814
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "Equation (15) describes the posterior conditional distribution of the active radio source given the RSS is z. If we assume that the radio transmission is equally likely to be initiated by any cell in the grid, which means that $P ( C _ { i } ^ { 1 } )$ is the same across all cells, then the posterior condition distribution actually captures the radiation pattern (see Fig. 4).",
+        "bbox": [
+            63,
+            819,
+            494,
+            910
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "The second term $P ( C _ { i } , C _ { i } ^ { 0 } | Z _ { j } ^ { k } = z )$ in (14) is the joint conditional probability that there is at least one radio source in cell i and none of the radio sources in cell i transmits given the RSS is z. Joint event $( C _ { i } , C _ { i } ^ { 0 } )$ implies the following information.",
+        "bbox": [
+            63,
+            910,
+            494,
+            940
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "image",
+        "img_path": "images/0b85186b903cc4b6584699da49b4c3a34e30eebf7f953c0891a4f90e8745afe8.jpg",
+        "image_caption": [
+            "Fig. 4. Distribution of $P ( C _ { i } ^ { 1 } | Z _ { j } ^ { k } = z )$ over a $5 0 \\times 5 0$ grid for the directional antenna given that $P ( C _ { i } ^ { 1 } )$ is the same across all cells."
+        ],
+        "image_footnote": [],
+        "bbox": [
+            513,
+            78,
+            932,
+            318
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            508,
+            383,
+            937,
+            414
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "1) Since none of radio sources in cell i is transmitting, the condition $Z _ { j } ^ { k } = z$ cannot provide additional information for event $C _ { i }$ , which implies $P ( C _ { i } | Z _ { i } ^ { k } = z ) = P ( C _ { i } )$",
+        "bbox": [
+            523,
+            415,
+            937,
+            462
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "2) There must be one active cell $s , s \\in I$ and $s \\neq i .$",
+        "bbox": [
+            523,
+            460,
+            880,
+            476
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "3) Joint conditional event $( C _ { i } , C _ { i } ^ { 0 } | Z _ { i } ^ { k } = z )$ is equivalent to the union of the collection of events $\\{ ( C _ { i } , C _ { s } ^ { 1 } | Z _ { j } ^ { k } =$ $z ) , s \\neq i , s \\in I \\}$ because of no collision.",
+        "bbox": [
+            523,
+            477,
+            937,
+            523
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "4) Events $C _ { i }$ and $C _ { s } ^ { 1 }$ are independent.",
+        "bbox": [
+            523,
+            523,
+            789,
+            539
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "Therefore, we can obtain",
+        "bbox": [
+            525,
+            539,
+            700,
+            553
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/d06d21d1ac802379fddb718366b84526ef5046487b638fa52b68450426d90c1f.jpg",
+        "text": "$$\nP ( C _ { i } , C _ { i } ^ { 0 } | Z _ { j } ^ { k } = z ) = P ( C _ { i } ) \\sum _ { s \\neq i , s \\in I } P ( C _ { s } ^ { 1 } | Z _ { j } ^ { k } = z ) .\\tag{16}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            528,
+            559,
+            887,
+            593
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "Note that $P ( C _ { s } ^ { 1 } | Z _ { j } ^ { k } = z )$ can be computed using (15). By the substitution of (15) and (16) into (14), we obtain",
+        "bbox": [
+            506,
+            602,
+            937,
+            633
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/db54ca0fc7530b0ca898a51f8022a2faf08f7f2fbe33bddff28daef13721655b.jpg",
+        "text": "$$\n\\begin{array} { l } { P ( C _ { i } | Z _ { j } ^ { k } = z ) } \\\\ { = \\frac { \\displaystyle \\left( { P ( Z _ { j } ^ { k } = z | C _ { i } ^ { 1 } ) P ( C _ { i } ^ { 1 } ) } \\right. } { \\displaystyle \\left. + P ( C _ { i } ) \\sum _ { s \\neq i , s \\in I } P ( Z _ { j } ^ { k } = z | C _ { s } ^ { 1 } ) P ( C _ { s } ^ { 1 } ) \\right) } . } \\end{array}\\tag{17}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            508,
+            641,
+            900,
+            724
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "Unfortunately, (15) and (17) cannot be directly used in the system because $P ( C _ { i } )$ and $P ( C _ { i } ^ { 1 } )$ are not available. We have to rely on the conditional versions of $P ( C _ { i } )$ and $P ( C _ { i } ^ { 1 } )$ that build on the observation $\\mathbf { Z } ^ { - } ( Z _ { j } ^ { k } )$ . We can derive the following from (15) by adding $\\mathbf { Z } ^ { - } ( Z _ { j } ^ { k } )$ as the condition:",
+        "bbox": [
+            506,
+            732,
+            939,
+            810
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/95ea2add18e5acad940dcc8d212c3cab7633896bae9ff335ee30215f839d7e9f.jpg",
+        "text": "$$\n\\begin{array} { r l } & { P ( C _ { i } ^ { 1 } | \\{ Z _ { j } ^ { k } = z \\} \\cup \\mathbf { Z } ^ { - } ( Z _ { j } ^ { k } ) ) } \\\\ & { = \\frac { P ( Z _ { j } ^ { k } = z | C _ { i } ^ { 1 } , \\mathbf { Z } ^ { - } ( Z _ { j } ^ { k } ) ) P ( C _ { i } ^ { 1 } | \\mathbf { Z } ^ { - } ( Z _ { j } ^ { k } ) ) } { \\sum _ { s \\in I } P ( Z _ { j } ^ { k } = z | C _ { s } ^ { 1 } , \\mathbf { Z } ^ { - } ( Z _ { j } ^ { k } ) ) P ( C _ { s } ^ { 1 } | \\mathbf { Z } ^ { - } ( Z _ { j } ^ { k } ) ) } . } \\end{array}\\tag{18}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            547,
+            819,
+            898,
+            882
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "Since the conditional event $Z _ { j } ^ { k } = z$ is independent of the previous RSS values $\\mathbf { Z } ^ { - } ( Z _ { i } ^ { k } )$ given $C _ { i } ^ { 1 }$ , we know $P ( Z _ { j } ^ { k } =$ $z | C _ { i } ^ { 1 } , \\mathbf { Z } ^ { - } ( Z _ { j } ^ { k } ) ) = P ( Z _ { j } ^ { k } = \\bar { z } | C _ { i } ^ { 1 } )$ . According to the definition,",
+        "bbox": [
+            506,
+            890,
+            937,
+            943
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "page_number",
+        "text": "672",
+        "bbox": [
+            67,
+            40,
+            90,
+            50
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "header",
+        "text": "IEEE TRANSACTIONS ON ROBOTICS, VOL. 28, NO. 3, JUNE 2012",
+        "bbox": [
+            590,
+            37,
+            939,
+            51
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "$\\{ Z _ { j } ^ { k } = z \\} \\cup \\mathbf { Z } ^ { - } ( Z _ { j } ^ { k } ) = \\mathbf { Z } ( Z _ { j } ^ { k } )$ . Equation (18) can be rewritten as",
+        "bbox": [
+            57,
+            79,
+            486,
+            109
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/f186c201644cad16643bf1aebcb863b2834a224b9eda1d3aa62f0b88a1c27b7d.jpg",
+        "text": "$$\nP ( C _ { i } ^ { 1 } | \\mathbf { Z } ( Z _ { j } ^ { k } ) ) = \\frac { P ( Z _ { j } ^ { k } = z | C _ { i } ^ { 1 } ) P ( C _ { i } ^ { 1 } | \\mathbf { Z } ^ { - } ( Z _ { j } ^ { k } ) ) } { \\sum _ { s \\in I } P ( Z _ { j } ^ { k } = z | C _ { s } ^ { 1 } ) P ( C _ { s } ^ { 1 } | \\mathbf { Z } ^ { - } ( Z _ { j } ^ { k } ) ) } .\\tag{19}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            80,
+            116,
+            464,
+            155
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "Similarly, from (17), we can derive the following:",
+        "bbox": [
+            58,
+            167,
+            398,
+            183
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/26ff0cb38774295d0a06fe08923a3fb1027a1888fa9b91a79a9ca41ef22d09b9.jpg",
+        "text": "$$\n\\begin{array} { r l } & { P ( C _ { i } | \\mathbf { Z } ( Z _ { j } ^ { k } ) ) } \\\\ & { = \\frac { \\Big ( P ( Z _ { j } ^ { k } = z | C _ { i } ^ { 1 } ) P ( C _ { i } ^ { 1 } | \\mathbf { Z } ^ { - } ( Z _ { j } ^ { k } ) ) } { + P ( C _ { i } | \\mathbf { Z } ^ { - } ( Z _ { j } ^ { k } ) ) } } \\\\ & { = \\frac { \\Big ( \\begin{array} { l } { \\begin{array} { r l } & { \\sum _ { s \\neq i , s \\in I } P ( Z _ { j } ^ { k } = z | C _ { s } ^ { 1 } ) P ( C _ { s } ^ { 1 } | \\mathbf { Z } ^ { - } ( Z _ { j } ^ { k } ) ) } \\end{array} } \\end{array} \\Big ) } { \\sum _ { s \\in I } P ( Z _ { j } ^ { k } = z | C _ { s } ^ { 1 } ) P ( C _ { s } ^ { 1 } | \\mathbf { Z } ^ { - } ( Z _ { j } ^ { k } ) ) } . } \\end{array}\\tag{20}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            65,
+            190,
+            444,
+            284
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "Equations (19) and (20) provide a recursive formulation for updating the SPOG when a new radio transmission is sensed.",
+        "bbox": [
+            57,
+            290,
+            488,
+            320
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "V. ROBOT MOTION PLANNING",
+        "text_level": 2,
+        "bbox": [
+            168,
+            338,
+            378,
+            352
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "We threshold $P ( C _ { i } | \\mathbf { Z } ( Z _ { j } ^ { k } ) )$ to determine if cell i contains at least a radio source (see Definition 1). The rate that $P ( C _ { i } | \\mathbf { Z } ( Z _ { i } ^ { k } ) )  1$ for cells that contain radio sources determines localization speed and accuracy. Equations (19) and (20) show that $P ( C _ { i } | \\mathbf { Z } ( Z _ { i } ^ { k } ) )$ largely depends the antenna model $P ( Z _ { i } ^ { k } = z | C _ { i } ^ { 1 } ) = \\alpha \\bar { g _ { i } } ( z )$ , which actually is a function of robot configurations. We can design robot configurations to increase $P ( C _ { i } | \\mathbf { Z } ( Z _ { i } ^ { k } ) )$ , which will increase convergence speed. A good motion planner should warrant a good convergence speed.",
+        "bbox": [
+            57,
+            358,
+            488,
+            496
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "Recall that (20) predicts $P ( C _ { i } | \\mathbf { Z } ( Z _ { j } ^ { k } ) )$ at time k. At the moment before time $k ,$ define $w _ { s } : = \\bar { P } ( C _ { s } ^ { 1 } | \\mathbf { Z } ^ { - } ( Z _ { i } ^ { k } ) ) , s \\in I$ , which are constants. To simplify the notation, we define $\\xi _ { k } =$ $P ( C _ { i } | \\mathbf { Z } ( Z _ { j } ^ { k } ) )$ and $\\xi _ { k - 1 } = P ( C _ { i } | \\mathbf { Z } ^ { - } ( Z _ { j } ^ { k } ) )$ . Then, (20) can be rewritten as",
+        "bbox": [
+            57,
+            496,
+            488,
+            573
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/b94a36179772a454dcf001d8b24b15a95430cd912f37fd6201fd3b277676888c.jpg",
+        "text": "$$\n\\xi _ { k } = \\xi _ { k - 1 } + \\frac { ( 1 - \\xi _ { k - 1 } ) w _ { i } } { \\sum _ { s \\in I } g _ { s } ( z ) w _ { s } } .\\tag{21}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            175,
+            579,
+            370,
+            622
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "We are interested in choosing a robot configuration $( x _ { j } ^ { k } , y _ { j } ^ { k } , \\theta _ { j } ^ { k } )$ to maximize the posterior probability $P ( C _ { i } | \\mathbf { Z } ( Z _ { j } ^ { k } ) )$ . Since $w _ { s } , s \\in I$ , and $\\xi _ { k - 1 }$ are constants at the moment prior to time $k , ( 2 1 )$ implies that the maximization of the posterior probability is",
+        "bbox": [
+            57,
+            630,
+            488,
+            707
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/67cb8f277668da8535980f50a68f40157c1523facca453354565599fcd840a1c.jpg",
+        "text": "$$\n( x _ { j } ^ { k * } , y _ { j } ^ { k * } , \\theta _ { j } ^ { k * } ) = \\arg \\operatorname* { m a x } _ { ( x _ { j } ^ { k } , y _ { j } ^ { k } , \\theta _ { j } ^ { k } ) } \\xi _ { k }\n$$",
+        "text_format": "latex",
+        "bbox": [
+            101,
+            714,
+            361,
+            736
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/ec4fdfb94f42e8b3528664568365a4a67687c561e5cd5b2d8985327a4fd99c3e.jpg",
+        "text": "$$\n= \\arg \\operatorname* { m i n } _ { ( x _ { j } ^ { k } , y _ { j } ^ { k } , \\theta _ { j } ^ { k } ) } \\frac { \\sum _ { s \\in I } g _ { s } ( z ) w _ { s } } { g _ { i } ( z ) }\\tag{22}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            203,
+            741,
+            442,
+            775
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/5be55d53f87be6af1f8df21c30fddb96218d9260b0c79b35cc9bd7d4100440d0.jpg",
+        "text": "$$\n= \\arg \\operatorname* { m i n } _ { ( x _ { j } ^ { k } , y _ { j } ^ { k } , \\theta _ { j } ^ { k } ) } \\sum _ { s \\in I } w _ { s } r _ { s i } ( z )\\tag{23}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            203,
+            781,
+            432,
+            814
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "where",
+        "bbox": [
+            58,
+            820,
+            107,
+            834
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/d1019061b0e152d5a2ee8099400c647dacb9d7574a786483a547fd41fd125b61.jpg",
+        "text": "$$\nr _ { s i } ( z ) = \\frac { g _ { s } ( z ) } { g _ { i } ( z ) } = e ^ { - \\frac { 1 } { 2 \\sigma ^ { 2 } } [ ( z - \\mu _ { s } ) ^ { 2 } - ( z - \\mu _ { i } ) ^ { 2 } ] }\\tag{24}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            129,
+            840,
+            415,
+            875
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "$( x _ { j } ^ { k * } , y _ { j } ^ { k * } , \\theta _ { j } ^ { k * } )$ is the optimal robot configuration, and",
+        "bbox": [
+            58,
+            881,
+            424,
+            900
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/e4c7257a2ab86f7996bd2276b71770d7944a2e495956a9b13a6153b3e7fe1077.jpg",
+        "text": "$$\n\\mu _ { s } = 1 0 \\big ( \\log _ { 1 0 } C - \\beta \\log _ { 1 0 } d _ { s j } ^ { k } + \\log _ { 1 0 } \\varphi ( \\phi _ { s j } ^ { k } ) \\big ) \\quad \\forall s \\in I .\\tag{25}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            72,
+            909,
+            469,
+            928
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "chart",
+        "img_path": "images/589e1bfa2f192e6252db81ea19cdc666e8c24c9fb6b19c077f54d0bca2a7623b.jpg",
+        "content": "",
+        "chart_caption": [
+            "(a)"
+        ],
+        "chart_footnote": [],
+        "bbox": [
+            505,
+            80,
+            713,
+            199
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "chart",
+        "img_path": "images/7d087121ec3d0d1e49ee450afd757df3471dfdec5a1bf870131dd43d7b60b73c.jpg",
+        "content": "",
+        "chart_caption": [
+            "(b)",
+            "Fig. 5. (a) Example of $P ( C _ { i } | \\mathbf { Z } ( Z _ { j } ^ { k } ) )$ distribution and (b) radio source locations, a sample level set $L ( 0 . 3 )$ , and ridges over a $5 0 \\times 5 0$ grid for the case. The radio source locations are shown with black dots. The level set is bounded inside the blue solid lines. The red dashed lines denote the corresponding ridges for the level set components."
+        ],
+        "chart_footnote": [],
+        "bbox": [
+            727,
+            79,
+            925,
+            200
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "To simplify the notation, let us define $\\begin{array} { r } { r _ { i } : = \\sum _ { s \\in I } w _ { s } r _ { s i } ( z ) } \\end{array}$ . Recall that $w _ { s } = P ( C _ { s } ^ { 1 } | \\mathbf { Z } ^ { - } ( Z _ { i } ^ { k } ) ) , s \\in I$ . From statistics [42], [43], we know that $r _ { i }$ is the likelihood ratio for two candidate distributions: the univariate Gaussian distribution that is represented by $g _ { i } ( z )$ and the Gaussian mixture that is represented by $\\sum _ { s \\in I } w _ { s } g _ { s } ( z )$ . Let us use the Gaussian mixture as $\\mathcal { H } _ { \\mathrm { 0 } }$ hypothesis and the univariate Gaussian as $\\mathcal { H } _ { 1 }$ hypothesis for the likelihood ratio test of the unknown distribution of the random noise in $z .$ Minimizing $r _ { i }$ actually minimizes the likelihood that noise in z is from the Gaussian mixture as opposed to the univariate Gaussian distribution. This is very intuitive for our problem.",
+        "bbox": [
+            500,
+            333,
+            930,
+            515
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "The optimization problem in (23) is not directly solvable because z is the RSS of the future reception at time k and $r _ { i }$ is not available. Therefore, to find the global optimal $( x _ { j } ^ { k * } , y _ { j } ^ { k * } , \\theta _ { j } ^ { k * } )$ for the nonlinear optimization problem is impractical. Actually, a robust local optimal solution would be a good candidate solution because the solution can also effectively accelerate the posterior probability convergence for $\\xi _ { k }$ . Defining $\\mathbf { x } _ { j } ^ { k } = \\binom { x _ { j } ^ { k } } { y _ { j } ^ { k } }$ and $\\mathbf { x } _ { i } = \\big [ _ { y _ { i } } ^ { x _ { i } } \\big ]$ , we have the following lemma with its proof in the Appendix.",
+        "bbox": [
+            500,
+            515,
+            930,
+            676
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "Lemma 1: If the robot is located at the center of the cell i at time $k , \\mathbf { x } _ { i } ^ { k } = \\mathbf { x } _ { i }$ , then the likelihood ratio $r _ { i }$ is located at a local minima regardless of future reception z.",
+        "bbox": [
+            500,
+            678,
+            930,
+            723
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "Remark 1: Note that Lemma 1 and its proof do not specify robot orientation $\\theta _ { j } ^ { k }$ . This is because of the fact that the RSS receiver is saturated when $\\mathbf { x } _ { j } ^ { k }  \\mathbf { x } _ { i }$ according to (6). Hence, $\\varphi = 1$ is constant in (25), which means that the $\\theta _ { j } ^ { k }$ value is irrelevant.",
+        "bbox": [
+            500,
+            723,
+            930,
+            801
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "Lemma 1 suggests that the principle of the motion planning is to drive the robot into the cells with the high $P ( C _ { i } | \\mathbf { Z } ( Z _ { j } ^ { k } ) )$ values. This principle inspires us to develop a ridge walking algorithm (RWA) for the robot motion planning.",
+        "bbox": [
+            500,
+            803,
+            929,
+            863
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "Fig. 5(a) illustrates an example of the distribution of $P ( C _ { i } | \\mathbf { Z } ( Z _ { j } ^ { k } ) )$ over a $5 0 \\times 5 0 ~ \\mathrm { g r i d }$ . The actual radio source positions are shown as black dots in Fig. 5(b). $P ( C _ { i } | \\mathbf { Z } ( Z _ { i } ^ { k } ) )$ value is much larger in the area adjacent to radio sources than that of other areas. To study the spatial distribution of $P ( C _ { i } | \\mathbf { Z } ( Z _ { j } ^ { k } ) )$ ), we introduce level set $L ( p ) , p \\in ( 0 , 1 ]$ as follows:",
+        "bbox": [
+            500,
+            863,
+            932,
+            941
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "header",
+        "text": "SONG et al.: SIMULTANEOUS LOCALIZATION OF MULTIPLE UNKNOWN AND TRANSIENT RADIO SOURCES USING A MOBILE ROBOT",
+        "bbox": [
+            57,
+            39,
+            782,
+            51
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "page_number",
+        "text": "673",
+        "bbox": [
+            909,
+            40,
+            929,
+            50
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            63,
+            79,
+            405,
+            95
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/9e128097b53dc0cb7a336f1485e98636f186d5cc147ea685bed8ab24cc322f5b.jpg",
+        "text": "$$\nL ( p ) = \\{ i | P ( C _ { i } | \\mathbf { Z } ( Z _ { j } ^ { k } ) ) \\geq p , i \\in I \\} .\\tag{26}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            149,
+            102,
+            409,
+            119
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "Let us envision that a plane parallel to the ground plane intersects the mountain-like $P ( C _ { i } | \\mathbf { Z } ( Z _ { j } ^ { k } ) )$ distribution at height $p$ in Fig. ${ 5 ( \\mathrm { a ) } }$ . The intersection generates $L ( p )$ that contains all cells with $P ( C _ { i } | \\mathbf { Z } ( Z _ { i } ^ { k } ) )$ above the plane. Fig. 5(b) illustrates the level set $L ( 0 . 3 )$ for the example shown in Fig. 5(a).",
+        "bbox": [
+            63,
+            126,
+            496,
+            202
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "Fig. 5(b) also shows that $L ( p )$ usually consists of several disconnected components. Define $l _ { \\mathrm { m a x } }$ as the total number of the disconnected components and $L _ { l }$ as the lth component, $l = 1 , \\ldots , l _ { \\mathrm { m a x } }$ . Therefore, $L ( p ) = L _ { 1 } \\cup L _ { 2 } \\cup \\dots \\cup L _ { l _ { \\operatorname* { m a x } } }$ , and $L _ { l } \\cap L _ { m } = \\emptyset$ , where $m \\neq l$ and $m = 1 , 2 , \\ldots , l _ { \\mathrm { m a x } }$ . For the lth component, we define its ridge $R _ { l }$ as the line segment defined by points $( x ^ { \\prime } , y ^ { \\prime } )$ and $( x ^ { \\prime \\prime } , y ^ { \\prime \\prime } )$ on $L _ { l } \\colon$",
+        "bbox": [
+            63,
+            202,
+            496,
+            310
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/69c504296511addbdab4d7a2dd16ecb57280e0e98bcb8c71e140ef3a25fda27a.jpg",
+        "text": "$$\n\\begin{array} { c } { R _ { l } = \\{ ( x , y ) | x = ( 1 - \\alpha ) x ^ { \\prime } + \\alpha x ^ { \\prime \\prime } \\nonumber } \\\\ { y = ( 1 - \\alpha ) y ^ { \\prime } + \\alpha y ^ { \\prime \\prime } , \\alpha \\in [ 0 , 1 ] \\} } \\end{array}\\tag{27}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            117,
+            315,
+            442,
+            356
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "where points $( x ^ { \\prime } , y ^ { \\prime } )$ and $( x ^ { \\prime \\prime } , y ^ { \\prime \\prime } )$ are the two points on $L _ { l }$ such that the distance between $( x ^ { \\prime } , y ^ { \\prime } )$ and $( x ^ { \\prime \\prime } , y ^ { \\prime \\prime } )$ is the maximum.",
+        "bbox": [
+            63,
+            361,
+            494,
+            393
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "If the robot walks on the ridge, the probability that the robot is close to a potential radio source is high. Because of the walk ing direction, the antenna always points along the ridge, which ensures the most sensitive reception region of the antenna to overlap with the lth component. In the RWA, there are two types of robot motion: on-ridge movements and off-ridge movements. Since the on-ridge movement is the effective movement for the localization purpose, it is desirable for the robot to allocate its time to on-ridge movements as much as possible. The off-ridge movement denotes the travel in-between ridges for the robot. Since we have a fixed time period, we set the robot to travel at its fastest speed along the shortest path for off-ridge movements to save time for on-ridge movements.",
+        "bbox": [
+            63,
+            392,
+            496,
+            588
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "We treat the end point of each on-ridge segment as a vertex. We define edges as the line segments connecting different vertices on the 2-D plane. With a vertex set $V ,$ an edge set E, and a graph $G ( V , E )$ , to find the shortest path is an instance of the traveling salesman problem (TSP). The only difference is that edges corresponding to on-ridge movements must be included in the solution. We can modify the original TSP by treating each on-ridge edge and its two end points as a super vertex. Then, solving the TSP provides an efficient trajectory for the robot. Define $v _ { \\mathrm { m a x } }$ as the maximum velocity that the robot can travel. The time available for on-ridge movements tON is",
+        "bbox": [
+            63,
+            588,
+            494,
+            756
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/b880661fdb42cc266bbec1ea45206387b12548111fd8005ee21c2eec9472744b.jpg",
+        "text": "$$\nt _ { \\mathrm { O N } } = \\tau _ { 0 } - d _ { \\mathrm { O F F } } / v _ { \\mathrm { m a x } }\\tag{28}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            195,
+            763,
+            365,
+            779
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "where $d _ { \\mathrm { O F F } }$ is the total length of off-ridge edges. We allocate $t _ { \\mathrm { O N } }$ to each ridge proportional to the probability that the corresponding component contains a radio source. For component $l ,$ we define the time the robot spend on the ridge $R _ { l }$ as $\\tau _ { l }$ Therefore",
+        "bbox": [
+            63,
+            786,
+            494,
+            861
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/d35c27c7051dfa2ca5b4bdd9bb468347c512890e36f460f22266a08f888fdd0b.jpg",
+        "text": "$$\n\\tau _ { l } = \\frac { \\sum _ { i \\in L _ { l } } P ( C _ { i } | \\mathbf { Z } ( Z _ { j } ^ { k } ) ) } { \\sum _ { i \\in L ( p ) } P ( C _ { i } | \\mathbf { Z } ( Z _ { j } ^ { k } ) ) } t _ { \\mathrm { O N } } .\\tag{29}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            163,
+            866,
+            395,
+            905
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "With $\\tau _ { l }$ and the length of each ridge, it is trivial to find the robot velocity for the ridge. If the low-cost robot cannot accurately control its speed, then we cannot execute the precise time allocation in (29). If so, we can simply set the robot to its maximum speed for off-ridge movements and minimum speed for on-ridge movements.",
+        "bbox": [
+            63,
+            910,
+            494,
+            940
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "code",
+        "sub_type": "algorithm",
+        "code_caption": [],
+        "code_footnote": [],
+        "code_body": "Algorithm 1: SPOG Update Algorithm   \ninput : the received RF signal strength $Z _ { j } ^ { k } = z$   \noutput: $P ( C _ { i } | \\mathbf { Z } ( Z _ { j } ^ { k } ) ) , P ( C _ { i } ^ { 1 } | \\mathbf { Z } ( Z _ { j } ^ { k } ) ) , i \\in \\overline { { I } } ,$ and $\\mathbb { C } ^ { * }$   \nfor $i \\in I$ do O(n)   \nCompute distance $d _ { i j } ^ { k }$ using (2) O(1)   \nCompute bearing $\\phi _ { i j } ^ { k }$ using (3) O(1)   \nCompute radiation pattern $\\varphi ( \\phi _ { i j } ^ { k } )$ using (6) O(1)   \nCompute $\\mu _ { i }$ using (5) O(1)   \nCompute $g _ { i } ( z )$ using (7) O(1)   \nCompute $G _ { i } ( z )$ using (8) O(1)   \nCompute $P ( Z _ { j } ^ { k } = z | C _ { i } ^ { 1 } )$ using (9) O(1)   \nfor $i \\in I$ do O(n)   \nCompute $P ( C _ { i } ^ { 1 } | \\mathbf { Z } ( Z _ { i } ^ { k } ) )$ using (19) O(n)   \nCompute $P ( C _ { i } | \\mathbf { Z } ( Z _ { j } ^ { k } ) )$ using (20) O(n)   \nif $P ( C _ { i } | \\mathbf { Z } ( Z _ { i } ^ { k } ) ) > \\tilde { p _ { t } }$ and $i \\notin \\mathbb { C } ^ { * }$ then   \n$\\big \\lfloor \\mathbb { C } ^ { * } = \\mathbb { C } ^ { * } \\cup \\{ i \\}$ O(1)",
+        "bbox": [
+            523,
+            80,
+            920,
+            333
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            506,
+            358,
+            939,
+            420
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "VI. ALGORITHMS",
+        "text_level": 2,
+        "bbox": [
+            659,
+            435,
+            787,
+            450
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "A. Algorithm Pseudo Code and Complexity",
+        "text_level": 2,
+        "bbox": [
+            508,
+            458,
+            811,
+            473
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "To summarize our analysis, we present two algorithms including an SPOG update algorithm and the RWA. Corresponding to the sensing problem in Section III-D, the SPOG update algorithm (i.e., Algorithm 1) runs when a radio signal is detected. Define set $\\mathbb { C } ^ { * }$ as the set of cells that contain radio sources with the initial value $\\mathbb { C } ^ { * } = \\varnothing$ . Recall that $p _ { t }$ is the probability threshold for finding the radio source. The robot reports the cells that satisfy $P ( C _ { i } | \\mathbf { Z } ( Z _ { j } ^ { k } ) ) > p _ { t }$ as the cells that contain at least one radio source.",
+        "bbox": [
+            505,
+            479,
+            939,
+            614
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "Recall that n is the total number of cells. It is clear that the complexity of Algorithm 1 is $O ( n ^ { 2 } )$ . The initial value settings are $P ( C _ { i } | \\mathbf { Z } ( Z _ { 0 } ^ { 0 } ) ) = 0$ and $P ( C _ { i } ^ { 1 } | \\mathbf { Z } ( Z _ { 0 } ^ { 0 } ) ) = 1 / n$",
+        "bbox": [
+            506,
+            614,
+            937,
+            661
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "The RWA runs every τ0 time. As illustrated in Algorithm 2, the robot performs random walking until set $L ( p ) \\neq \\emptyset$ at the initialization stage. Then, the robot switches into the normal ridge walking mode. The robot stops when no additional radio source has been found in $k _ { \\mathrm { m a x } }$ consecutive periods, where $k _ { \\mathrm { m a x } }$ is a preset iteration number. For the Euclidean TSP, we can also use approximation approaches, such as the minimum spanning tree (MST) approximation [44, p. 969]. If so, the overall complexity can be reduced to $O ( n + l _ { \\mathrm { m a x } } ^ { 2 } )$",
+        "bbox": [
+            506,
+            661,
+            939,
+            799
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "B. Localization Time",
+        "text_level": 2,
+        "bbox": [
+            508,
+            813,
+            661,
+            828
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "An important question that remains to be answered is how long does it take for the RWA to find a radio source. We need to find the upper bound of the searching/localization time. Let $T _ { s }$ denote the searching time. Obviously, $T _ { s }$ is related to how often the radio source transmits. To facilitate our analysis, let us assume that the radio source i transmits according to a Poisson process with a rate of $\\lambda _ { i }$ . Since we are looking for the upper bound of $T _ { s } ,$ , we also tighten the convergence condition by increasing the probability threshold $p _ { t }$ in Definition 1. Threshold $p _ { t }$ is set high so that the robot must receive a saturated signal when considering radio source i found. It means that the robot must receive the transmission within the distance of $d _ { a }$ of the radio source. This defines a sensing circle with its center located at the radio source i and a radius of $d _ { a }$",
+        "bbox": [
+            505,
+            834,
+            939,
+            941
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "page_number",
+        "text": "674",
+        "bbox": [
+            67,
+            40,
+            90,
+            50
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "header",
+        "text": "IEEE TRANSACTIONS ON ROBOTICS, VOL. 28, NO. 3, JUNE 2012",
+        "bbox": [
+            592,
+            37,
+            937,
+            51
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "table",
+        "img_path": "images/b842399db0eb8507955018ae337111e3a03cc0fde546dd601a1f8f161315136f.jpg",
+        "table_caption": [],
+        "table_footnote": [],
+        "table_body": "<table><tr><td>Algorithm 2: Ridge Walking Algorithm</td></tr><tr><td>input  $: P ( C _ { i } | \\mathbf { Z } ( Z _ { j } ^ { k } ) ) , P ( C _ { i } ^ { 1 } | \\mathbf { Z } ( Z _ { j } ^ { k } ) ) , i \\in I$  output: Robot motion  $\\{ \\mathbf { r } ( t ) | t ^ { k } \\leq \\check { t } < t ^ { k + 1 } \\}$  and  $\\mathbb { C } ^ { * }$  Compute  $L ( p )$  O(n)</td></tr><tr><td>if  $L ( p ) = \\emptyset$  then L  $\\{ \\mathbf { r } ( t ) | t ^ { k } \\leq t < t ^ { k + 1 } \\}$  = random walk O(1)</td></tr><tr><td>else</td></tr><tr><td>Find all disconnected components in  $L ( p )$   $O ( n )$ </td></tr><tr><td>Compute  $R _ { l }$  for each  $L _ { l }$   $O ( n )$ </td></tr><tr><td>Construct graph G and solve TSP  $O ( l _ { \\mathrm { m a x } } ^ { 2 } )$  Compute  $d _ { \\mathrm { o F F } }$   $O ( l _ { \\mathrm { m a x } } )$  Compute using (28) (1)</td></tr></table>",
+        "bbox": [
+            74,
+            80,
+            471,
+            297
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            55,
+            320,
+            488,
+            428
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "Without loss of generality, we assume the field of localization as a disk with a radius of 1. Define $T _ { \\mathrm { T S P } }$ to be the amount of time for the robot to finish a TSP tour in the RWA. Let $\\tau _ { \\mathrm { I N } }$ and τ be portions of the tour within and outside distance of $d _ { a }$ of radio source $i ,$ respectively. Hence",
+        "bbox": [
+            57,
+            428,
+            488,
+            503
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "equation",
+        "img_path": "images/e5796b0116339535b14c15c35dccf8161b87e8d54dbf131aa5f337a070aeb4e5.jpg",
+        "text": "$$\nT _ { \\mathrm { T S P } } = \\tau _ { \\mathrm { I N } } + \\tau _ { \\mathrm { O U T } } .\\tag{30}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            196,
+            512,
+            348,
+            527
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "We have the following theorem.",
+        "bbox": [
+            57,
+            535,
+            279,
+            549
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "Theorem 1: The expected searching time $E ( T _ { s } )$ of radio source i has the following upper bound:",
+        "bbox": [
+            57,
+            549,
+            488,
+            580
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "equation",
+        "img_path": "images/37550e8f9ff3d9dc929334612da8cdba7bb16d9edba5330fa4ba979a97c6fc99.jpg",
+        "text": "$$\nE ( T _ { s } ) \\leq \\frac { \\tau _ { 0 } } { 1 - e ^ { - \\lambda _ { i } \\tau _ { 0 } } } + \\frac { 1 } { \\lambda _ { i } } + \\frac { 4 \\sqrt { 3 } } { v _ { \\mathrm { a v g } } } \\Big [ \\frac { 1 } { 2 } + E \\big ( \\frac { e ^ { - \\lambda _ { i } \\tau _ { \\mathrm { I N } } } } { 1 - e ^ { - \\lambda _ { i } \\tau _ { \\mathrm { I N } } } } \\big ) \\Big ]\\tag{31}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            69,
+            588,
+            474,
+            625
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "where $v _ { \\mathrm { a v g } }$ is the average traveling speed of the robot and defined in (40).",
+        "bbox": [
+            57,
+            636,
+            486,
+            666
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "Proof: From [34, Th. 1], we know that the expected time to search for a transient signal source is",
+        "bbox": [
+            57,
+            666,
+            488,
+            696
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "equation",
+        "img_path": "images/7d656dbd37aa1af4319afde31d7c5a8a70245cf3fc5068662346f3607bf0ae7e.jpg",
+        "text": "$$\nE ( T _ { s } ) = E ( D ) + \\frac { 1 } { \\lambda _ { i } } + E \\left( \\tau _ { \\mathrm { O U T } } \\frac { e ^ { - \\lambda _ { i } \\tau _ { \\mathrm { I N } } } } { 1 - e ^ { - \\lambda _ { i } \\tau _ { \\mathrm { I N } } } } \\right)\\tag{32}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            90,
+            704,
+            425,
+            743
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "where $D$ is the amount of time from the beginning to the moment that the robot is within the distance $d _ { a }$ of the radio source i during the repetitive TSP tours. It is clear that $D$ is a random variable. From Algorithm 2, the robot performs random walk in the first period to initialize the SPOG. The expect value of $D$ can be obtained by conditioning on the event $A _ { i }$ that radio source i has at least one transmission during the initial $\\tau _ { 0 }$ time. If $A _ { i }$ is true, then the TSP tour planned at the end of first period would come across the sensing circle of the radio source i. If $A _ { i }$ is not true, the system returns to the same initial state because the chance that the next TSP tour will come across the sensing circle is negligible. Hence, we have",
+        "bbox": [
+            57,
+            750,
+            488,
+            933
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "equation",
+        "img_path": "images/87165a39b121803a277ccbc2f0f08153b47b78a3181ed906f9d4f3e976095cd7.jpg",
+        "text": "$$\nE ( D | A _ { i } ) = \\tau _ { 0 } + E ( T _ { \\mathrm { T S P } } ) / 2\\tag{33}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            170,
+            939,
+            378,
+            957
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "equation",
+        "img_path": "images/b3a92bed3b03a89bb4a6a73b32bda40b3d513164e88f18c197597ac25c4aa22a.jpg",
+        "text": "$$\n\\begin{array} { r } { E ( D | \\bar { A } _ { i } ) \\approx \\tau _ { 0 } + E ( D ) . } \\end{array}\\tag{34}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            612,
+            80,
+            784,
+            97
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "From the property of a Poisson process, we know",
+        "bbox": [
+            500,
+            106,
+            841,
+            121
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "equation",
+        "img_path": "images/4902f3b33f5b8ff5cd0ee4503f49e49c8142bf26b88403859feddaa10b4a4306.jpg",
+        "text": "$$\nP ( \\bar { A } _ { i } ) = e ^ { - \\lambda _ { i } \\tau _ { 0 } } \\mathrm { a n d } P ( A _ { i } ) = 1 - e ^ { - \\lambda _ { i } \\tau _ { 0 } } .\\tag{35}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            567,
+            128,
+            863,
+            148
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "Combining (35) with (33) and (34), we have",
+        "bbox": [
+            500,
+            156,
+            808,
+            172
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "equation",
+        "img_path": "images/9e0c8cdc54c0c794cf6f87911c79324a0ec20fcb2667144cf57b56051b916f22.jpg",
+        "text": "$$\n\\begin{array} { c l c r } { { } } & { { } } & { { E ( D ) = E ( D | A _ { i } ) P ( A _ { i } ) + E ( D | \\bar { A } _ { i } ) P ( \\bar { A } _ { i } ) } } \\\\ { { } } & { { } } & { { = \\displaystyle \\frac { \\tau _ { 0 } } { 1 - e ^ { - \\lambda _ { i } \\tau _ { 0 } } } + E ( T _ { \\mathrm { T S P } } ) / 2 . } } \\end{array}\\tag{36}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            562,
+            180,
+            868,
+            233
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "In addition, since τIN $\\ll$ τ and $\\tau _ { \\mathrm { I N } }$ is independent of $T _ { \\mathrm { T S P } }$ the last term of (32) can be approximated as",
+        "bbox": [
+            500,
+            239,
+            929,
+            270
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "equation",
+        "img_path": "images/a2a7de69e86ef72742dfe362c2902458f1c6497691c19f54933dd3632f7558d0.jpg",
+        "text": "$$\nE \\left( \\tau _ { \\mathrm { O U T } } \\frac { e ^ { - \\lambda _ { i } \\tau _ { \\mathrm { I N } } } } { 1 - e ^ { - \\lambda _ { i } \\tau _ { \\mathrm { I N } } } } \\right) \\approx E ( T _ { \\mathrm { T S P } } ) E \\left( \\frac { e ^ { - \\lambda _ { i } \\tau _ { \\mathrm { I N } } } } { 1 - e ^ { - \\lambda _ { i } \\tau _ { \\mathrm { I N } } } } \\right) .\\tag{37}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            518,
+            276,
+            909,
+            318
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "If the TSP tour straightly crosses the sensing circle with a speed of v, we have shown how to compute $\\begin{array} { r } { E \\big ( \\frac { { e } ^ { - \\big ( \\lambda _ { i } \\tau _ { \\mathrm { I N } } } } { 1 - e ^ { - \\lambda _ { i } \\tau _ { \\mathrm { I N } } } } \\big ) } \\end{array}$ in [34]:",
+        "bbox": [
+            500,
+            330,
+            930,
+            372
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "equation",
+        "img_path": "images/5c7bacd29bbe46a2ed87fd669e9a497cbb5e5144095318ef1cc06cb79569ffd3.jpg",
+        "text": "$$\nE \\left( \\frac { e ^ { - \\lambda _ { i } \\tau _ { \\mathrm { I N } } } } { 1 - e ^ { - \\lambda _ { i } \\tau _ { \\mathrm { I N } } } } \\right) = \\int _ { 0 } ^ { \\pi / 2 } \\frac { 1 } { e ^ { \\frac { 2 \\lambda _ { i } d _ { a } \\sin \\theta } { v } } - 1 } \\sin \\theta d \\theta .\\tag{38}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            523,
+            381,
+            880,
+            424
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "When the field is large, the TSP tour consists of long and straight line segments. Equation (38) is a good approximation for general $\\begin{array} { r } { E \\big ( \\frac { { e } ^ { - \\displaystyle \\lambda _ { i } \\tau _ { \\mathrm { I N } } } } { 1 - e ^ { - \\displaystyle \\lambda _ { i } \\tau _ { \\mathrm { I N } } } } \\big ) } \\end{array}$ . By the substitution of (36) and (37) into (32), we have",
+        "bbox": [
+            500,
+            430,
+            932,
+            498
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "equation",
+        "img_path": "images/5ebcff59357c40d9fd2857fe0d04289901abb6f7830c795352b84514bf0d0754.jpg",
+        "text": "$$\n\\begin{array} { r } { E ( T _ { s } ) = \\displaystyle { \\frac { \\tau _ { 0 } } { 1 - e ^ { - \\lambda _ { i } \\tau _ { 0 } } } } + \\frac { 1 } { \\lambda _ { i } } + E ( T _ { \\mathrm { T S P } } ) } \\\\ { \\times \\left[ \\frac { 1 } { 2 } + E \\left( \\frac { e ^ { - \\lambda _ { i } \\tau _ { \\mathrm { I N } } } } { 1 - e ^ { - \\lambda _ { i } \\tau _ { \\mathrm { I N } } } } \\right) \\right] . } \\end{array}\\tag{39}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            577,
+            506,
+            853,
+            584
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "Define $L _ { \\mathrm { T S P } }$ as the length of the TSP tour and $v _ { \\mathrm { a v g } }$ as the average speed during the tour that satisfies",
+        "bbox": [
+            500,
+            590,
+            930,
+            622
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "equation",
+        "img_path": "images/7b5387ea781d54b04c860b2b1ba6f65f14b9a96204f0a679f0e2c03900696b00.jpg",
+        "text": "$$\nE ( T _ { \\mathrm { T S P } } ) = E ( L _ { \\mathrm { T S P } } ) / v _ { \\mathrm { a v g } } .\\tag{40}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            616,
+            631,
+            814,
+            647
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "Define $L _ { \\mathrm { M S T } }$ as the summation of MST edges for the vertices in the TSP tour. From [44], we know that $L _ { \\mathrm { T S P } } \\leq 2 L _ { \\mathrm { M S T } }$ since triangle inequalities are satisfied for the Euclidean TSP. Define $\\mathcal { E }$ as the edge index set for the MST and $e _ { l }$ as the lth edge in $\\mathcal { E } .$ From its definition, we know that $\\begin{array} { r } { L _ { \\mathrm { M S T } } = \\sum _ { l \\in \\mathcal { E } } | e _ { l } | } \\end{array}$ and that",
+        "bbox": [
+            500,
+            655,
+            930,
+            733
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "equation",
+        "img_path": "images/b40143b296933b46d092b3ea9b9c1b1a32f41935f0b5c7c0e994d2e04b538f46.jpg",
+        "text": "$$\nL _ { \\mathrm { M S T } } = \\sqrt { \\left( \\sum _ { l \\in \\mathcal { E } } \\left. e _ { l } \\right. \\right) ^ { 2 } } \\leq \\sqrt { 2 \\sum _ { l \\in \\mathcal { E } } \\left. e _ { l } \\right. ^ { 2 } } .\\tag{41}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            574,
+            742,
+            856,
+            790
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "Since all vertices are located inside a unit disk and distances are Euclidean, from [45, Th. 1], we have",
+        "bbox": [
+            500,
+            797,
+            930,
+            829
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "equation",
+        "img_path": "images/4d0dc63b64fc8d3ebf3bbd5d089d3a6f128711d315228d291bdf19697b41aae3.jpg",
+        "text": "$$\n\\sum _ { l \\in { \\mathcal { E } } } | e _ { l } | ^ { 2 } \\leq 6\\tag{42}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            668,
+            835,
+            764,
+            868
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "regardless of the number of vertices in the graph. Combining (40)–(42), we have",
+        "bbox": [
+            500,
+            875,
+            930,
+            905
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "equation",
+        "img_path": "images/e2f90ab2fe2618079946b6d4cae206a780cf652c25f0f830c1c3c8719425a5af.jpg",
+        "text": "$$\nE ( T _ { \\mathrm { T S P } } ) \\leq 4 \\sqrt { 3 } / v _ { \\mathrm { a v g } } .\\tag{43}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            634,
+            914,
+            799,
+            933
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "Equation (31) is proved by substituting (43) into (39).",
+        "bbox": [
+            500,
+            939,
+            867,
+            957
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "header",
+        "text": "SONG eL aL : SIMULTANEOUS LOCALIZATION OF MULTIPLE UNKNOWN AND TRANSIENT RADIO SOURCES USING A MOBILE ROBOT",
+        "bbox": [
+            57,
+            37,
+            782,
+            51
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "page_number",
+        "text": "675",
+        "bbox": [
+            907,
+            40,
+            930,
+            50
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "Remark 2: An important result that is given by Theorem 1 is the fact that entries in (31) are not sensitive to the number of radio sources. This means that our RWA has excellent scalability when the number of radio sources increases.",
+        "bbox": [
+            63,
+            79,
+            496,
+            141
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "C. Extensions",
+        "text_level": 2,
+        "bbox": [
+            65,
+            156,
+            171,
+            171
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "Increasing localization accuracy, handling of uneven transmission rates, and dealing with obstacles in the searching region are the three important extensions for application purposes.",
+        "bbox": [
+            63,
+            178,
+            494,
+            223
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "Increasing localization accuracy: We discretize the searching space, and the localization accuracy is inherently limited by grid resolution. If the localization accuracy cannot satisfy application requirement, we can run a postprocessing algorithm to increase the accuracy. Once a cell that contains a radio source is identified, we can verify all RSSs to identify transmissions that are initiated by the source based on distances between the cell center and the robot positions when transmissions occurred. We can identify a group of transmissions that are within a preset distance threshold since the robot has less range ambiguity when it moves closer to the source. Based on the transmissions, we can estimate the source location using the maximum likelihood estimator by minimizing the Mahalanobis distance. The process can provide both mean and variance of the source position. Since the method is a standard approach [46], we omit the details. In fact, when the cell is identified, the problem can be reduced to the regular localization problem with multiple measurements.",
+        "bbox": [
+            63,
+            223,
+            496,
+            479
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "Handling of uneven transmission rates: The RWA tracks highprobability regions by patrolling. This is an efficient approach when the transmission rates of radio sources are close to each other. If a few nodes transmit significantly more frequently than others, their residing cells can be quickly identified. This often happens if the sensor network employs some nodes as routers. In such cases, repeatedly visiting the cells is inefficient, and the RWA needs to remove ridges corresponding to the identified nodes before solving the TSP such that the robot can focus on searching for the remaining nodes.",
+        "bbox": [
+            63,
+            479,
+            494,
+            631
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "Dealing with obstacles in the searching region: In the presence of obstacles, the SPOG framework can be easily adapted by marking obstacle-occupied cells as nontraversable. For motion planning, we can still use the idea of RWA but connecting the ridges in the presence of obstacle is different because simple line connections may not work. This can be addressed by using the established techniques in motion planning, such as sampling- or rapid-exploring random tree (RRT)-based approaches [47]. Depending upon the methods that are used, the path length, which is the most important factor that determines the convergence speed, may vary, and the final searching time analysis should reflect the complexity of obstacles.",
+        "bbox": [
+            63,
+            631,
+            496,
+            813
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "VII. EXPERIMENTS",
+        "text_level": 2,
+        "bbox": [
+            212,
+            828,
+            350,
+            842
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "We have implemented the algorithms using Microsoft Visual C++ .NET 2005 with OpenGL on a PC desktop with an Intel 2.13-GHz Core 2 Duo CPU and 2-GB RAM. The machine runs Microsoft Windows XP. The algorithms are tested in the hardware-driven simulation and physical experiments. The antenna on the robot is HyperGainT Model HG2415G that is a",
+        "bbox": [
+            63,
+            849,
+            496,
+            941
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "2.4-GHz 15-dBi reflector grid antenna. The radio sources are Zigbee nodes, which are XBeeT with ZigBeeT/802.15.4 OEM RF Modules by MaxStream, Inc. The antenna is calibrated first with the radio sources. The calibration is conducted at 328 configurations and 6560 readings have been collected. The calibrated antenna model is represented as the coefficients in (5) and σ in (7).",
+        "bbox": [
+            505,
+            79,
+            941,
+            186
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "A. Simulation",
+        "text_level": 2,
+        "bbox": [
+            506,
+            200,
+            614,
+            215
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "We use the data from the real hardware to drive the simulation experiments here.",
+        "bbox": [
+            506,
+            222,
+            939,
+            252
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "The grid is a square with $5 0 \\times 5 0$ cells. Each grid cell has a size of $5 . 0 8 \\times 5 . 0 8 \\mathrm { c m ^ { 2 } }$ . Each radio source generates radio transmission signals according to an independently and identically distributed Poisson process with a rate of $\\lambda = 0 . 0 1 2$ packets per second. The threshold $p _ { t } = 0 . 8$ and the level set parameter $\\begin{array} { r } { p = { \\frac { 6 } { n } } \\sum _ { i } P ( C _ { i } | \\mathbf { Z } ( Z _ { j } ^ { k } ) ) } \\end{array}$ , where the constant 6 is determined by many experimental trials. During each trial of the simulation, we randomly generate radio source locations in the 50× 50 grid.",
+        "bbox": [
+            505,
+            252,
+            939,
+            373
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "The first experiment we conducted is to study how fast the RWA can localize all radio sources under different $\\tau _ { 0 }$ settings. This determines how often we should run the RWA. Fig. 6(a) shows the test results. We change the radio source number from 2 to 10 during the simulation. Each point in Fig. 6(a) is an average of 10 trials. It is interesting that the RWA is at its best performance when $\\tau _ { 0 } = 8 0 0 :$ s, regardless of the radio source number. This means that the robot needs to listen to each radio for an expected value of $8 0 0 \\lambda = 9 . 6$ times before repeating the algorithm.",
+        "bbox": [
+            506,
+            373,
+            939,
+            523
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "Fig. 6(b) illustrates how $P ( C _ { i } | \\mathbf { Z } ( Z _ { j } ^ { k } ) )$ converges at the radio source for a trial with six radio sources. It is clear that $P ( C _ { i } | \\mathbf { Z } ( Z _ { j } ^ { k } ) )$ tends monotonically toward 1. This is what we expect to see: $P ( C _ { i } | \\mathbf { Z } ( Z _ { j } ^ { k } ) )  1$ for cells containing radio sources.",
+        "bbox": [
+            506,
+            523,
+            939,
+            601
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "We also compare our algorithms to two intuitive heuristics, namely, a random walk and a fixed-route patrol. The random walk is chosen because it is considered as the most conservative approach. According to [34], a 2-D lattice-based random walk can cover the entire field over a long run. Hence, it does not have a blind spot. The fixed-route patrol traverses the field using a predefined route that scans all cells. It warrants equal coverage but might not visit cells with radio sources frequent enough because of the route length. We increase the radio source number from 2 to 10 to observe the performance of each method. For each trial, we test all three methods. We repeat for 10 trials for each radio source number and compute the average time required for the localization of all radio sources. Fig. 6(c) illustrates comparison results. It is clear that the RWA significantly outperforms the two heuristics in terms of localization time. The result can be explained that the robot motion for the two heuristics does not consider sensor location distribution and, hence, cannot achieve good performance.",
+        "bbox": [
+            505,
+            602,
+            941,
+            875
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "B. Physical Experiments",
+        "text_level": 2,
+        "bbox": [
+            508,
+            888,
+            686,
+            905
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "We test both SPOG update and RWA in physical experiments. The physical experiment is conducted in a $\\mathrm { 1 0 \\times 1 0 ~ m ^ { 2 } }$ field, which is evenly divided into $5 0 \\times 5 0$ cells. Each cell has a side length of 20 cm. The threshold for the SPOG convergence is $p _ { t } = 0 . 7 .$",
+        "bbox": [
+            506,
+            909,
+            937,
+            940
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "page_number",
+        "text": "676",
+        "bbox": [
+            67,
+            40,
+            90,
+            50
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "header",
+        "text": "IEEE TRANSACTIONS ON ROBOTICS, VOL. 28, NO. 3, JUNE 2012",
+        "bbox": [
+            590,
+            37,
+            939,
+            51
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "chart",
+        "img_path": "images/8e63146abf14a56dc2a57ed9e67988522402c7a31e9871f12e722c407ff51412.jpg",
+        "content": "",
+        "chart_caption": [
+            "(a)"
+        ],
+        "chart_footnote": [],
+        "bbox": [
+            72,
+            80,
+            318,
+            247
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "chart",
+        "img_path": "images/d00984b5484ae7e608e385f55d9a0c8c43d2c2177ca31d9edf58bbde1bd8a6bf.jpg",
+        "content": "",
+        "chart_caption": [
+            "(b)"
+        ],
+        "chart_footnote": [],
+        "bbox": [
+            336,
+            85,
+            619,
+            250
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "chart",
+        "img_path": "images/d22bea37366374e42596f715e047b2311b643284fd8d714113a89e9434dd7662.jpg",
+        "content": "",
+        "chart_caption": [
+            "(c)",
+            "Fig. 6. Simulation results. (a) RWA performance versus $\\tau _ { 0 } ,$ , (b) convergence of $P ( C _ { i } | \\mathbf { Z } ( Z _ { j } ^ { k } ) )$ at radio source locations for a six-radio source case, and (c) localization time comparison among the RWA, the random walk, and the fixed-route patrol."
+        ],
+        "chart_footnote": [],
+        "bbox": [
+            631,
+            83,
+            919,
+            250
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "image",
+        "img_path": "images/b30e0e1be76191dc259c496d7240042c61cbeae20896c01b7b21b49d0eb4f152.jpg",
+        "image_caption": [
+            "(a)"
+        ],
+        "image_footnote": [],
+        "bbox": [
+            75,
+            377,
+            222,
+            497
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "image",
+        "img_path": "images/a6282861c629c0533bdc15c7c07bd5320b242a8ceffd953cb897149dde323753.jpg",
+        "image_caption": [
+            "(b)"
+        ],
+        "image_footnote": [],
+        "bbox": [
+            235,
+            378,
+            341,
+            496
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "chart",
+        "img_path": "images/9a315358ddf06cd2c5f94996ffc5ea8daa8b07c883b0052fca3f63eef772e2db.jpg",
+        "content": "",
+        "chart_caption": [
+            "(c)"
+        ],
+        "chart_footnote": [],
+        "bbox": [
+            360,
+            325,
+            609,
+            493
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "chart",
+        "img_path": "images/b704c2e97568cbe97c2db491efe65bd87a096ec1fa6908670d23f72b0a339434.jpg",
+        "content": "",
+        "chart_caption": [
+            "(d)",
+            "Fig. 7. Physical experiment hardware and results. (a) Robot. (b) RF source is XBeeT with ZigBeeT/802.15.4 OEM RF Modules by MaxStream, Inc. (c) Sample robot trajectory. (d) Convergence of $P ( C _ { i } | \\mathbf { Z } ( Z _ { i } ^ { k } ) )$ for cells containing radio sources."
+        ],
+        "chart_footnote": [],
+        "bbox": [
+            627,
+            325,
+            917,
+            496
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            57,
+            570,
+            488,
+            614
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "text",
+        "text": "The robot is custom made in our laboratory [see Fig. 7(a)]. The robot measures $5 0 \\times 4 7 \\times 5 0 \\mathrm { c m ^ { 3 } }$ in size. The robot has two front drive wheels and one rear cast wheel and uses a typical differential driving structure. The robot has a maximum traveling speed $v _ { \\mathrm { m a x } }$ of 40 cm/s. The four color patches on the top of the robot are used for obtaining robot location and orientation from an overhead camera that is mounted at a height of a three-story building. The top sliver ring above the color patches contains white LEDs that are used to illuminate the color patches at night for night experiments. The vision-based localization system can provide the robot with location at an accuracy of ±5 cm in each dimension of position and orientation $\\mathrm { a t \\pm 3 . 5 ^ { \\circ } }$ at a frame rate of 11 frames/s.",
+        "bbox": [
+            57,
+            614,
+            488,
+            810
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "text",
+        "text": "Fig. 7(b) illustrates the aforementioned radio sources. We use three such radio sources in the experiment. Each of them is programmed with a Poisson transmission rate of 0.05 packets/s. We set $\\tau _ { 0 } = 1 6 0 \\mathrm { s }$ in the experiments. Fig. 7(c) illustrates the actual robot trajectory, actual location of the three radio sources, and the estimated locations of the radio sources. It is clear that the robot has successfully found all three radio sources with reasonable accuracy. The on-ridge and off-ridge parts of the robot trajectory are represented by red solid lines and blue dashed lines, respectively. The fact that most of on-ridge movements are close to the radio sources indicates that the RWA is effective.",
+        "bbox": [
+            57,
+            810,
+            489,
+            949
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            500,
+            570,
+            930,
+            599
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "text",
+        "text": "Fig. 7(d) illustrates how $P ( C _ { i } | \\mathbf { Z } ( Z _ { j } ^ { k } ) )$ converges at the three radio source cells during the physical experiment. Similar to what we have seen in simulation results in Fig. 6(b), $P ( C _ { i } | \\mathbf { Z } ( Z _ { j } ^ { k } ) )$ of these cells tends toward 1. The cell represented by the blue dashed line has the slowest growing rate because the corresponding radio source transmits the fewest number of signals.",
+        "bbox": [
+            500,
+            599,
+            932,
+            705
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "text",
+        "text": "VIII. CONCLUSION AND FUTURE WORK",
+        "text_level": 2,
+        "bbox": [
+            577,
+            722,
+            855,
+            737
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "text",
+        "text": "System and algorithm developments that enable a mobile robot to localize multiple unknown transient radio sources have been reported. By the employment of a Monte Carlo approach, the radio transmission activities using an SPOG have been modeled and an SPOG update algorithm to track the radio source location and transmission rates has been proposed. Based on the SPOG, an RWA for robot motion planning by accelerating the SPOG convergence rate has been developed. For the n-cell grid, the SPOG update algorithm runs in $O ( n ^ { 2 } )$ time and the RWA runs in $O ( n + l _ { \\mathrm { m a x } } ^ { 2 } )$ time. The fact that the time to find a radio source is insensitive to the number of radio sources, and hence, our algorithm has great scalability has been formally proved. The algorithm using simulation with the data from the real hardware and a physical experiment has been tested. In the simulation experiment, algorithms with a random walk and a fixed-route patrol heuristics have been compared. Our algorithms showed a consistently faster localization speed than that of the two heuristics. In the physical experiment, the SPOG and RWA have been tested in the setup that directs the mobile robot to search for three radio sources. The physical experiment results showed that the system and algorithm development were successful.",
+        "bbox": [
+            500,
+            743,
+            932,
+            941
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "header",
+        "text": "SONG et al.: SIMULTANEOUS LOCALIZATION OF MULTIPLE UNKNOWN AND TRANSIENT RADIO SOURCES USING A MOBILE ROBOT",
+        "bbox": [
+            58,
+            39,
+            782,
+            51
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "page_number",
+        "text": "677",
+        "bbox": [
+            907,
+            40,
+            929,
+            50
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            63,
+            79,
+            496,
+            214
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "text",
+        "text": "In the future, we are interested in extending SPOG and RWA to design a decentralized multiple-robot localization scheme. Tracking moving radio sources is another interesting extension of the proposed framework. We will consider various kinodynamic and energy constraints imposed by robots. More efficient motion planning strategies considering obstacles in the environment and optimal velocity profile will be explored for these problems. We will also apply the algorithms to human tracking in search and rescue and animal tracking in the nature environment.",
+        "bbox": [
+            63,
+            215,
+            496,
+            367
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "text",
+        "text": "APPENDIX",
+        "text_level": 2,
+        "bbox": [
+            244,
+            383,
+            318,
+            397
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "text",
+        "text": "PROOF OF LEMMA 1",
+        "text_level": 2,
+        "bbox": [
+            210,
+            405,
+            350,
+            419
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "text",
+        "text": "From (23), each entry in the Jacobian of $r _ { i }$ with respect to $\\mu _ { s } , s \\in I$ , can be computed as follows:",
+        "bbox": [
+            63,
+            426,
+            494,
+            457
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "equation",
+        "img_path": "images/4c799c6d96ebe43efd9bac42089411300071fdd129565428c5684a21284c64cd.jpg",
+        "text": "$$\n\\frac { \\partial r _ { i } } { \\partial \\mu _ { s } } = \\left\\{ \\begin{array} { l l } { \\frac { w _ { s } } { \\sigma ^ { 2 } } ( z - \\mu _ { s } ) r _ { s i } ( z ) , } & { \\mathrm { i f ~ } s \\neq i } \\\\ { - \\sum _ { a \\in I , a \\neq i } \\frac { w _ { a } } { \\sigma ^ { 2 } } ( z - \\mu _ { i } ) r _ { a i } ( z ) , } & { \\mathrm { i f ~ } s = i } \\end{array} \\right.\\tag{44}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            87,
+            463,
+            442,
+            501
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "text",
+        "text": "where $a \\in I$ is the new index variable. By the use of the chain rule, we obtain",
+        "bbox": [
+            65,
+            506,
+            494,
+            536
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "equation",
+        "img_path": "images/8c6e1258b39e1756adf1191167a7695d96016774e478161071fca0d60413b6e8.jpg",
+        "text": "$$\n\\begin{array} { l } { \\displaystyle \\frac { \\partial r _ { i } } { \\partial x _ { j } ^ { k } } = \\sum _ { s \\in I } \\frac { \\partial r _ { i } } { \\partial \\mu _ { s } } \\frac { \\partial \\mu _ { s } } { \\partial x _ { j } ^ { k } } } \\\\ { \\displaystyle = - \\sum _ { s \\in I , s \\neq i } \\frac { w _ { s } } { \\sigma ^ { 2 } } r _ { s i } ( z ) ( \\mu _ { i } - \\mu _ { s } ) \\frac { \\partial ( \\mu _ { i } - \\mu _ { s } ) } { \\partial x _ { j } ^ { k } } . } \\end{array}\\tag{45}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            111,
+            541,
+            449,
+            622
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "text",
+        "text": "From (5), we know",
+        "bbox": [
+            69,
+            632,
+            205,
+            646
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "equation",
+        "img_path": "images/b63a8e9c786e8e9fb41d6467dd556373a00845269bd20d2168276f1cbb1125ff.jpg",
+        "text": "$$\n\\mu _ { i } - \\mu _ { s } = 1 0 \\beta \\log _ { 1 0 } \\frac { d _ { s j } ^ { k } } { d _ { i j } ^ { k } } + 1 0 \\log _ { 1 0 } \\frac { \\varphi ( \\phi _ { i j } ^ { k } ) } { \\varphi ( \\phi _ { s j } ^ { k } ) } .\\tag{46}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            122,
+            654,
+            436,
+            691
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "text",
+        "text": "By the substitution of (2) into the previous equations, we can compute its partial derivative with respect to x as follows:",
+        "bbox": [
+            65,
+            699,
+            494,
+            729
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "equation",
+        "img_path": "images/00a1664144d886946ad06dfdd6fa07cd171fdd2d62562e29599850283de810d4.jpg",
+        "text": "$$\n\\frac { \\partial ( \\mu _ { i } - \\mu _ { s } ) } { \\partial x _ { j } ^ { k } } = 1 0 \\beta \\left( \\frac { x _ { j } ^ { k } - x _ { s } } { ( d _ { s j } ^ { k } ) ^ { 2 } } - \\frac { x _ { j } ^ { k } - x _ { i } } { ( d _ { i j } ^ { k } ) ^ { 2 } } \\right) .\\tag{47}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            126,
+            736,
+            434,
+            776
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "text",
+        "text": "Combining (45) and (47), we have",
+        "bbox": [
+            69,
+            784,
+            308,
+            799
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "equation",
+        "img_path": "images/b9e127ce8ae9f5c0db1418c0038b1edc2b0903253e500362c43eaa61f3ed31f3.jpg",
+        "text": "$$\n\\frac { \\partial r _ { i } } { \\partial x _ { j } ^ { k } } = - 1 0 \\beta \\sum _ { s \\in I , s \\neq i } \\frac { w _ { s } } { \\sigma ^ { 2 } } r _ { s i } ( z ) ( \\mu _ { i } - \\mu _ { s } ) \\left( \\frac { x _ { j } ^ { k } - x _ { s } } { ( d _ { s j } ^ { k } ) ^ { 2 } } - \\frac { x _ { j } ^ { k } - x _ { i } } { ( d _ { i j } ^ { k } ) ^ { 2 } } \\right) ,\\tag{48}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            67,
+            806,
+            489,
+            847
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "text",
+        "text": "Similarly, we obtain",
+        "bbox": [
+            69,
+            862,
+            212,
+            876
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "equation",
+        "img_path": "images/1a8da6ffa3ccbee94448f1f5915d2f1e7375aeebb15950875058214d6e52a35f.jpg",
+        "text": "$$\n\\frac { \\partial r _ { i } } { \\partial y _ { j } ^ { k } } = - 1 0 \\beta \\sum _ { s \\in I , s \\neq i } \\frac { w _ { s } } { \\sigma ^ { 2 } } r _ { s i } ( z ) ( \\mu _ { i } - \\mu _ { s } ) \\left( \\frac { y _ { j } ^ { k } - y _ { s } } { ( d _ { s j } ^ { k } ) ^ { 2 } } - \\frac { y _ { j } ^ { k } - y _ { i } } { ( d _ { i j } ^ { k } ) ^ { 2 } } \\right)\\tag{49}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            67,
+            885,
+            493,
+            925
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "text",
+        "text": "Defining $\\begin{array} { r } { \\nabla \\mathbf { r } ^ { T } = [ \\frac { \\partial r _ { i } } { \\partial x _ { i } ^ { k } } , \\frac { \\partial r _ { i } } { \\partial y _ { i } ^ { k } } ] } \\end{array}$ , we can verify the first-order optimality condition by computing $\\nabla \\mathbf { r } ^ { T } ( \\mathbf { x } _ { j } ^ { k } - \\mathbf { x } _ { i } )$ at the neighborhood of $( \\mathbf { x } _ { j } ^ { k } = \\mathbf { x } _ { i } )$",
+        "bbox": [
+            508,
+            79,
+            937,
+            137
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "text",
+        "text": "(50)",
+        "bbox": [
+            905,
+            176,
+            936,
+            190
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "equation",
+        "img_path": "images/363117e742f676f6259f44748e5e61de96ee8dfcdb7687dd508b6746f22bc2ee.jpg",
+        "text": "$$\n\\begin{array} { r l } & { \\nabla \\mathbf { r } ^ { T } ( s _ { k } ^ { \\theta } - x _ { k } ) } \\\\ & { = 1 0 \\beta \\sum _ { s \\in L \\times s _ { k } } \\frac { w _ { S } } { \\alpha ^ { 2 } } r _ { s \\in \\mathcal { S } } ( z ) ( \\beta \\mu - \\mu _ { s } ) } \\\\ & { \\times \\left\\{ \\left( \\frac { \\alpha _ { k } ^ { k } } { ( \\delta _ { k } ^ { k } ) ^ { 2 } } - x _ { k } ^ { \\theta _ { s } ^ { k } } - \\frac { \\alpha _ { k } ^ { k } } { ( \\delta _ { k } ^ { k } ) ^ { 2 } } \\right) ( x _ { s } ^ { k } - x _ { k } ) \\right. } \\\\ & { + \\left. \\left( \\frac { \\beta _ { k } ^ { 2 } } { ( \\delta _ { k } ^ { k } ) ^ { 2 } } - \\frac { \\beta _ { k } ^ { 2 } } { ( \\delta _ { k } ^ { k } ) ^ { 2 } } - y _ { k } ^ { \\theta _ { s } ^ { \\prime } } \\right) ( \\beta s _ { j } ^ { k } - y _ { k } ) \\right\\} } \\\\ & { \\approx - 1 0 \\beta \\sum _ { s \\in L \\times s _ { k } } \\frac { w _ { S } } { \\alpha ^ { 2 } } r _ { s \\in \\mathcal { S } } ( z ) ( \\beta \\mu _ { s } - \\mu _ { s } ) } \\\\ & { \\times \\left\\{ - \\frac { ( \\alpha _ { k } ^ { k } - x _ { k } ) ^ { 2 } + ( \\beta _ { k } ^ { k } - y _ { k } ) ^ { 2 } } { ( \\delta _ { k } ^ { k } ) ^ { 2 } } \\right\\} . } \\end{array}\\tag{51}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            585,
+            146,
+            855,
+            387
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "text",
+        "text": "Note that the approximation from (50) to (51) is based on the fact that $\\begin{array} { r } { \\left| \\frac { x _ { j } ^ { k } - \\overline { { x _ { s } } } } { ( d _ { s j } ^ { k } ) ^ { 2 } } \\right| \\ll \\left| \\frac { x _ { j } ^ { k } - x _ { i } } { ( d _ { i j } ^ { k } ) ^ { 2 } } \\right| } \\end{array}$ and $\\begin{array} { r } { \\left| \\frac { y _ { j } ^ { k } - y _ { s } } { ( d _ { s j } ^ { k } ) ^ { 2 } } \\right| \\ll \\left| \\frac { y _ { j } ^ { k } - y _ { i } } { ( d _ { i j } ^ { k } ) ^ { 2 } } \\right| } \\end{array}$ when ${ \\bf x } _ { j } ^ { k }  { \\bf x } _ { i }$ . From (51), we know",
+        "bbox": [
+            508,
+            396,
+            937,
+            453
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "equation",
+        "img_path": "images/3c1bd1749ea6de0d35b78bf71729740bf3d274a40553dcea849559c452425dbe.jpg",
+        "text": "$$\n\\operatorname* { l i m } _ { \\mathbf { x } _ { j } ^ { k }  \\mathbf { x } _ { i } } \\nabla \\mathbf { r } ^ { T } ( \\mathbf { x } _ { j } ^ { k } - \\mathbf { x } _ { i } ) = 1 0 \\beta \\sum _ { s \\in I , s \\neq i } \\frac { w _ { s } } { \\sigma ^ { 2 } } r _ { s i } ( z ) ( \\mu _ { i } - \\mu _ { s } ) \\geq 0 .\\tag{52}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            513,
+            463,
+            930,
+            497
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "text",
+        "text": "Therefore, $\\mathbf { x } _ { j } ^ { k } = \\mathbf { x } _ { i }$ is a local minima (see [48]) regardless of the z value. This proof relies on the limiting format of the first-order sufficient condition instead of a regular format because of the degeneracy in ratio computation. -",
+        "bbox": [
+            506,
+            510,
+            939,
+            571
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "text",
+        "text": "ACKNOWLEDGMENT",
+        "text_level": 2,
+        "bbox": [
+            653,
+            590,
+            794,
+            603
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "text",
+        "text": "The authors would like to thank K. Goldberg, R. Volz, E. Frew, and J. Xiao for their insightful discussions. The authors would also like to thank Q. Hu and Z. Goodwin for their contributions to the earlier implementation and experiments and Y. Xu, W. Li, H. Li, Y. Lu, and H. Ge for their inputs and contributions to the Networked Robots Laboratory, Texas A&M University.",
+        "bbox": [
+            506,
+            611,
+            939,
+            702
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "text",
+        "text": "REFERENCES",
+        "text_level": 2,
+        "bbox": [
+            678,
+            720,
+            769,
+            734
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "list",
+        "sub_type": "ref_text",
+        "list_items": [
+            "[1] P. Bahl and V. N. Padmanabhan, “RADAR: An in-building RF-based user location and tracking system,” in Proc. IEEE Int. Conf. Comput. Commun., 2000, pp. 775–784.",
+            "[2] J. Letchner, D. Fox, and A. LaMarce, “Large-scale localization from wireless signal strength,” in Proc. Nat. Conf. Artif. Intell., 2005, pp. 15–20.",
+            "[3] N. Malhotra, M. Krasniewski, C. Yang, S. Bagchi, and W. Chappell, “Location estimation in ad hoc networks with directional antennas,” in Proc. 25th IEEE Int. Conf. Distrib. Comput. Syst. Washington, DC: IEEE Computer Society, 2005, pp. 633–642.",
+            "[4] M. Youssef, A. Agrawala, and U. Shankar, “Wlan location determination via clustering and probability distributions,” in Proc. IEEE Pervasive Comput. Commun., 2003, p. 143.",
+            "[5] G. Mao, B. Fidan, and B. Anderson, “Wireless sensor network localization techniques,” Comput. Netw., vol. 51, no. 7, pp. 2529–2553, 2007.",
+            "[6] A. Savvides, C. Han, and M. B. Strivastava, “Dynamic fine-grained localization in ad-hoc networks of sensors,” in Proc. ACM SIGMOBILE, Rome, Italy, Jul. 2001, pp. 166–179."
+        ],
+        "bbox": [
+            516,
+            744,
+            936,
+            777
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "page_number",
+        "text": "678",
+        "bbox": [
+            67,
+            40,
+            90,
+            50
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "header",
+        "text": "IEEE TRANSACTIONS ON ROBOTICS, VOL. 28, NO. 3, JUNE 2012",
+        "bbox": [
+            590,
+            37,
+            937,
+            51
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "list",
+        "sub_type": "ref_text",
+        "list_items": [
+            "[7] B. H. Wellenhoff, H. Lichtenegger, and J. Collins, Global Positioning System: Theory and Practice. New York: Springer-Verlag, 1997.",
+            "[8] N. Bulusu, J. Heidemann, and D. Estrin, “GPS-less low cost outdoor localization for very small devices,” IEEE Pers. Commun. Mag., vol. 7, no. 5, pp. 28–34, Oct. 2000.",
+            "[9] X. Ji and H. Zha, “Sensor positioning in wireless ad-hoc sensor networks using multidimensional scaling,” in Proc. IEEE Int. Conf. Comput. Commun., 2004, pp. 2562–2661.",
+            "[10] K. Lorincz and M. Welsh, “Motetrack: A robust, decentralized approach to RF-based location tracking,” in Proc. Int. Workshop Location Context-Awareness Pervasive,, 2005, pp. 63–82.",
+            "[11] M. Sichitiu and V. Ramadurai, “Localization of wireless sensor networks with a mobile beacon,” in Proc. 1st IEEE Int. Conf. Mobile Ad hoc Sens. Syst., 2004, pp. 174–183.",
+            "[12] N. Bulusu, V. Bychkovskiy, D. Estrin, and J. Heidemann. (2002, Oct.). Scalable, ad hoc deployable rf-based localization. in Grace Hopper Celebration of Women in Computing Conf. 2002, Vancouver, BC, Canada. Los Angeles, CA: UCLA Press. [Online]. Available:http://www.cs.ucla.edu/bulusu/papers/Bulusu02a.html.",
+            "[13] D. Koutsonikolas, S. Das, and Y. Hu, “Path planning of mobile landmarks for localization in wireless sensor networks,” Comput. Commun., vol. 30, pp. 2577–2592, 2007.",
+            "[14] T. Sit, Z. Liu, M. Ang, and W. Seah, “Multi-robot mobility enhanced hopcount based localization in ad hoc networks,” Robot. Auton. Syst., vol. 55, pp. 244–252, 2007.",
+            "[15] T. He, C. Huang, B. M. Blum, J. A. Stankovic, and T. Abdelzaher, “Rangefree localization schemes for large scale sensor networks,” in Proc. 9th Annu. Int. Conf. Mobile Comput. Netw., 2003, pp. 81–95.",
+            "[16] D. Niculescu and B. Nath, “DV based positioning in ad hoc networks,” Telecommun. Syst., vol. 22, no. 1–4, pp. 267–280, 2003.",
+            "[17] Y. Shang and W. Ruml, “Improved MDS-based localization,” in Proc. IEEE Int. Conf. Comput. Commun., Hong Kong, 2004, pp. 2640–2651.",
+            "[18] P. Biswas and Y. Ye, “Semidefinite programming for ad hoc wireless sensor network localization,” in Proc. 3rd Int. Symp. Inf. Process. Sens. Netw., Berkeley, CA, Apr. 2004, pp. 46–54.",
+            "[19] A. Ihler, I. Fisher, J. W., R. Moses, and A. Willsky, “Nonparametric belief propagation for self-localization of sensor networks,” IEEE J. Sel. Areas Commun., vol. 23, no. 4, pp. 809–819, Apr. 2005.",
+            "[20] K. Yedavalli and B. Krishnamachari, “Sequence-based localization in wireless sensor networks,” IEEE Trans. Mobile Comput., vol. 7, no. 1, pp. 81–94, Jan. 2008.",
+            "[21] J. A. Costa, N. Patwari, and A. O. H. Iii, “Distributed weightedmultidimensional scaling for node localization in sensor networks,” ACM Trans. Sens. Netw., vol. 2, pp. 39–64, 2005.",
+            "[22] U. Khan, S. Kar, and J. Moura, “A linear iterative algorithm for distributed sensor localization,” in Proc. 42nd Asilomar Conf. Signals, Syst. Comput., Oct. 2008, pp. 1160–1164.",
+            "[23] U. Khan, S. Kar, and J. Moura, “Distributed sensor localization in random environments using minimal number of anchor nodes,” IEEE Trans. Signal Process., vol. 57, no. 5, pp. 2000–2016, May 2009.",
+            "[24] U. Khan, S. Kar, and J. Moura, “Diland: An algorithm for distributed sensor localization with noisy distance measurements,” IEEE Trans. Signal Process., vol. 58, no. 3, pp. 1940–1947, Mar. 2010.",
+            "[25] S. Thrun, W. Burgard, and D. Fox, Probabilistic Robotics. Cambridge, MA: MIT Press, 2005.",
+            "[26] J. Kelly and G. S. Sukhatme, “Visual-inertial sensor fusion: Localization, mapping and sensor-to-sensor self-calibration,” Int. J. Robot. Res., vol. 30, no. 1, pp. 56–79, 2011.",
+            "[27] E. S. Jones and S. Soatto, “Visual-inertial navigation, mapping and localization: A scalable real-time causal approach,” Int. J. Robot. Res., vol. 30, no. 4, pp. 407–430, 2011.",
+            "[28] C. Wang, C. Thorpe, S. Thrun, M. Hebert, and H. Durrant-Whyte, “Simultaneous localization, mapping and moving object tracking,” Int. J. Robot. Res., vol. 26, no. 9, pp. 889–916, Sep. 2007.",
+            "[29] A. Elfes, “Occupancy grids: A probabilistic framework for robot perception and navigation” Ph.D. dissertation, Dept. Elect. Comput. Eng., Carnegie Mellon Univ., Pittsburgh, PA, 1989.",
+            "[30] H. P. Moravec, “Sensor fusion in certainty grids for mobile robots,” Artif. Intell. Mag., no. 9, pp. 61–74, 1988.",
+            "[31] G. Ferri, M. Jakuba, E. Caselli, V. Mattoli, B. Mazzolai, D. Yoerger, and P. Dario, “Localizing multiple gas/odor sources in an indoor environment using Bayesian occupancy grid mapping,” in Proc. Int. Conf. Intell. Robots Syst., Nov. 2007, pp. 566–571.",
+            "[32] X. Zhang, Y. Sun, J. Xiao, and F. Cabrera-Mora, “Theseus gradient guide: An indoor transmitter searching approach using received signal strength,”",
+            "in Proc. IEEE Int. Conf. Robot. Autom., Shanghai, China, May. 2011, pp. 2560–2565.",
+            "[33] C. Kim, D. Song, Y. Xu, and J. Yi, “Localization of multiple unknown transient radio sources using multiple paired mobile robots with limited sensing ranges,” in Proc. IEEE Int. Conf. Robot. Autom., Shanghai, China, May 2011, pp. 5167–5172.",
+            "[34] D. Song, C. Kim, and J. Yi, “On the time to search for an intermittent signal source under a limited sensing range,” IEEE Trans. Robot., vol. 27, no. 2, pp. 313–323, Apr. 2011.",
+            "[35] D. Song, J. Yi, and Z. Goodwin, “Localization of unknown networked radio sources using a mobile robot with a directional antenna,” in Proc. Am. Control Conf., New York, Jul. 2007, pp. 5952–5957.",
+            "[36] D. Song, C. Kim, and J. Yi, “Simultaneous localization of multiple unknown CSMA-based wireless sensor network nodes using a mobile robot with a directional antenna,” J. Intell. Serv. Robots, vol. 2, no. 4, pp. 219– 233, Oct. 2009.",
+            "[37] D. Song, C. Kim, and J. Yi, “Monte carlo simultaneous localization of multiple unknown transient radio sources using a mobile robot with a directional antenna,” in Proc. IEEE Int. Conf. Robot. Autom., Kobe, Japan, May 2009, pp. 3154–3159.",
+            "[38] M. Kim and N. Y. Chong, “Direction sensing rfid reader for mobile robot navigation,” IEEE Trans. Autom. Sci. Eng., vol. 6, no. 1, pp. 44–54, Jan. 2009.",
+            "[39] Y. Sun, J. Xiao, and F. Cabrera-Mora, “Robot localization and energyefficient wireless communications by multiple antennas,” in Proc. IEEE/RSJ Int. Conf. Intell. Robots Syst., St. Louis, MO, Oct. 2009, pp. 377–381.",
+            "[40] W. L. Stutzman and G. A. Thiele, Antenna Theory and Design. New York: Wiley, 2003.",
+            "[41] R. S. Elliott, Antenna Theory and Design. Piscataway, NJ: IEEE Press, 2003.",
+            "[42] B. Garel, “Likelihood ratio test for univariate Gaussian mixture,” J. Statist. Plan. Infer., vol. 96, pp. 325–350, 2001.",
+            "[43] C. Delmas, “On likelihood ratio tests in Gaussian mixture models,” Indian J. Statist., vol. 65, no. 3, pp. 513–531, Aug. 2003.",
+            "[44] T. Cormen, C. E. Leiserson, R. Rivest, and C. Stein, Eds., Instruction to Algorithms. Cambridge, MA: McGraw-Hill, 1989.",
+            "[45] C. Ambuhl, “An optimal bound for the MST algorithm to compute en-¨ ergy efficient broadcast trees in wireless networks,” in Automata, Languages and Programming (Lecture Notes in Computer Science Series 3580), L. Caires, G. Italiano, L. Monteiro, C. Palamidessi, and M. Yung, Eds. Berlin, Germany: Springer-Verlag, 2005, pp. 1139–1150.",
+            "[46] G. McLachlan, Discriminant Analysis and Statistical Pattern Recognition. New York: Wiley-Interscience, 1992.",
+            "[47] H. Choset, W. Burgard, S. Hutchinson, G. Kantor, L. E. Kavraki, K. Lynch, and S. Thrun, Principles of Robot Motion: Theory, Algorithms, and Implementation. Cambridge, MA: MIT Press, Apr. 2005.",
+            "[48] M. Bazaraa, H. Shelrali, and C. Shetty, Nonlinear Programming: Theory and Algorithms. New York: Wiley, 1993, p. 132, Def. 4.1.1."
+        ],
+        "bbox": [
+            67,
+            82,
+            486,
+            104
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "image",
+        "img_path": "images/cbf27e4666c39a0db256eefec6dc27cf1d7b1eef39c2f6fc52e477546597e599.jpg",
+        "image_caption": [],
+        "image_footnote": [],
+        "bbox": [
+            503,
+            713,
+            626,
+            828
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "Dezhen Song (S’02–M’04–SM’09) received the B.S. and M.S. degrees from Zhejiang University, Hangzhou, China, in 1995 and 1998, respectively, and the Ph.D. degree from the University of California, Berkeley, in 2004.",
+        "bbox": [
+            641,
+            712,
+            930,
+            768
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "He is currently an Associate Professor with the Department of Computer Science and Engineering, Texas A&M University, College Station, TX. His primary research interests include networked robotics, distributed sensing, computer vision, surveillance, and stochastic modeling.",
+        "bbox": [
+            641,
+            768,
+            930,
+            837
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "Dr. Song received the Kayamori Best Paper Award at the 2005 IEEE International Conference on Robotics and Automation (with J. Yi and S. Ding). He received the National Science Foundation Faculty Early Career Development (CAREER) Award in 2007. He co-chaired IEEE Robotics and Automation Society Technical Committee on Networked Robots from 2007 to 2009. He is an Associate Editor of the IEEE TRANSACTIONS ON ROBOTICS and an Associate Editor of the IEEE TRANSACTIONS ON AUTOMATION SCIENCE AND ENGINEERING.",
+        "bbox": [
+            500,
+            835,
+            932,
+            928
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "header",
+        "text": "SONG et al.: SIMULTANEOUS LOCALIZATION OF MULTIPLE UNKNOWN AND TRANSIENT RADIO SOURCES USING A MOBILE ROBOT",
+        "bbox": [
+            58,
+            39,
+            782,
+            50
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "page_number",
+        "text": "679",
+        "bbox": [
+            907,
+            40,
+            929,
+            49
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "image",
+        "img_path": "images/0edd811bb10825d0294ad4ab279f8660996ceba4da0ff161b58123b5cad6e15b.jpg",
+        "image_caption": [],
+        "image_footnote": [],
+        "bbox": [
+            67,
+            82,
+            191,
+            198
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Chang-Young Kim (S’11) received the B.S. degree in electrical engineering from Korea University, Seoul, Korea, in 2005. He is currently working toward the Ph.D. degree with the Department of Computer Science and Engineering, Texas A&M University, College Station.",
+        "bbox": [
+            207,
+            82,
+            494,
+            150
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "He was with the GIT Co., Ltd, Seoul, where he was involved in the fields of automotive and embedded systems. His research interests include mobile robots, networked robots, radio localization, robot navigation, sensor networks, and surveillance.",
+        "bbox": [
+            205,
+            150,
+            494,
+            208
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "image",
+        "img_path": "images/1cd9b50b5da4f2da8a6414c15992ca0e931263fff7e1e3848d3daf2449f48af9.jpg",
+        "image_caption": [],
+        "image_footnote": [],
+        "bbox": [
+            511,
+            83,
+            632,
+            198
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Jingang Yi (S’99–M’02–SM’07) received the B.S. degree in electrical engineering from Zhejiang University, Hangzhou, China, in 1993, the M.Eng. degree in precision instruments from Tsinghua University, Beijing, China, in 1996, and the M.A. degree in mathematics and the Ph.D. degree in mechanical engineering from the University of California, Berkeley, in 2001 and 2002, respectively.",
+        "bbox": [
+            649,
+            82,
+            939,
+            174
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "He is currently an Assistant Professor with the Department of Mechanical and Aerospace Engineering, Rutgers University, Piscataway, NJ. His research",
+        "bbox": [
+            649,
+            172,
+            937,
+            207
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "interests include autonomous robotic systems, dynamic systems and control, and automation science and engineering, with applications to biomedical systems, civil infrastructural and transportation systems, and semiconductor manufacturing.",
+        "bbox": [
+            508,
+            207,
+            937,
+            252
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Dr. Yi received the 2010 National Science Foundation Faculty Early Career Development (CAREER) Award. He has co-authored papers that received the Kayamori Best Paper Award from the 2005 IEEE International Conference on Robotics and Automation. He currently an Associate Editor of the American Society of Mechanical Engineers Dynamic Systems and Control Division and the IEEE Robotics and Automation Society Conference Editorial Boards. He is an Associate Editor for the IEEE TRANSACTIONS ON AUTOMATION SCIENCE AND ENGINEERING.",
+        "bbox": [
+            508,
+            252,
+            939,
+            343
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "page_number",
+        "text": "680",
+        "bbox": [
+            67,
+            40,
+            90,
+            50
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "header",
+        "text": "IEEE TRANSACTIONS ON ROBOTICS, VOL. 28, NO. 3, JUNE 2012",
+        "bbox": [
+            592,
+            39,
+            937,
+            50
+        ],
+        "page_idx": 12
+    }
+]

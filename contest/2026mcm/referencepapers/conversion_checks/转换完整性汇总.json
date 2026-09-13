@@ -1,0 +1,182 @@
+[
+  {
+    "stem": "01_Gholami_2015_WorstCase_BearingOnly",
+    "status": "PASS",
+    "pages": 6,
+    "minerPages": 6,
+    "anchors": 6,
+    "mdChars": 23664,
+    "issues": [],
+    "warnings": []
+  },
+  {
+    "stem": "02_Colle_Galerne_2013_Set_Inversion",
+    "status": "PASS",
+    "pages": 10,
+    "minerPages": 10,
+    "anchors": 10,
+    "mdChars": 57976,
+    "issues": [],
+    "warnings": []
+  },
+  {
+    "stem": "03_Jaulin_Walter_1993_SIVIA",
+    "status": "PASS",
+    "pages": 12,
+    "minerPages": 12,
+    "anchors": 12,
+    "mdChars": 74250,
+    "issues": [],
+    "warnings": []
+  },
+  {
+    "stem": "04_Toussaint_1983_Rotating_Calipers",
+    "status": "PASS",
+    "pages": 8,
+    "minerPages": 8,
+    "anchors": 8,
+    "mdChars": 23722,
+    "issues": [],
+    "warnings": []
+  },
+  {
+    "stem": "05_Welzl_1991_Smallest_Enclosing_Disks",
+    "status": "PASS",
+    "pages": 12,
+    "minerPages": 12,
+    "anchors": 12,
+    "mdChars": 42391,
+    "issues": [],
+    "warnings": []
+  },
+  {
+    "stem": "06_Tokekar_Isler_2013_Bounded_Bearing_Placement",
+    "status": "PASS",
+    "pages": 6,
+    "minerPages": 6,
+    "anchors": 6,
+    "mdChars": 34576,
+    "issues": [],
+    "warnings": []
+  },
+  {
+    "stem": "07_Dogancay_Hmam_2008_Optimal_Angular_Separation",
+    "status": "PASS",
+    "pages": 13,
+    "minerPages": 13,
+    "anchors": 13,
+    "mdChars": 53212,
+    "issues": [],
+    "warnings": []
+  },
+  {
+    "stem": "08_VanderHook_2014_Cautious_Greedy",
+    "status": "PASS",
+    "pages": 31,
+    "minerPages": 31,
+    "anchors": 31,
+    "mdChars": 114429,
+    "issues": [],
+    "warnings": []
+  },
+  {
+    "stem": "09_Dogancay_2012_UAV_Path_Planning",
+    "status": "PASS",
+    "pages": 17,
+    "minerPages": 17,
+    "anchors": 17,
+    "mdChars": 75274,
+    "issues": [],
+    "warnings": []
+  },
+  {
+    "stem": "10_Song_2011_Limited_Sensing_Search",
+    "status": "PASS",
+    "pages": 11,
+    "minerPages": 11,
+    "anchors": 11,
+    "mdChars": 66680,
+    "issues": [],
+    "warnings": []
+  },
+  {
+    "stem": "11_Song_2012_Multiple_Radio_Sources",
+    "status": "PASS",
+    "pages": 13,
+    "minerPages": 13,
+    "anchors": 13,
+    "mdChars": 82711,
+    "issues": [],
+    "warnings": []
+  },
+  {
+    "stem": "12_Bai_2023_Multi_Radiation_Search",
+    "status": "PASS",
+    "pages": 18,
+    "minerPages": 18,
+    "anchors": 18,
+    "mdChars": 89617,
+    "issues": [],
+    "warnings": []
+  },
+  {
+    "stem": "13_Choset_2001_Coverage_Robotics",
+    "status": "PASS",
+    "pages": 14,
+    "minerPages": 14,
+    "anchors": 14,
+    "mdChars": 39125,
+    "issues": [],
+    "warnings": []
+  },
+  {
+    "stem": "14_Ryan_Hedrick_2010_Information_Active_Sensing",
+    "status": "PASS",
+    "pages": 11,
+    "minerPages": 11,
+    "anchors": 11,
+    "mdChars": 67564,
+    "issues": [],
+    "warnings": []
+  },
+  {
+    "stem": "15_Koch_2007_Negative_Evidence",
+    "status": "PASS",
+    "pages": 12,
+    "minerPages": 12,
+    "anchors": 12,
+    "mdChars": 63807,
+    "issues": [],
+    "warnings": []
+  },
+  {
+    "stem": "16_Guvensan_Yavuz_2011_Directional_Coverage",
+    "status": "PASS",
+    "pages": 18,
+    "minerPages": 18,
+    "anchors": 18,
+    "mdChars": 97920,
+    "issues": [],
+    "warnings": []
+  },
+  {
+    "stem": "17_Bercea_2016_Angle_Constraints",
+    "status": "PASS",
+    "pages": 20,
+    "minerPages": 20,
+    "anchors": 20,
+    "mdChars": 105497,
+    "issues": [],
+    "warnings": []
+  },
+  {
+    "stem": "18_Huo_2020_Autonomous_Radioactive_Search",
+    "status": "PASS",
+    "pages": 17,
+    "minerPages": 17,
+    "anchors": 17,
+    "mdChars": 70384,
+    "issues": [],
+    "warnings": []
+  }
+]

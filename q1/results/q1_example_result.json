@@ -1,0 +1,74 @@
+{
+  "status": "VALID",
+  "vertices": [
+    [
+      -17.45506492821756,
+      5.551115123125783e-13
+    ],
+    [
+      -17.15561259646294,
+      -17.155612596462923
+    ],
+    [
+      -9.2148511043888e-12,
+      -17.45506492821742
+    ],
+    [
+      17.155612596463033,
+      -17.15561259646266
+    ],
+    [
+      17.45506492821744,
+      -1.3211653993039363e-11
+    ],
+    [
+      17.155612596462603,
+      17.15561259646281
+    ],
+    [
+      -2.220446049250313e-12,
+      17.45506492821755
+    ],
+    [
+      -17.155612596462923,
+      17.155612596462976
+    ]
+  ],
+  "diameter": 48.52340000947307,
+  "diameter_pair": [
+    [
+      17.155612596463033,
+      -17.15561259646266
+    ],
+    [
+      -17.155612596462923,
+      17.155612596462976
+    ]
+  ],
+  "circle_center": [
+    5.5067062021407764e-14,
+    1.580957587066223e-13
+  ],
+  "covered": true,
+  "max_violation": 9.642319028734658e-12,
+  "violating_vertex": null,
+  "diagnostics": {
+    "constraint_count": 8,
+    "normalization_center": [
+      0.0,
+      0.0
+    ],
+    "normalization_scale": 1000.0,
+    "tolerance": 1e-10,
+    "formal_vertex_algorithm": "angle-sorted deque half-plane intersection",
+    "reference_vertex_algorithm": "pairwise boundary intersections with full screening",
+    "main_vertex_count": 8,
+    "normalized_area": 0.0011978093270184204,
+    "main_reference_vertex_agreement": true,
+    "reference_vertex_count": 8,
+    "reference_normalized_area": 0.0011978093270184214,
+    "calipers_bruteforce_diameter_agreement": true,
+    "normalized_reference_diameter": 0.04852340000947306,
+    "coverage_formula_agreement": true
+  }
+}

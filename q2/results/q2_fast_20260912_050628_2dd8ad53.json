@@ -1,0 +1,138 @@
+{
+  "algorithm": "CONSERVATIVE_SPARSE_MINIMAX",
+  "evidence_level": {
+    "reception_safety": "conservative outer-polygon certificate",
+    "localization_objective": "representative-state numerical minimax",
+    "global_optimality": "not claimed"
+  },
+  "first_observation": {
+    "point_m": [
+      0.0,
+      0.0
+    ],
+    "bearing_deg": 0.0
+  },
+  "safe_region": {
+    "outer_polygon_vertices_m": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        1499.9999999999998,
+        -26.182597392326375
+      ],
+      [
+        1499.9999999999998,
+        26.182597392326375
+      ]
+    ],
+    "outer_polygon_vertex_count": 3,
+    "minimum_enclosing_circle_center_m": [
+      750.2285094687363,
+      0.0
+    ],
+    "minimum_enclosing_circle_radius_m": 750.2285094687363,
+    "minimum_receive_radius_m": 1000.0,
+    "nonempty_under_outer_approximation": true
+  },
+  "state_domain": {
+    "status": "REGULAR",
+    "source_sample_count": 792,
+    "support_point_count": 70,
+    "approximate_area_m2": 39269.47183755942
+  },
+  "result_status": "FAST_NUMERICAL_SOLUTION",
+  "search": {
+    "sparse_candidate_count": 25,
+    "coarse_source_count": 24,
+    "coarse_error_nodes": 3,
+    "local_seed_count": 3,
+    "local_rounds": 4,
+    "local_initial_step_m": 112.39717073906866,
+    "local_candidate_evaluations": 60,
+    "finalist_count": 9,
+    "final_source_count": 64,
+    "final_error_nodes": 7
+  },
+  "best_sparse_candidate": {
+    "point_m": [
+      750.2285094687363,
+      571.9628210131483
+    ],
+    "stage": "sparse_search",
+    "movement_m": 943.3897842572817,
+    "conservative_safety_margin_m": 40.867459850864634,
+    "worst_posterior_diameter_m": 120.30228115091653,
+    "worst_source_m": [
+      1386.1198375894542,
+      23.461493437508715
+    ],
+    "worst_error_deg": 1.0,
+    "worst_observed_bearing_deg": 320.2199023060491,
+    "worst_posterior_vertex_count": 4,
+    "evaluated_direction_cases": 72,
+    "evaluated_near_cases": 0
+  },
+  "recommendations": [
+    {
+      "point_m": [
+        839.6399112864862,
+        538.7500045649327
+      ],
+      "stage": "final_recheck",
+      "movement_m": 997.6205431144115,
+      "conservative_safety_margin_m": 2.3794568855885245,
+      "worst_posterior_diameter_m": 111.89676435827997,
+      "worst_source_m": [
+        1452.3034791419245,
+        13.826314485844557
+      ],
+      "worst_error_deg": -1.0,
+      "worst_observed_bearing_deg": 318.4103797238917,
+      "worst_posterior_vertex_count": 4,
+      "evaluated_direction_cases": 448,
+      "evaluated_near_cases": 0
+    },
+    {
+      "point_m": [
+        839.639911286486,
+        -538.7500045649326
+      ],
+      "stage": "final_recheck",
+      "movement_m": 997.6205431144114,
+      "conservative_safety_margin_m": 2.379456885588638,
+      "worst_posterior_diameter_m": 112.04312524405992,
+      "worst_source_m": [
+        1499.771542734587,
+        26.178609655925268
+      ],
+      "worst_error_deg": 1.0,
+      "worst_observed_bearing_deg": 41.55630851189513,
+      "worst_posterior_vertex_count": 4,
+      "evaluated_direction_cases": 448,
+      "evaluated_near_cases": 0
+    },
+    {
+      "point_m": [
+        883.7679936909443,
+        461.4902421510232
+      ],
+      "stage": "final_recheck",
+      "movement_m": 997.0050703347135,
+      "conservative_safety_margin_m": 2.994929665286463,
+      "worst_posterior_diameter_m": 113.73134988029057,
+      "worst_source_m": [
+        1484.080364322197,
+        -25.119575367186613
+      ],
+      "worst_error_deg": -0.33333333333333337,
+      "worst_observed_bearing_deg": 320.6386373812703,
+      "worst_posterior_vertex_count": 4,
+      "evaluated_direction_cases": 448,
+      "evaluated_near_cases": 0
+    }
+  ],
+  "elapsed_seconds": 1.769474499997159,
+  "output": "D:\\1A-project\\mcm-2026\\contest\\2026mcm\\q2\\results\\q2_fast_20260912_050628_2dd8ad53.json"
+}

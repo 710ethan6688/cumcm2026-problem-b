@@ -1,0 +1,21 @@
+%%{init: {'theme': 'base', 'themeVariables': {'fontFamily': 'Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif', 'fontSize': '18px', 'lineColor': '#5F6368', 'primaryTextColor': '#2B2B2B'}, 'flowchart': {'curve': 'basis', 'nodeSpacing': 26, 'rankSpacing': 34, 'htmlLabels': true}}}%%
+flowchart LR
+    A([第一测点<br/>与示向度]) --> B[初始可能区域]
+    B --> C[安全测点区域]
+    C --> D{存在安全测点?}
+    D -- 否 --> X([无可用测点])
+    D -- 是 --> E[候选点粗筛<br/>24×3]
+    E --> F[局部搜索<br/>3种子 · 4轮]
+    F --> G[精细复评<br/>64×7]
+    G --> H([推荐第二测点])
+
+    classDef yellow fill:#FFF1B8,stroke:#C99A00,color:#2B2B2B,stroke-width:1.6px;
+    classDef purple fill:#E8D9F5,stroke:#7A52A3,color:#2B2B2B,stroke-width:1.6px;
+    classDef green fill:#D9EFD8,stroke:#4D8B55,color:#2B2B2B,stroke-width:1.6px;
+    classDef neutral fill:#FFFFFF,stroke:#8A8A8A,color:#444444,stroke-width:1.4px;
+
+    class A,D yellow;
+    class B,C,E,F,G purple;
+    class H green;
+    class X neutral;
+    linkStyle default stroke:#5F6368,stroke-width:1.5px;

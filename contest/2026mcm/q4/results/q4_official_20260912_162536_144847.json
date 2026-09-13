@@ -1,0 +1,25 @@
+{
+  "result_status": "COMPLETE",
+  "strategy_name": "GuaranteedDirectionalQ4Strategy",
+  "strategy_completed": true,
+  "strategy_note": "visited_search_points=25;fallback_clear_attempts=3;guaranteed_clear_attempts=7;certificate=True;mirrored_reacquisition_attempts=1;mirrored_reacquisition_hits=1;source_first_insertions=0;search_first_decisions=0;joint_direction_rankings=0",
+  "successful_clear_count": 14,
+  "measure_count": 237,
+  "clear_count": 14,
+  "unique_request_count": 253,
+  "http_attempt_count": 253,
+  "virtual_time_s": 6385.491453,
+  "average_localize_clear_time_s": 456.10653235714284,
+  "wall_time_s": 5.215759900005651,
+  "entered_remaining_real_duration_s": 1200.0,
+  "remaining_real_duration_s": 1194.8439999999973,
+  "final_position": {
+    "x": -483.991614341714,
+    "y": 1806.2812951605576
+  },
+  "final_measurement_channel": 18,
+  "environment_finished": true,
+  "cleanup_error": null,
+  "request_log": "D:\\1A-project\\mcm-2026\\contest\\2026mcm\\q4\\results\\q4_official_20260912_162536_144847.jsonl",
+  "output": "D:\\1A-project\\mcm-2026\\contest\\2026mcm\\q4\\results\\q4_official_20260912_162536_144847.json"
+}

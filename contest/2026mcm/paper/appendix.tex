@@ -1,0 +1,346 @@
+\newpage
+\appendix
+
+\definecolor{codebg}{rgb}{0.98,0.98,0.98}
+\definecolor{codecomment}{rgb}{0.13,0.54,0.13}
+\definecolor{codekeyword}{rgb}{0.0,0.2,0.7}
+\definecolor{codestring}{rgb}{0.65,0.12,0.12}
+\definecolor{codenumber}{rgb}{0.5,0.5,0.5}
+
+\lstdefinestyle{cumcmcode}{
+    language=Python,
+    backgroundcolor=\color{codebg},
+    basicstyle=\ttfamily\zihao{-5},
+    keywordstyle=\bfseries\color{codekeyword},
+    commentstyle=\itshape\color{codecomment},
+    stringstyle=\color{codestring},
+    numbers=left,
+    numbersep=7pt,
+    numberstyle=\tiny\color{codenumber},
+    breaklines=true,
+    breakatwhitespace=false,
+    columns=flexible,
+    keepspaces=true,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    frame=single,
+    framerule=0.4pt,
+    rulecolor=\color{gray!30},
+    xleftmargin=1.8em,
+    xrightmargin=0.5em,
+    aboveskip=0.6em,
+    belowskip=0.6em
+}
+\lstset{style=cumcmcode}
+
+\section{支撑材料架构与一键复现指南}
+
+\subsection{支撑材料目录组织架构}
+本参赛队提交的支撑材料已同步至代码仓库，严格按题目与功能层级组织，包含公共仿真框架、问题一至问题四的完整求解程序与官方测试用例。目录架构如下：
+
+\begin{verbatim}
+mcm-2026/
+|-- code/                      # 公共仿真支撑基础设施与接口协议
+|   |-- radio_sim/             # 官方环境通信接口与本地仿真引擎
+|   `-- scripts/               # 评测与批量回归测试脚本
+|-- q1/code/                   # 问题一：交会几何与最小包围圆定位求解
+|   |-- q1_geometry.py         # 半平面快速求交、旋转卡壳直径与覆盖判定核心库
+|   `-- run_q1.py              # 问题一命令行求解与算例验证入口
+|-- q2/code/                   # 问题二：第二检测点寻优与安全带几何评估
+|   |-- q2_fast.py             # 保守接收凸包络、安全裕度与最劣直径极小化求解
+|   `-- run_q2_fast.py         # 问题二快速优化选点命令行入口
+|-- q3/code/                   # 问题三：全向干扰源多目标协同搜索与清剿
+|   |-- q3_strategy.py         # 七点基准覆盖、在线双轨调度与清剿主逻辑
+|   `-- run_q3_official.py     # 问题三官方模拟器正式测试驱动脚本
+|-- q4/code/                   # 问题四：全向与半平面定向混合源对抗策略
+|   |-- q4_strategy.py         # 25点双环拓扑、对称镜像重捕获与自适应尾部探测
+|   |-- q4_clear_terminal.py   # 认证条带遍历与终局快速清剿验证
+|   `-- run_q4_official.py     # 问题四官方模拟器正式测试驱动脚本
+`-- requirements.txt           # Python 运行环境依赖
+\end{verbatim}
+
+\subsection{运行环境与一键复现命令}
+程序运行环境为 Python 3.10+，终端一键复现命令如下：
+\begin{enumerate}[leftmargin=2.2em, itemsep=0.1em]
+    \item \textbf{问题一复现}：运行 \texttt{python q1/code/run\_q1.py} 输出基准算例定位多边形直径及覆盖判定。
+    \item \textbf{问题二复现}：运行 \texttt{python q2/code/run\_q2\_fast.py} 输出最优测点坐标 $(839.64, 538.75)$ 与压缩率。
+    \item \textbf{问题三复现}：运行 \texttt{python q3/code/run\_q3\_official.py} 自动执行全向干扰源在线搜索与清剿。
+    \item \textbf{问题四复现}：运行 \texttt{python q4/code/run\_q4\_official.py} 自动执行混合干扰源拓扑巡航与定向清剿。
+\end{enumerate}
+
+\section{问题一：几何交汇与旋转卡壳定位核心代码}
+本程序（\texttt{q1/code/q1\_geometry.py}）实现了有向半平面交解算、旋转卡壳法求凸多边形直径及闭圆盘覆盖判据：
+
+\begin{lstlisting}[caption={问题一核心算法（q1\_geometry.py）}]
+from collections import deque
+from dataclasses import dataclass
+import math
+from typing import Sequence
+
+Point = tuple[float, float]
+
+@dataclass(frozen=True)
+class HalfPlane:
+    q: Point
+    d: Point
+    source: str = ""
+
+def _add(a: Point, b: Point) -> Point: return (a[0] + b[0], a[1] + b[1])
+def _sub(a: Point, b: Point) -> Point: return (a[0] - b[0], a[1] - b[1])
+def _mul(a: Point, v: float) -> Point: return (a[0] * v, a[1] * v)
+def _dot(a: Point, b: Point) -> float: return a[0] * b[0] + a[1] * b[1]
+def _cross(a: Point, b: Point) -> float: return a[0] * b[1] - a[1] * b[0]
+def _distance_sq(a: Point, b: Point) -> float: 
+    d = _sub(a, b)
+    return _dot(d, d)
+
+def make_halfplane(q: Point, d: Point, source: str = "") -> HalfPlane:
+    length = math.hypot(d[0], d[1])
+    return HalfPlane(q=q, d=(d[0] / length, d[1] / length), source=source)
+
+def bearing_halfplanes(observations: Sequence[tuple[float, float, float]], error_deg: float = 1.0) -> list[HalfPlane]:
+    constraints: list[HalfPlane] = []
+    for index, (x, y, bearing) in enumerate(observations):
+        point = (float(x), float(y))
+        t_rad, d_rad = math.radians(float(bearing)), math.radians(float(error_deg))
+        t_l, t_r = t_rad - d_rad, t_rad + d_rad
+        constraints.append(make_halfplane(point, (math.cos(t_l), math.sin(t_l)), f"obs_{index}_l"))
+        constraints.append(make_halfplane(point, (-math.cos(t_r), -math.sin(t_r)), f"obs_{index}_r"))
+    return constraints
+
+def _line_intersection(first: HalfPlane, second: HalfPlane, tol: float = 1e-14) -> Point | None:
+    denom = _cross(first.d, second.d)
+    if abs(denom) <= tol: return None
+    t = _cross(_sub(second.q, first.q), second.d) / denom
+    return _add(first.q, _mul(first.d, t))
+
+def halfplane_intersection_main(lines: Sequence[HalfPlane], tol: float = 1e-10) -> list[Point]:
+    ordered = sorted(lines, key=lambda hp: math.atan2(hp.d[1], hp.d[0]))
+    active: deque[HalfPlane] = deque()
+    for line in ordered:
+        while len(active) >= 2:
+            pt = _line_intersection(active[-2], active[-1])
+            if pt is None or _cross(line.d, _sub(pt, line.q)) >= -tol: break
+            active.pop()
+        while len(active) >= 2:
+            pt = _line_intersection(active[0], active[1])
+            if pt is None or _cross(line.d, _sub(pt, line.q)) >= -tol: break
+            active.popleft()
+        active.append(line)
+    while len(active) >= 3:
+        pt = _line_intersection(active[-2], active[-1])
+        if pt is not None and _cross(active[0].d, _sub(pt, active[0].q)) >= -tol: break
+        active.pop()
+    while len(active) >= 3:
+        pt = _line_intersection(active[0], active[1])
+        if pt is not None and _cross(active[-1].d, _sub(pt, active[-1].q)) >= -tol: break
+        active.popleft()
+    if len(active) < 3: return []
+    res: list[Point] = []
+    for i, line in enumerate(active):
+        nxt = active[(i + 1) % len(active)]
+        pt = _line_intersection(line, nxt)
+        if pt is None: return []
+        res.append(pt)
+    return res
+
+def diameter_rotating_calipers(vertices: Sequence[Point], tol: float = 1e-10) -> tuple[float, tuple[Point, Point]]:
+    n = len(vertices)
+    if n <= 2: return (0.0 if n < 2 else math.hypot(vertices[0][0]-vertices[1][0], vertices[0][1]-vertices[1][1]), (vertices[0], vertices[-1]))
+    best_sq, best_pair, opp = 0.0, (vertices[0], vertices[0]), 1
+    for i in range(n):
+        nxt = (i + 1) % n
+        edge = _sub(vertices[nxt], vertices[i])
+        supp = lambda k: abs(_cross(edge, _sub(vertices[k], vertices[i])))
+        while supp((opp + 1) % n) > supp(opp) + tol: opp = (opp + 1) % n
+        for candidate in (opp, (opp + 1) % n):
+            d_sq = _distance_sq(vertices[i], vertices[candidate])
+            if d_sq > best_sq: best_sq, best_pair = d_sq, (vertices[i], vertices[candidate])
+    return math.sqrt(best_sq), best_pair
+
+def coverage_by_dot_product(vertices: Sequence[Point], pair: tuple[Point, Point], tol: float = 1e-10) -> bool:
+    p1, p2 = pair
+    thresh = tol * max(1.0, _distance_sq(p1, p2))
+    return all(_dot(_sub(v, p1), _sub(v, p2)) <= thresh for v in vertices)
+\end{lstlisting}
+
+\section{问题二：第二检测点寻优与安全带评估核心代码}
+本程序（\texttt{q2/code/q2\_fast.py}）实现了初测可行域凸外包计算、保守接收安全裕度计算与后验最劣直径极小化评估：
+
+\begin{lstlisting}[caption={问题二核心算法（q2\_fast.py）}]
+from dataclasses import dataclass
+import math
+from typing import Sequence
+from q1_geometry import HalfPlane, make_halfplane, bearing_halfplanes, halfplane_intersection_main, diameter_rotating_calipers
+
+Point = tuple[float, float]
+
+@dataclass(frozen=True)
+class CandidateScore:
+    point: Point
+    movement_m: float
+    conservative_safety_margin_m: float
+    worst_posterior_diameter_m: float
+
+def build_position_outer_polygon(first_obs: tuple[float, float, float], r_tgt: float = 1800.0, r_rx: float = 1500.0) -> list[Point]:
+    x1, y1, bearing = first_obs
+    constraints = bearing_halfplanes([(x1, y1, bearing)], error_deg=1.0)
+    for idx in range(48):
+        ang = 2.0 * math.pi * idx / 48
+        ux, uy = math.cos(ang), math.sin(ang)
+        constraints.append(make_halfplane((r_tgt * ux, r_tgt * uy), (-uy, ux)))
+        constraints.append(make_halfplane((x1 + r_rx * ux, y1 + r_rx * uy), (-uy, ux)))
+    return halfplane_intersection_main(constraints)
+
+def conservative_safety_margin(cand: Point, poly: Sequence[Point], r_near: float = 5.0) -> float:
+    return min(math.hypot(cand[0] - v[0], cand[1] - v[1]) for v in poly) - r_near
+
+def posterior_polygon(first_poly: Sequence[Point], cand: Point, src: Point) -> list[Point]:
+    bearing_true = (math.degrees(math.atan2(src[0] - cand[0], src[1] - cand[1])) + 360.0) % 360.0
+    c2 = bearing_halfplanes([(cand[0], cand[1], bearing_true)], error_deg=1.0)
+    poly_lines = []
+    for i in range(len(first_poly)):
+        v1, v2 = first_poly[i], first_poly[(i + 1) % len(first_poly)]
+        poly_lines.append(make_halfplane(v1, (v2[0] - v1[0], v2[1] - v1[1])))
+    return halfplane_intersection_main(poly_lines + c2)
+
+def evaluate_candidate(cand: Point, first_poly: list[Point], sample_sources: list[Point]) -> CandidateScore:
+    worst_diam = 0.0
+    for src in sample_sources:
+        post = posterior_polygon(first_poly, cand, src)
+        if len(post) >= 3:
+            diam, _ = diameter_rotating_calipers(post)
+            if diam > worst_diam: worst_diam = diam
+    return CandidateScore(
+        point=cand, movement_m=math.hypot(cand[0], cand[1]),
+        conservative_safety_margin_m=conservative_safety_margin(cand, first_poly),
+        worst_posterior_diameter_m=worst_diam
+    )
+\end{lstlisting}
+
+\section{问题三：在线双轨搜索与动态清剿核心代码}
+本程序（\texttt{q3/code/q3\_strategy.py}）实现了七点基准巡航拓扑调度、信道生命周期状态机与在线快速清剿闭环：
+
+\begin{lstlisting}[caption={问题三核心策略（q3\_strategy.py）}]
+from dataclasses import dataclass
+from enum import Enum
+import math
+from radio_sim.domain.models import Position, ClearStatus, MeasureStatus
+from radio_sim.environment.base import Environment
+
+Point = tuple[float, float]
+
+class ChannelStatus(str, Enum):
+    UNKNOWN = "unknown"
+    ALIVE = "alive"
+    CLEARED = "cleared"
+
+@dataclass
+class ChannelTrack:
+    channel: int
+    status: ChannelStatus = ChannelStatus.UNKNOWN
+    observations: list[tuple[float, float, float]] = None
+
+class GuaranteedRollingQ3Strategy:
+    def __init__(self) -> None:
+        self.tracks = {ch: ChannelTrack(channel=ch, observations=[]) for ch in range(1, 21)}
+        self.search_grid: list[Point] = [(0.0, 0.0)] + [
+            (1140.0 * math.cos(math.radians(60.0 * k)), 1140.0 * math.sin(math.radians(60.0 * k))) for k in range(6)
+        ]
+        self.grid_idx = 0
+
+    def step(self, env: Environment) -> bool:
+        # 1. 优先清剿处于 ALIVE 状态的信道
+        for ch, tr in self.tracks.items():
+            if tr.status == ChannelStatus.ALIVE:
+                self._localize_and_clear(env, tr)
+                return True
+        # 2. 推进基准巡航网格并扫描新信号
+        if self.grid_idx < len(self.search_grid):
+            pt = self.search_grid[self.grid_idx]
+            env.move_to(Position(pt[0], pt[1]))
+            for ch in range(1, 21):
+                if self.tracks[ch].status == ChannelStatus.UNKNOWN:
+                    env.switch_channel(ch)
+                    obs = env.measure()
+                    if obs.status == MeasureStatus.SUCCESS:
+                        self.tracks[ch].status = ChannelStatus.ALIVE
+                        self.tracks[ch].observations.append((pt[0], pt[1], obs.bearing_deg))
+            self.grid_idx += 1
+            return True
+        return False
+
+    def _localize_and_clear(self, env: Environment, tr: ChannelTrack) -> None:
+        cand = self._get_optimal_second_station(tr.observations[0])
+        env.move_to(Position(cand[0], cand[1]))
+        env.switch_channel(tr.channel)
+        m2 = env.measure()
+        if m2.status == MeasureStatus.SUCCESS:
+            tr.observations.append((cand[0], cand[1], m2.bearing_deg))
+            center = self._solve_mec_center(tr.observations)
+            env.move_to(Position(center[0], center[1]))
+            if env.clear().status == ClearStatus.SUCCESS:
+                tr.status = ChannelStatus.CLEARED
+        elif m2.status == MeasureStatus.TOO_CLOSE:
+            env.clear()
+            tr.status = ChannelStatus.CLEARED
+\end{lstlisting}
+
+\section{问题四：25点拓扑与定向清剿终局控制核心代码}
+本程序（\texttt{q4/code/q4\_strategy.py} 与 \texttt{q4/code/q4\_clear\_terminal.py}）实现了 25 点双环拓扑剖分、对称镜像重捕获算法与认证条带清剿快速终局控制：
+
+\begin{lstlisting}[caption={问题四核心策略（q4\_strategy.py \& q4\_clear\_terminal.py）}]
+import math
+from radio_sim.domain.models import Position, ClearStatus, MeasureStatus
+from radio_sim.environment.base import Environment
+from q3_strategy import GuaranteedRollingQ3Strategy, ChannelStatus, ChannelTrack
+
+Point = tuple[float, float]
+
+def _polar_point(r: float, deg: float) -> Point:
+    return (r * math.cos(math.radians(deg)), r * math.sin(math.radians(deg)))
+
+def _reflect_across_bearing_axis(pt: Point, origin: Point, bearing_deg: float) -> Point:
+    ang = math.radians(bearing_deg)
+    ux, uy = math.cos(ang), math.sin(ang)
+    vx, vy = pt[0] - origin[0], pt[1] - origin[1]
+    proj = vx * ux + vy * uy
+    return (origin[0] + 2.0 * proj * ux - vx, origin[1] + 2.0 * proj * uy - vy)
+
+def build_directionally_complete_search_points() -> tuple[Point, ...]:
+    pts = [(0.0, 0.0)]
+    pts += [_polar_point(950.0, i * 30.0) for i in range(12)]
+    pts += [_polar_point(1870.0, i * 30.0 + 15.0) for i in range(12)]
+    return tuple(pts)
+
+class GuaranteedDirectionalQ4Strategy(GuaranteedRollingQ3Strategy):
+    def __init__(self) -> None:
+        super().__init__()
+        self.search_grid = list(build_directionally_complete_search_points())
+        self.mirrored_reacquisition = True
+
+    def _localize_and_clear_directional(self, env: Environment, tr: ChannelTrack) -> None:
+        cand = self._select_q2_point(tr.observations[0])
+        env.move_to(Position(cand[0], cand[1]))
+        env.switch_channel(tr.channel)
+        m2 = env.measure()
+        # 若遭遇背向辐射盲区，启动对称镜像重捕获
+        if m2.status == MeasureStatus.NO_SIGNAL and self.mirrored_reacquisition:
+            cand = _reflect_across_bearing_axis(cand, (tr.observations[0][0], tr.observations[0][1]), tr.observations[0][2])
+            env.move_to(Position(cand[0], cand[1]))
+            m2 = env.measure()
+        if m2.status == MeasureStatus.SUCCESS:
+            tr.observations.append((env.current_position.x, env.current_position.y, m2.bearing_deg))
+            center = self._solve_poly_center(tr.observations)
+            env.move_to(Position(center[0], center[1]))
+            env.clear()
+            tr.status = ChannelStatus.CLEARED
+        else:
+            self._execute_strip_clear(env, tr)
+
+def build_certified_strip_plan(center: Point, half_width: float = 30.0, spacing: float = 26.0) -> list[Point]:
+    rows = int(math.ceil(2.0 * half_width / spacing))
+    return [(center[0] + (-half_width if i % 2 == 0 else half_width), center[1] - half_width + (i // 2) * spacing) for i in range(rows * 2)]
+\end{lstlisting}

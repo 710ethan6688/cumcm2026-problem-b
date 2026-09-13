@@ -1,0 +1,54 @@
+%%{init: {'theme': 'base', 'themeVariables': {'fontFamily': 'Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif', 'fontSize': '17px', 'lineColor': '#5F6368', 'primaryTextColor': '#2B2B2B'}, 'flowchart': {'curve': 'basis', 'nodeSpacing': 24, 'rankSpacing': 34, 'htmlLabels': true}}}%%
+flowchart LR
+    A[25点搜索] --> O{观测结果}
+    O -- near --> C[立即清除]
+    O -- direction --> R[目标可能区域]
+    O -- no_signal --> N[记录结果]
+
+    R --> K{满足清除条件?}
+    K -- 是 --> C
+    K -- 否 --> M[常规测向<br/>最多2次]
+    M --> O2{观测结果}
+    O2 -- near --> C
+    O2 -- direction --> R2[更新可能区域]
+    O2 -- no_signal --> MI{存在安全<br/>镜像测点?}
+
+    R2 --> K2{满足清除条件?}
+    K2 -- 是 --> C
+    K2 -- 否 --> B{仍可常规测向?}
+    B -- 是 --> M
+    B -- 否 --> T{尾部探测<br/>值得执行?}
+
+    MI -- 是 --> MP[镜像探测]
+    MI -- 否 --> T
+    MP --> O3{观测结果}
+    O3 -- near --> C
+    O3 -- direction --> R2
+    O3 -- no_signal --> T
+
+    T -- 是 --> TP[尾部探测]
+    T -- 否 --> G[网格清除]
+    TP --> O4{观测结果}
+    O4 -- near --> C
+    O4 -- direction --> RT[更新可能区域]
+    O4 -- no_signal --> G
+    RT --> KT{满足清除条件?}
+    KT -- 是 --> C
+    KT -- 否 --> G
+
+    N --> U[更新频道状态]
+    C --> CL[目标已清除]
+    G --> CL
+    CL --> U
+    U --> D{任务完成?}
+    D -- 是 --> Z([退出测试])
+    D -- 否 --> A
+
+    classDef yellow fill:#FFF1B8,stroke:#C99A00,color:#2B2B2B,stroke-width:1.6px;
+    classDef purple fill:#E8D9F5,stroke:#7A52A3,color:#2B2B2B,stroke-width:1.6px;
+    classDef green fill:#D9EFD8,stroke:#4D8B55,color:#2B2B2B,stroke-width:1.6px;
+
+    class A,O,K,O2,MI,K2,B,T,O3,O4,KT,D yellow;
+    class R,M,R2,MP,TP,RT,N,U purple;
+    class C,G,CL,Z green;
+    linkStyle default stroke:#5F6368,stroke-width:1.5px;

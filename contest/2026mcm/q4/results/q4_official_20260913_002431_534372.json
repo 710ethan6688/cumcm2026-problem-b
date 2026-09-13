@@ -1,0 +1,30 @@
+{
+  "result_status": "COMPLETE",
+  "strategy_name": "GuaranteedDirectionalQ4Strategy",
+  "strategy_completed": true,
+  "strategy_note": "visited_search_points=25;fallback_clear_attempts=76;guaranteed_clear_attempts=7;certificate=True;mirrored_reacquisition_attempts=2;mirrored_reacquisition_hits=0;source_first_insertions=0;search_first_decisions=0;joint_direction_rankings=2;adaptive_tail_probe_attempts=0;adaptive_tail_probe_hits=0;direction_aware_grid_uses=0;analytic_plan_generated=4;analytic_plan_certified=4;analytic_plan_selected=4;analytic_plan_fallbacks=0;analytic_estimated_saving_s=920.176504",
+  "analytic_plan_generated": 4,
+  "analytic_plan_certified": 4,
+  "analytic_plan_selected": 4,
+  "analytic_plan_fallbacks": 0,
+  "analytic_estimated_saving_s": 920.1765038181729,
+  "successful_clear_count": 13,
+  "measure_count": 270,
+  "clear_count": 85,
+  "unique_request_count": 357,
+  "http_attempt_count": 357,
+  "virtual_time_s": 7643.362098,
+  "average_localize_clear_time_s": 587.9509306153846,
+  "wall_time_s": 6.207767300016712,
+  "entered_remaining_real_duration_s": 1200.0,
+  "remaining_real_duration_s": 1193.8439999999828,
+  "final_position": {
+    "x": -1806.2812951605576,
+    "y": 483.9916143417143
+  },
+  "final_measurement_channel": 18,
+  "environment_finished": true,
+  "cleanup_error": null,
+  "request_log": "D:\\1A-project\\mcm-2026\\contest\\2026mcm\\q4\\results\\q4_official_20260913_002431_534372.jsonl",
+  "output": "D:\\1A-project\\mcm-2026\\contest\\2026mcm\\q4\\results\\q4_official_20260913_002431_534372.json"
+}

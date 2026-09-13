@@ -1,0 +1,431 @@
+{
+  "result_status": "COMPLETE",
+  "strategy_name": "GuaranteedRollingQ3Strategy",
+  "strategy_completed": true,
+  "strategy_note": "visited_search_points=7;fallback_clear_attempts=0;guaranteed_clear_attempts=13;polygon_rebuilds=0;polygon_rebuild_failures=0;state_version=154;certificate=True;certificate_reason=all_channels_resolved",
+  "successful_clear_count": 14,
+  "measure_count": 106,
+  "clear_count": 14,
+  "unique_request_count": 122,
+  "http_attempt_count": 122,
+  "virtual_time_s": 3380.921159,
+  "wall_time_s": 4.284168399999999,
+  "entered_remaining_real_duration_s": 1200.0,
+  "remaining_real_duration_s": 1195.781,
+  "final_position": {
+    "x": -243.75079829628578,
+    "y": 1171.803569195164
+  },
+  "final_measurement_channel": 6,
+  "environment_finished": true,
+  "cleanup_error": null,
+  "pending_request": null,
+  "completion_certificate": {
+    "valid": true,
+    "state_version": 154,
+    "built_from_version": 154,
+    "history_consistent": true,
+    "pending_request_empty": true,
+    "cleared_channels": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      12,
+      14,
+      15,
+      16,
+      18
+    ],
+    "absent_channels": [
+      1,
+      11,
+      13,
+      17,
+      19,
+      20
+    ],
+    "per_channel_reasons": {
+      "1": "cover_complete_no_signal",
+      "2": "clear_success",
+      "3": "clear_success",
+      "4": "clear_success",
+      "5": "clear_success",
+      "6": "clear_success",
+      "7": "clear_success",
+      "8": "clear_success",
+      "9": "clear_success",
+      "10": "clear_success",
+      "11": "cover_complete_no_signal",
+      "12": "clear_success",
+      "13": "cover_complete_no_signal",
+      "14": "clear_success",
+      "15": "clear_success",
+      "16": "clear_success",
+      "17": "cover_complete_no_signal",
+      "18": "clear_success",
+      "19": "cover_complete_no_signal",
+      "20": "cover_complete_no_signal"
+    },
+    "per_channel_evidence": {
+      "1": {
+        "event_ids": [
+          1,
+          33,
+          57,
+          73,
+          94,
+          107,
+          131
+        ],
+        "search_points": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            -1140.0,
+            0.0
+          ],
+          [
+            -570.0,
+            -987.26896031426
+          ],
+          [
+            570.0,
+            -987.26896031426
+          ],
+          [
+            1140.0,
+            0.0
+          ],
+          [
+            570.0,
+            987.26896031426
+          ],
+          [
+            -570.0,
+            987.26896031426
+          ]
+        ],
+        "confirmed_channels": []
+      },
+      "2": {
+        "event_ids": [
+          105
+        ],
+        "search_points": [],
+        "confirmed_channels": []
+      },
+      "3": {
+        "event_ids": [
+          88
+        ],
+        "search_points": [],
+        "confirmed_channels": []
+      },
+      "4": {
+        "event_ids": [
+          71
+        ],
+        "search_points": [],
+        "confirmed_channels": []
+      },
+      "5": {
+        "event_ids": [
+          145
+        ],
+        "search_points": [],
+        "confirmed_channels": []
+      },
+      "6": {
+        "event_ids": [
+          153
+        ],
+        "search_points": [],
+        "confirmed_channels": []
+      },
+      "7": {
+        "event_ids": [
+          51
+        ],
+        "search_points": [],
+        "confirmed_channels": []
+      },
+      "8": {
+        "event_ids": [
+          47
+        ],
+        "search_points": [],
+        "confirmed_channels": []
+      },
+      "9": {
+        "event_ids": [
+          92
+        ],
+        "search_points": [],
+        "confirmed_channels": []
+      },
+      "10": {
+        "event_ids": [
+          31
+        ],
+        "search_points": [],
+        "confirmed_channels": []
+      },
+      "11": {
+        "event_ids": [
+          17,
+          37,
+          62,
+          78,
+          95,
+          108,
+          132
+        ],
+        "search_points": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            -1140.0,
+            0.0
+          ],
+          [
+            -570.0,
+            -987.26896031426
+          ],
+          [
+            570.0,
+            -987.26896031426
+          ],
+          [
+            1140.0,
+            0.0
+          ],
+          [
+            570.0,
+            987.26896031426
+          ],
+          [
+            -570.0,
+            987.26896031426
+          ]
+        ],
+        "confirmed_channels": []
+      },
+      "12": {
+        "event_ids": [
+          125
+        ],
+        "search_points": [],
+        "confirmed_channels": []
+      },
+      "13": {
+        "event_ids": [
+          19,
+          39,
+          64,
+          80,
+          97,
+          111,
+          133
+        ],
+        "search_points": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            -1140.0,
+            0.0
+          ],
+          [
+            -570.0,
+            -987.26896031426
+          ],
+          [
+            570.0,
+            -987.26896031426
+          ],
+          [
+            1140.0,
+            0.0
+          ],
+          [
+            570.0,
+            987.26896031426
+          ],
+          [
+            -570.0,
+            987.26896031426
+          ]
+        ],
+        "confirmed_channels": []
+      },
+      "14": {
+        "event_ids": [
+          149
+        ],
+        "search_points": [],
+        "confirmed_channels": []
+      },
+      "15": {
+        "event_ids": [
+          121
+        ],
+        "search_points": [],
+        "confirmed_channels": []
+      },
+      "16": {
+        "event_ids": [
+          55
+        ],
+        "search_points": [],
+        "confirmed_channels": []
+      },
+      "17": {
+        "event_ids": [
+          25,
+          41,
+          66,
+          82,
+          99,
+          114,
+          134
+        ],
+        "search_points": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            -1140.0,
+            0.0
+          ],
+          [
+            -570.0,
+            -987.26896031426
+          ],
+          [
+            570.0,
+            -987.26896031426
+          ],
+          [
+            1140.0,
+            0.0
+          ],
+          [
+            570.0,
+            987.26896031426
+          ],
+          [
+            -570.0,
+            987.26896031426
+          ]
+        ],
+        "confirmed_channels": []
+      },
+      "18": {
+        "event_ids": [
+          129
+        ],
+        "search_points": [],
+        "confirmed_channels": []
+      },
+      "19": {
+        "event_ids": [
+          27,
+          43,
+          68,
+          84,
+          101,
+          117,
+          135
+        ],
+        "search_points": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            -1140.0,
+            0.0
+          ],
+          [
+            -570.0,
+            -987.26896031426
+          ],
+          [
+            570.0,
+            -987.26896031426
+          ],
+          [
+            1140.0,
+            0.0
+          ],
+          [
+            570.0,
+            987.26896031426
+          ],
+          [
+            -570.0,
+            987.26896031426
+          ]
+        ],
+        "confirmed_channels": []
+      },
+      "20": {
+        "event_ids": [
+          28,
+          44,
+          69,
+          85,
+          102,
+          118,
+          136
+        ],
+        "search_points": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            -1140.0,
+            0.0
+          ],
+          [
+            -570.0,
+            -987.26896031426
+          ],
+          [
+            570.0,
+            -987.26896031426
+          ],
+          [
+            1140.0,
+            0.0
+          ],
+          [
+            570.0,
+            987.26896031426
+          ],
+          [
+            -570.0,
+            987.26896031426
+          ]
+        ],
+        "confirmed_channels": []
+      }
+    },
+    "global_reason": "all_channels_resolved"
+  },
+  "request_log": "D:\\1A-project\\mcm-2026\\contest\\2026mcm\\q3\\results\\q3_official_20260913_134413_985382.jsonl",
+  "output": "D:\\1A-project\\mcm-2026\\contest\\2026mcm\\q3\\results\\q3_official_20260913_134413_985382.json"
+}

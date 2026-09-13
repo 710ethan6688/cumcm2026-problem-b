@@ -1,0 +1,2763 @@
+[
+    {
+        "type": "text",
+        "text": "www.elsevier.com/locate/sigpro",
+        "bbox": [
+            731,
+            144,
+            933,
+            157
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Optimal angular sensor separation for AOA localization",
+        "text_level": 1,
+        "bbox": [
+            119,
+            192,
+            886,
+            219
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Kutluyıl Dog˘ anc-aya,-, Hatem Hmamb",
+        "bbox": [
+            299,
+            231,
+            704,
+            253
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "a School of Electrical and Information Engineering, University of South Australia, Mawson Lakes, S.A. 5095, Australia b Electronic Warfare and Radar Division, Defence Science and Technology Organisation, Edinburgh, S.A. 5111, Australia",
+        "bbox": [
+            125,
+            262,
+            882,
+            291
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Received 26 July 2007; received in revised form 2 November 2007; accepted 20 November 2007 Available online 3 December 2007",
+        "bbox": [
+            196,
+            296,
+            810,
+            324
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Abstract",
+        "text_level": 2,
+        "bbox": [
+            71,
+            359,
+            137,
+            373
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "This paper establishes the angular separation requirements for angle-of-arrival (AOA) sensors in order to achieve the best mean squared error (MSE) localization performance for arbitrary but fixed sensor ranges. Optimal sensor placement for localization arises in several practical applications such as trajectory optimization for moving sensor platforms, e.g., unmanned aerial vehicles (UAVs). In optimal UAV path planning the angular separation between UAVs is an important parameter that has a significant impact on fuel efficiency and inter-UAV distance constraints. The paper shows that optimal angular sensor separation is in general not unique, and that when all sensors are equidistant from the emitter, there may exist optimal sensor configurations with non-uniform angular sensor separation in addition to equiangular separation. The results of the paper are illustrated with extensive simulation studies. © 2007 Elsevier B V. All rights reserved",
+        "bbox": [
+            69,
+            388,
+            935,
+            516
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Keywords: AOA localization; Optimal sensor placement; Pseudolinear estimator; Fisher information matrix; CRLB",
+        "bbox": [
+            69,
+            535,
+            808,
+            551
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "1. Introduction",
+        "text_level": 2,
+        "bbox": [
+            71,
+            592,
+            194,
+            607
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "The angle-of-arrival (AOA) localization is a passive localization technique whereby the location of an emitter is determined by triangulation of bearing information collected at a number of sensors. The AOA localization finds application in electronic warfare systems such as passive localization of radars and in mobile positioning in wireless telecommunication systems.",
+        "bbox": [
+            69,
+            623,
+            485,
+            753
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "The AOA localization has a rich history. The Stansfield estimator [1], one of the first AOA localization methods, is a weighted least-squares (LS) estimator that can be considered a small bearing noise approximation of the maximum likelihood estimator (MLE) for independent Gaussian bearing noise and no sensor location error [2]. The pseudolinear estimator (PLE) developed in [3] dispenses with prior knowledge of the emitter range required by the Stansfield estimator. For Gaussian bearing noise, the passive emitter localization problem can be cast to a nonlinear LS estimation problem by applying the maximum likelihood solution. In [4] the nonlinear LS problem was linearized by Taylor series expansion, resulting in an iterative Gauss–Newton algorithm. The application of the extended Kalman filter (EKF) to this nonlinear estimation problem was considered in [5]. A modified polar coordinate EKF (MPCEKF) algorithm with improved stability was proposed in [6]. The EKF and MPCEKF are recursive algorithms with large computational complexity. They also require good initialization to avoid divergence [7].",
+        "bbox": [
+            69,
+            753,
+            485,
+            803
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            518,
+            591,
+            935,
+            884
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "header",
+        "text": "",
+        "bbox": [
+            343,
+            74,
+            408,
+            109
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "header",
+        "text": "",
+        "bbox": [
+            71,
+            57,
+            174,
+            125
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "header",
+        "text": "Available online at www.sciencedirect.com",
+        "bbox": [
+            314,
+            56,
+            634,
+            72
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "header",
+        "text": "ScienceDirect",
+        "bbox": [
+            408,
+            83,
+            606,
+            109
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "header",
+        "text": "ELSEVIER",
+        "bbox": [
+            73,
+            128,
+            176,
+            142
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "header",
+        "text": "SIGNAL PROCESSING",
+        "bbox": [
+            773,
+            75,
+            933,
+            123
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "header",
+        "text": "Signal Processing 88 (2008) 1248–1260",
+        "bbox": [
+            347,
+            129,
+            599,
+            144
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "page_footnote",
+        "text": "-Corresponding author. Tel.: +61 8 8302 3984.",
+        "bbox": [
+            84,
+            839,
+            389,
+            854
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "page_footnote",
+        "text": "E-mail addresses: Kutluyil.Dogancay@unisa.edu.au (K. Dog˘ anc-ay), hatem.hmam@dsto.defence.gov.au (H. Hmam).",
+        "bbox": [
+            69,
+            855,
+            483,
+            882
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "footer",
+        "text": "0165-1684/\\$ - see front matter r 2007 Elsevier B.V. All rights reserved. doi:10.1016/j.sigpro.2007.11.013",
+        "bbox": [
+            69,
+            897,
+            529,
+            925
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            60,
+            87,
+            476,
+            136
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "In practical applications of AOA localization, the placement of AOA sensors relative to the emitter location plays a crucial role in determining the estimation performance. For example it is well known that large range-to-baseline ratios tend to produce poor estimation results with large mean squared error (MSE). In this paper we investigate the impact of AOA sensor placements on the localization performance. In particular we study angular sensor separations to minimize the MSE of the localization algorithm under the assumption that the distance from each sensor to the emitter remains constant. This is particularly relevant to trajectory optimization for multiple moving sensor platforms, e.g., unmanned aerial vehicles (UAVs) [8]. In optimal UAV path planning a key consideration is the angular separation between UAVs as this is closely related to fuel efficiency and communication distance constraints. A prediction of how much angular separation or baseline spread is required for optimal emitter localization provides useful tactical information.",
+        "bbox": [
+            60,
+            136,
+            477,
+            490
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "The problem of determining the optimal trajectory for a single moving platform with an AOA sensor was addressed in [9]. In this work the optimal trajectory was determined by maximizing the determinant of the Fisher information matrix (FIM), which minimizes the uncertainty area of the estimation algorithm. This approach assumes that the estimation algorithm is nearly efficient, i.e., its error covariance matrix is close to the Cramer– Rao lower bound (CRLB) [10]. The chief reason for using FIM is that it tremendously simplifies the analysis. Deriving and dealing with actual MSE expressions for AOA localization methods can be challenging due to the nonlinear nature of the estimation process. In this paper we also adopt the determinant of FIM as an optimization criterion. It is shown that the maximization of the determinant of FIM over angular sensor separations is equivalent to minimizing the MSE. The optimal angular sensor separation is not unique and there may be infinitely many optimal sensor configurations if the number of sensors is larger than three. It also turns out that for three or more sensors equiangular sensor separation is not the only optimal configuration when sensors are equidistant from the emitter. This observation is important to UAV path optimization as it implies that the UAVs do not need to circle the emitter with uniform angular separation.",
+        "bbox": [
+            58,
+            490,
+            479,
+            927
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            509,
+            87,
+            926,
+            119
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "The paper is organized as follows. The optimization problem and the assumptions made are stated in Section 2. The main results of the paper are included in Section 3. Section 4 provides geometric interpretation of the main results presented in Section 3. The findings of the paper are illustrated with comprehensive simulations in Section 5. The paper concludes with a discussion of the optimal configurations in Section 6.",
+        "bbox": [
+            509,
+            119,
+            928,
+            266
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "2. Problem formulation and assumptions",
+        "text_level": 2,
+        "bbox": [
+            512,
+            285,
+            836,
+            303
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "We consider 2D localization by AOA measurements taken at multiple sensors. The general AOA localization problem employing N sensors is depicted in Fig. 1 where $\\underline { { \\pmb { p } } } = [ p _ { x } , p _ { y } ] ^ { \\mathrm { T } }$ is the unknown emitter location with T denoting matrix transpose and $\\boldsymbol { r } _ { i } = \\left[ x _ { i } , y _ { i } \\right] ^ { \\mathrm { T } }$ is the location of the ith sensor, $1 \\leqslant i \\leqslant N$ . The minimum number of AOA sensors required for 2D emitter localization is two. However the larger N the better the localization performance will be. The AOA measurement at sensor i is given by",
+        "bbox": [
+            509,
+            318,
+            928,
+            497
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "equation",
+        "img_path": "images/905ec1b334bbe83199eb21cee376f8fbc8afd37eece14076d6ce86e862670de5.jpg",
+        "text": "$$\n\\tilde { \\theta } _ { i } = \\theta _ { i } + n _ { i } , \\quad \\theta _ { i } = \\tan ^ { - 1 } \\frac { p _ { y } - y _ { i } } { p _ { x } - x _ { i } } ,\\tag{1}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            512,
+            502,
+            781,
+            536
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "where $n _ { i } { \\sim } \\mathcal { N } ( 0 , \\sigma ^ { 2 } )$ is the additive i.i.d. zero-mean Gaussian noise with variance $\\sigma ^ { 2 }$ . For simplicity all sensors are assumed to have identical noise variance regardless of the emitter range.",
+        "bbox": [
+            511,
+            541,
+            928,
+            606
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "The FIM for AOA localization is [11]",
+        "bbox": [
+            529,
+            606,
+            840,
+            623
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "equation",
+        "img_path": "images/d1792340dba2f587d28b0ac5fca7d11b8745fe3455d0be046afccd8879c8036a.jpg",
+        "text": "$$\n\\pmb { \\phi } = \\left[ \\begin{array} { c c } { \\phi _ { 1 1 } } & { \\phi _ { 1 2 } } \\\\ { \\phi _ { 2 1 } } & { \\phi _ { 2 2 } } \\end{array} \\right] , ~ = \\pmb { J } _ { o } ^ { \\mathrm { T } } \\pmb { \\Sigma } ^ { - 1 } \\pmb { J } _ { o } ,\\tag{2}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            512,
+            629,
+            777,
+            673
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "image",
+        "img_path": "images/23d8a3c28a1f439488812907f91d73d66776d290279d7c87dc47927268bf64fe.jpg",
+        "image_caption": [
+            "Fig. 1. AOA localization geometry with N sensors."
+        ],
+        "image_footnote": [],
+        "bbox": [
+            514,
+            695,
+            922,
+            898
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "header",
+        "text": "K. Dog˘anc-ay, H. Hmam / Signal Processing 88 (2008) 1248–1260",
+        "bbox": [
+            281,
+            56,
+            707,
+            71
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "page_number",
+        "text": "1249",
+        "bbox": [
+            893,
+            57,
+            926,
+            70
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "where $J _ { o }$ is the Jacobian evaluated at the true emitter location",
+        "bbox": [
+            69,
+            87,
+            483,
+            119
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/acb258dc07c4ec68d429a00430dcc0c0bc350439214078e6000f699bf3b444c3.jpg",
+        "text": "$$\n\\begin{array} { r } { J _ { o } = \\left[ \\begin{array} { c } { u _ { 1 } ^ { \\mathrm { T } } / d _ { 1 } } \\\\ { u _ { 2 } ^ { \\mathrm { T } } / d _ { 2 } } \\\\ { \\vdots } \\\\ { u _ { N } ^ { \\mathrm { T } } / d _ { N } } \\end{array} \\right] , \\quad u _ { i } = \\left[ \\begin{array} { c } { - \\sin \\theta _ { i } } \\\\ { \\cos \\theta _ { i } } \\end{array} \\right] , \\quad d _ { i } = | | { \\boldsymbol { p } } - { \\boldsymbol { r } } _ { i } | | } \\end{array}\\tag{3}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            69,
+            125,
+            477,
+            218
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "and $\\pmb { \\Sigma }$ is the AOA noise covariance matrix",
+        "bbox": [
+            69,
+            242,
+            417,
+            258
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/4822118c649b1953ff3481cc22e8c0d9a65e0ab36ca9563e20e04611ad2b6400.jpg",
+        "text": "$$\n\\Sigma = \\sigma ^ { 2 } \\left[ \\begin{array} { l l l } { 1 } & { } & { \\mathbf { 0 } } \\\\ { } & { \\ddots } \\\\ { \\mathbf { 0 } } & { } & { 1 } \\end{array} \\right] _ { N \\times N } .\\tag{4}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            69,
+            265,
+            273,
+            328
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "FIM can be rewritten as",
+        "bbox": [
+            69,
+            335,
+            272,
+            351
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/e899722362f6ab1cccc3e4f50601798ce74ffee6e483deee8f1146c67a4a615a.jpg",
+        "text": "$$\n\\pmb { \\phi } = \\frac { 1 } { \\sigma ^ { 2 } } \\sum _ { i = 1 } ^ { N } \\frac { 1 } { d _ { i } ^ { 2 } } \\pmb { u } _ { i } \\pmb { u } _ { i } ^ { \\operatorname { T } } .\\tag{5}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            69,
+            358,
+            224,
+            400
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "Here",
+        "bbox": [
+            71,
+            407,
+            115,
+            421
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/04953fda3b7ca9a33b55cba836fae86f93636cefb74211f1f2b1966cb35bd479.jpg",
+        "text": "$$\n\\pmb { u } _ { i } = \\left[ \\begin{array} { r r } { 0 } & { - 1 } \\\\ { 1 } & { 0 } \\end{array} \\right] \\frac { \\pmb { p } - \\pmb { r } _ { i } } { d _ { i } }\\tag{6}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            69,
+            428,
+            240,
+            466
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "is a unit vector orthogonal to the bearing vector emanating from the ith sensor.",
+        "bbox": [
+            69,
+            473,
+            483,
+            505
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "Observation 1. Moving a sensor from $r _ { i }$ to $2 p - r _ { i }$ (i.e., reflecting the sensor about the emitter) does not affect FIM.",
+        "bbox": [
+            69,
+            513,
+            483,
+            561
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "This is easily seen from (5) where replacing $\\pmb { u } _ { i }$ with $- { \\pmb u } _ { i }$ for any $i , 1 \\leqslant i \\leqslant N$ , does not change FIM. In (6) substituting $2 p - r _ { i }$ for $r _ { i }$ results in $\\pmb { u } _ { i }$ becoming $- { \\pmb u } _ { i }$ which verifies the observation. This property will allow us to generate new optimal geometries from a given optimal localization geometry by simply reflecting some of the sensors about the emitter location.",
+        "bbox": [
+            69,
+            570,
+            485,
+            699
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "As illustrated in Fig. 2, the area of the 1-s error ellipse (39:4% uncertainty region) of an efficient estimator is given by $\\dot { A _ { 1 \\sigma } } = \\pi / | \\mathbf { \\dot { \\pmb { \\phi } } } | ^ { 1 / 2 }$ where $| \\cdot |$ denotes determinant. In this paper we employ the criterion of maximizing the determinant of FIM, which is equivalent to minimizing the area of uncertainty ellipse, for finding the optimal sensor locations [9]. This criterion tacitly assumes that the localization algorithm in use is nearly efficient so that its error covariance can be approximated by CRLB, which is the inverse of FIM. The equivalence of the maximization of the determinant of FIM to the minimization of MSE (the trace of CRLB) is established in the next section.",
+        "bbox": [
+            68,
+            699,
+            485,
+            925
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "chart",
+        "img_path": "images/e850037c8a9f1eab570c10d52905332266f44600f3e0fed9c7b5b1d62265edc4.jpg",
+        "content": "",
+        "chart_caption": [
+            "Fig. 2. Illustration of 1-s error ellipse and a realization of estimates. The area of the ellipse is $\\bar { A _ { 1 \\sigma } } = \\pi / | \\pmb { \\phi } | ^ { 1 / 2 }$"
+        ],
+        "chart_footnote": [],
+        "bbox": [
+            523,
+            87,
+            926,
+            326
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "3. The main result",
+        "text_level": 2,
+        "bbox": [
+            520,
+            393,
+            674,
+            409
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "The following result specifies the optimal angular separation for AOA sensors in an arbitrary localization geometry.",
+        "bbox": [
+            518,
+            425,
+            935,
+            475
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "Theorem 1. Suppose that the distances from each sensor to the emitter, $d _ { i } ,$ are fixed. Then the maximization of the determinant of FIM is equivalent to",
+        "bbox": [
+            518,
+            489,
+            935,
+            539
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/7ebdd9cea8fd692928b01c46d2b96dfab4cdd8d1d112ab26de03c92499a519a1.jpg",
+        "text": "$$\n\\operatorname* { m i n } _ { \\theta _ { 1 } , \\dots , \\theta _ { N } } \\left\\| \\sum _ { i = 1 } ^ { N } \\frac { 1 } { d _ { i } ^ { 2 } } \\pmb { v } _ { i } \\right\\| ^ { 2 } ,\\tag{7}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            520,
+            545,
+            669,
+            594
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "where $\\| \\cdot \\|$ denotes the Euclidean norm and",
+        "bbox": [
+            520,
+            601,
+            865,
+            618
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/aa32a757d5e04213aba967a81f94ab47acfee158a3a412a90bffe14aa89797ac.jpg",
+        "text": "$$\n\\begin{array} { r } { \\boldsymbol { v } _ { i } = \\left[ \\begin{array} { l } { \\cos 2 \\theta _ { i } } \\\\ { \\sin 2 \\theta _ { i } } \\end{array} \\right] . } \\end{array}\\tag{8}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            520,
+            626,
+            647,
+            671
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "Proof. Writing $\\pmb { u } _ { i } = [ u _ { x } ( i ) , u _ { y } ( i ) ] ^ { \\mathrm { T } }$ we have",
+        "bbox": [
+            520,
+            679,
+            856,
+            696
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/0ee64469a690b87288175a3321160cc7bd896e9dd18940fd02b1566c14da12f4.jpg",
+        "text": "$$\n\\pmb { u } _ { i } \\pmb { u } _ { i } ^ { \\operatorname { T } } = \\left[ \\begin{array} { c c } { u _ { x } ^ { 2 } ( i ) } & { u _ { x } ( i ) u _ { y } ( i ) } \\\\ { u _ { x } ( i ) u _ { y } ( i ) } & { u _ { y } ^ { 2 } ( i ) } \\end{array} \\right]\\tag{9}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            518,
+            704,
+            764,
+            747
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "and",
+        "bbox": [
+            520,
+            758,
+            556,
+            773
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/b12e4839e51a6ae2ff571aac52164ffae9491b6befe22af5dc7c69d856b4a955.jpg",
+        "text": "$$\n\\begin{array}{c} \\begin{array} { c c } { { \\displaystyle \\phi = \\frac { 1 } { \\sigma ^ { 2 } } \\left[ \\sum _ { i } \\frac { 1 } { d _ { i } ^ { 2 } } u _ { x } ^ { 2 } ( i ) \\right. } } & { { \\left. \\sum _ { i } \\frac { 1 } { d _ { i } ^ { 2 } } u _ { x } ( i ) u _ { y } ( i ) \\right] } } \\\\ { { \\displaystyle \\sum _ { i } \\frac { 1 } { d _ { i } ^ { 2 } } u _ { x } ( i ) u _ { y } ( i ) } } & { { \\sum _ { i } \\frac { 1 } { d _ { i } ^ { 2 } } u _ { y } ^ { 2 } ( i ) } } \\end{array} \\left( 1 0 { \\mathrm { a } } \\right.   \\\\ { { \\displaystyle } } & { { \\displaystyle = \\frac { 1 } { \\sigma ^ { 2 } } \\left[ \\begin{array} { l l } { { \\displaystyle \\sum _ { i } \\frac { 1 } { d _ { i } ^ { 2 } } \\sin ^ { 2 } \\theta _ { i } } } & { { \\displaystyle - \\sum _ { i } \\frac { 1 } { d _ { i } ^ { 2 } } \\sin \\theta _ { i } \\cos \\theta _ { i } } } \\\\ { { \\displaystyle - \\sum _ { i } \\frac { 1 } { d _ { i } ^ { 2 } } \\sin \\theta _ { i } \\cos \\theta _ { i } } } & { { \\displaystyle \\sum _ { i } \\frac { 1 } { d _ { i } ^ { 2 } } \\cos ^ { 2 } \\theta _ { i } } } \\end{array} \\right] } } \\end{array}\\tag{ð10bÞ}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            520,
+            781,
+            926,
+            904
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "page_number",
+        "text": "1250",
+        "bbox": [
+            71,
+            57,
+            106,
+            70
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "header",
+        "text": "K. Dog˘anc-ay, H. Hmam / Signal Processing 88 (2008) 1248–1260",
+        "bbox": [
+            290,
+            56,
+            716,
+            72
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/edd9d9b6b41764675ae1bb120a4a3fa6bdccd62fe1b3e11a1686d05e09eac620.jpg",
+        "text": "$$\n= \\frac { 1 } { \\sigma ^ { 2 } } \\left[ \\begin{array} { l l } { \\frac { 1 } { 2 } \\sum _ { i } \\frac { 1 } { d _ { i } ^ { 2 } } ( 1 - \\cos 2 \\theta _ { i } ) } & { - \\frac { 1 } { 2 } \\sum _ { i } \\frac { 1 } { d _ { i } ^ { 2 } } \\sin 2 \\theta _ { i } } \\\\ { - \\frac { 1 } { 2 } \\sum _ { i } \\frac { 1 } { d _ { i } ^ { 2 } } \\sin 2 \\theta _ { i } } & { \\frac { 1 } { 2 } \\sum _ { i } \\frac { 1 } { d _ { i } ^ { 2 } } ( 1 + \\cos 2 \\theta _ { i } ) } \\end{array} \\right]\\tag{ð10cÞ}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            82,
+            86,
+            472,
+            145
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "The determinant of FIM is",
+        "bbox": [
+            60,
+            172,
+            286,
+            190
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/8da24b41ca1a7266cba60a2488a560888f74ea2f09dbdecc773c8c1997c9c6fe.jpg",
+        "text": "$$\n\\begin{array} { c } { { | \\displaystyle | \\Phi | = \\frac { 1 } { 4 \\sigma ^ { 4 } } \\left( \\left( \\displaystyle \\sum _ { i = 1 } ^ { N } \\frac { 1 } { d _ { i } ^ { 2 } } \\right) ^ { 2 } - \\left( \\displaystyle \\sum _ { i = 1 } ^ { N } \\frac { 1 } { d _ { i } ^ { 2 } } \\sin 2 \\theta _ { i } \\right) ^ { 2 } \\right. } } \\\\ { { \\left. - \\left( \\displaystyle \\sum _ { i = 1 } ^ { N } \\frac { 1 } { d _ { i } ^ { 2 } } \\cos 2 \\theta _ { i } \\right) ^ { 2 } \\right) . } } \\end{array}\\tag{ð11Þ}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            62,
+            196,
+            411,
+            297
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Since $| \\pmb { \\phi } | \\geqslant 0$ and the $d _ { i }$ are fixed, the maximization of $| \\Phi |$ over $\\theta _ { i }$ requires the minimization of",
+        "bbox": [
+            60,
+            305,
+            476,
+            340
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/41db04cf49532f38ee350f6cb61e7a44d3a5d1083bd7272e222422561d62dcc8.jpg",
+        "text": "$$\n\\left( \\sum _ { i = 1 } ^ { N } \\frac { 1 } { d _ { i } ^ { 2 } } \\sin 2 \\theta _ { i } \\right) ^ { 2 } + \\left( \\sum _ { i = 1 } ^ { N } \\frac { 1 } { d _ { i } ^ { 2 } } \\cos 2 \\theta _ { i } \\right) ^ { 2 }\\tag{12}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            64,
+            346,
+            367,
+            392
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "over $\\theta _ { i } ,$ which is identical to (7). &",
+        "bbox": [
+            60,
+            398,
+            363,
+            416
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "We will call sensor configurations minimizing (7) optimal solutions. Sensor configurations minimizing (7) to zero will sometimes be referred to as maximally optimal solutions in order to distinguish them from other geometries where the solution of (7) is non-zero due to geometric constraints.",
+        "bbox": [
+            60,
+            425,
+            477,
+            522
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "We now establish the equivalence of uncertainty area minimization to MSE minimization.",
+        "bbox": [
+            60,
+            522,
+            476,
+            555
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Corollary 1. For constant $d _ { i } ,$ the maximization of the determinant of FIM is equivalent to the minimization of MSE.",
+        "bbox": [
+            60,
+            566,
+            476,
+            614
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Proof. The CRLB can be expressed as",
+        "bbox": [
+            60,
+            623,
+            378,
+            640
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/04340561f12dc2abe9a1e6a32c39dc4566080aff525caef280f2ef942e13b802.jpg",
+        "text": "$$\n\\mathrm { C R L B } = \\pmb { \\phi } ^ { - 1 } = \\frac { 1 } { \\vert \\pmb { \\phi } \\vert } \\left[ \\begin{array} { c c } { \\phi _ { 2 2 } } & { - \\phi _ { 1 2 } } \\\\ { - \\phi _ { 2 1 } } & { \\phi _ { 1 1 } } \\end{array} \\right] ,\\tag{13}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            60,
+            648,
+            362,
+            691
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "where $\\phi _ { 1 2 } = \\phi _ { 2 1 }$ . The optimal MSE is given by the trace of the CRLB",
+        "bbox": [
+            60,
+            698,
+            476,
+            730
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/493e83e24eb995426b27fcc5126449335823f2f084784fc7057d2cf611478874.jpg",
+        "text": "$$\n\\mathrm { M S E } = \\frac { \\phi _ { 1 1 } + \\phi _ { 2 2 } } { | \\pmb { \\phi } | } .\\tag{14}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            62,
+            738,
+            215,
+            770
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Using (10), the MSE can be written as",
+        "bbox": [
+            62,
+            777,
+            376,
+            793
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/d8431db19e2a3d101b7202c80e1e041de1ab000b173441e4d3082bcda105c0d6.jpg",
+        "text": "$$\n\\mathrm { M S E } = \\frac { 1 } { \\sigma ^ { 2 } | \\pmb { \\phi } | } \\sum _ { i = 1 } ^ { N } \\frac { 1 } { d _ { i } ^ { 2 } } .\\tag{15}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            62,
+            801,
+            235,
+            843
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Thus for fixed $d _ { i } ,$ the MSE is minimized if and only if the determinant of FIM is maximized. &",
+        "bbox": [
+            60,
+            850,
+            476,
+            882
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "The special case of all sensors being equidistant from the emitter is considered next.",
+        "bbox": [
+            60,
+            893,
+            476,
+            925
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Corollary 2. For equal sensor ranges, i.e., $d _ { 1 } =$ $d _ { 2 } = \\cdot \\cdot \\cdot = d _ { N } = d .$ , the determinant of FIM is upperbounded by",
+        "bbox": [
+            511,
+            87,
+            928,
+            136
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/36328b5602bfa38102e57957ecdfa841ca6a16b31a57f32c3fc378019c3dcb40.jpg",
+        "text": "$$\n\\frac { N ^ { 2 } } { 4 \\sigma ^ { 4 } d ^ { 4 } }\\tag{16}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            512,
+            141,
+            564,
+            179
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "which is attained if and only if",
+        "bbox": [
+            512,
+            183,
+            761,
+            199
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/5da9ffe160fe868756fd59755032c75d87d8a30daca1b4acc534bab020b861c5.jpg",
+        "text": "$$\n\\sum _ { i = 1 } ^ { N } \\sin 2 \\theta _ { i } = 0 \\quad a n d \\quad \\sum _ { i = 1 } ^ { N } \\cos 2 \\theta _ { i } = 0 .\\tag{17}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            512,
+            206,
+            819,
+            247
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Proof. When the sensors are equidistant from the emitter, (10c) becomes",
+        "bbox": [
+            511,
+            253,
+            926,
+            285
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/ef86e9cf4e08735bcf79df38e21d114951a3f5cbd3d9970f00d33a284031a74f.jpg",
+        "text": "$$\n\\phi = \\frac { 1 } { \\sigma ^ { 2 } d ^ { 2 } } \\left[ \\begin{array} { l l } { \\frac { 1 } { 2 } \\sum _ { i } ( 1 - \\cos 2 \\theta _ { i } ) } & { - \\frac { 1 } { 2 } \\sum _ { i } \\sin 2 \\theta _ { i } } \\\\ { - \\frac { 1 } { 2 } \\sum _ { i } \\sin 2 \\theta _ { i } } & { \\frac { 1 } { 2 } \\sum _ { i } ( 1 + \\cos 2 \\theta _ { i } ) } \\end{array} \\right]\\tag{18}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            512,
+            291,
+            889,
+            353
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "resulting in",
+        "bbox": [
+            512,
+            378,
+            608,
+            396
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/44dfad8576b7c356a6b2fa1b2cb85fbee7b50edc7b0e04b82f5481939a088b2c.jpg",
+        "text": "$$\n\\begin{array} { r } { | \\varPhi | = \\displaystyle \\frac { 1 } { 4 \\sigma ^ { 4 } d ^ { 4 } } \\left( N ^ { 2 } - \\left( \\sum _ { i = 1 } ^ { N } \\sin 2 \\theta _ { i } \\right) ^ { 2 } \\right. } \\\\ { \\displaystyle \\left. - \\left( \\sum _ { i = 1 } ^ { N } \\cos 2 \\theta _ { i } \\right) ^ { 2 } \\right) \\leqslant \\frac { N ^ { 2 } } { 4 \\sigma ^ { 4 } d ^ { 4 } } . } \\end{array}\\tag{ð19Þ}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            512,
+            401,
+            795,
+            501
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "The determinant of FIM is maximized if and only if (17) is satisfied. &",
+        "bbox": [
+            511,
+            509,
+            928,
+            543
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "When all sensors have the same range $d ,$ the MSE is given by",
+        "bbox": [
+            511,
+            549,
+            926,
+            584
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/cb844cf2db92c8b722d99424beaf3483b785b1edfa280b1b191b123443eb215a.jpg",
+        "text": "$$\n\\mathrm { M S E } = \\frac { N } { \\sigma ^ { 2 } d ^ { 2 } | \\Phi | } \\geqslant \\frac { 4 \\sigma ^ { 2 } d ^ { 2 } } { N } .\\tag{20}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            512,
+            590,
+            722,
+            626
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "The minimum MSE is attained when the angular sensor separation satisfies (17).",
+        "bbox": [
+            511,
+            633,
+            926,
+            667
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Corollary 3. For $N \\geqslant 3$ the optimality condition (17) subsumes equiangular sensor separation as a special case.",
+        "bbox": [
+            511,
+            673,
+            928,
+            722
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Proof. Rewrite (17) as",
+        "bbox": [
+            512,
+            730,
+            698,
+            746
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/1982d329b318bfe7f9c6a4b38885debb2978b15d26cebdc9b0856e29ace091f9.jpg",
+        "text": "$$\n\\sum _ { i = 1 } ^ { N } v _ { i } = 0 .\\tag{21}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            512,
+            754,
+            599,
+            796
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Now let all sensors be placed with uniform angular separation of $2 \\pi / N$ , giving $\\theta _ { i } = ( 2 \\pi / N ) ( i - 1 ) + \\theta _ { 0 }$ where $\\theta _ { 0 }$ is an angular offset. Then the angle of $\\pmb { v } _ { i }$ is $2 \\theta _ { i } = 4 \\pi / N ( i - 1 ) + 2 \\theta _ { 0 } ;$ i.e., the $\\pmb { v } _ { i }$ have a uniform angular separation of $4 \\pi / N$ . For even $N \\left( N \\geqslant 4 \\right)$ this implies",
+        "bbox": [
+            511,
+            801,
+            928,
+            898
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/1229e9a6a3dd1a6b1e19915fa3769a809785448c752c29ce1eb6dbc7cebba048.jpg",
+        "text": "$$\n\\pmb { v } _ { i } = \\pmb { v } _ { N / 2 + i } , \\quad i = 1 , \\ldots , N / 2\\tag{22}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            512,
+            904,
+            742,
+            921
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "header",
+        "text": "K. Dog˘anc-ay, H. Hmam / Signal Processing 88 (2008) 1248–1260",
+        "bbox": [
+            281,
+            56,
+            707,
+            71
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "page_number",
+        "text": "1251",
+        "bbox": [
+            893,
+            57,
+            926,
+            70
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "and",
+        "bbox": [
+            69,
+            87,
+            108,
+            103
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/336fa02abeda71d8d4f9deae1d2f920a48cec842a862f3003340172548b881cf.jpg",
+        "text": "$$\n\\sum _ { i = 1 } ^ { N } { \\pmb v } _ { i } = 2 \\sum _ { i = 1 } ^ { N / 2 } { \\pmb v } _ { i } = 0\\tag{23}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            69,
+            114,
+            233,
+            159
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "since $\\pmb { v } _ { 1 } , \\ldots , \\pmb { v } _ { N / 2 }$ are uniformly separated by $2 \\pi / ( N / 2 )$ . Note that (23) does not hold if $N = 2$ meaning that equiangular separation is not optimal for $N = 2$",
+        "bbox": [
+            68,
+            173,
+            483,
+            237
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "For odd $N \\left( N \\geqslant 3 \\right)$ , the ‘‘interleaved’’ sequence",
+        "bbox": [
+            86,
+            237,
+            466,
+            254
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/64743f62900acf38754082f0e822e18404c359c56b77ccc2dbe79d86f38b5410.jpg",
+        "text": "$$\n\\pmb { v } _ { 1 } , \\pmb { v } _ { M + 1 } , \\pmb { v } _ { 2 } , \\pmb { v } _ { M + 2 } , \\dots , \\pmb { v } _ { M - 1 } , \\pmb { v } _ { N } , \\pmb { v } _ { M }\\tag{24}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            69,
+            266,
+            345,
+            281
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "contains unit vectors uniformly separated by $2 \\pi / N$ rad, where $M = ( N + 1 ) / 2$ , thereby satisfying (21). &",
+        "bbox": [
+            68,
+            295,
+            485,
+            343
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "It is interesting to note that (21) allows nonequiangular sensor separations to yield maximally optimal sensor placements in addition to equiangular separation. We will investigate this in more detail in the next section.",
+        "bbox": [
+            68,
+            351,
+            485,
+            432
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "4. Geometric interpretation",
+        "text_level": 2,
+        "bbox": [
+            69,
+            448,
+            292,
+            464
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "Using complex exponentials the optimality condition for angular sensor separation given in Theorem 1 can be equivalently written as",
+        "bbox": [
+            68,
+            481,
+            483,
+            530
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/f2134d93e55c46dd08e6b30184f88d45a2ffb13b7604b8ab698636e00d84ffa5.jpg",
+        "text": "$$\n\\operatorname* { m i n } _ { \\theta _ { 1 } , . . . , \\theta _ { N } } \\left| \\sum _ { i = 1 } ^ { N } \\frac { 1 } { d _ { i } ^ { 2 } } \\mathrm { e } ^ { \\mathrm { i } \\beta _ { i } } \\right| ^ { 2 } , \\quad \\beta _ { i } \\triangleq 2 \\theta _ { i } ,\\tag{25}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            69,
+            540,
+            303,
+            586
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "where $j = \\sqrt { - 1 } , \\mathrm { e } ^ { \\mathrm { i } \\beta } = \\cos \\beta + j \\sin \\beta$ and $| \\cdot |$ is the modulus (note that we use the same notation to denote determinant if the argument is a matrix). For $N = 2$ the optimal angular sensor separation is obtained from",
+        "bbox": [
+            68,
+            598,
+            485,
+            680
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/4c7737fd6cd588a5e1a40796745fac8da125a6e7839b9ba75535192f0dbaa12f.jpg",
+        "text": "$$\n\\operatorname* { m i n } _ { \\theta _ { 1 } , \\theta _ { 2 } } \\bigg | \\frac { 1 } { d _ { 1 } ^ { 2 } } \\mathrm { e } ^ { \\mathrm { i } \\beta _ { 1 } } + \\frac { 1 } { d _ { 2 } ^ { 2 } } \\mathrm { e } ^ { \\mathrm { j } \\beta _ { 2 } } \\bigg | ^ { 2 } .\\tag{26}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            69,
+            691,
+            248,
+            738
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "Irrespective of the $d _ { i }$ the solution of this minimization problem is",
+        "bbox": [
+            68,
+            752,
+            483,
+            785
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/3ded886a47cd7a127f0b021c5b452e8c79b6aae8d3ca271212f98d8518570f35.jpg",
+        "text": "$$\n\\begin{array} { r } { \\mathtt { e } ^ { \\mathrm { j } \\beta _ { 1 } } = \\mathtt { e } ^ { \\mathrm { j } ( \\beta _ { 2 } \\pm \\pi ) } , } \\end{array}\\tag{27}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            69,
+            795,
+            181,
+            812
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "whereby $\\pmb { v } _ { 1 } = - \\pmb { v } _ { 2 }$ , leading to $| \\theta _ { 1 } - \\theta _ { 2 } | = \\pi / 2$ as the optimal angular separation (see Fig. 3). When the sensors are equidistant from the emitter, (27) satisfies (17).",
+        "bbox": [
+            68,
+            828,
+            483,
+            893
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "In the case of three sensors $( N = 3 )$ , the condition for optimal angular sensor separation takes",
+        "bbox": [
+            68,
+            893,
+            485,
+            925
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "image",
+        "img_path": "images/74edad22fd1e86c80637fcb7f69c88d875274268c1ddff59800cdcc32b26c982.jpg",
+        "image_caption": [
+            "Fig. 3. Illustration of optimal angular sensor separation for $N = 2$ . Irrespective of $d _ { 1 }$ and $d _ { 2 } ,$ bearing lines must be perpendicular in order to solve the minimization problem in (7)."
+        ],
+        "image_footnote": [],
+        "bbox": [
+            612,
+            87,
+            841,
+            242
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "the form:",
+        "bbox": [
+            520,
+            311,
+            602,
+            328
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/7a5b07a6da9ec24c13696eeb20fe5eac18f939572adeba7976fe9ea5b479e157.jpg",
+        "text": "$$\n\\operatorname* { m i n } _ { \\theta _ { 1 } , \\theta _ { 2 } , \\theta _ { 3 } } \\left| \\frac { 1 } { d _ { 1 } ^ { 2 } } \\mathrm { e } ^ { \\mathrm { i } \\beta _ { 1 } } + \\frac { 1 } { d _ { 2 } ^ { 2 } } \\mathrm { e } ^ { \\mathrm { i } \\beta _ { 2 } } + \\frac { 1 } { d _ { 3 } ^ { 2 } } \\mathrm { e } ^ { \\mathrm { j } \\beta _ { 3 } } \\right| ^ { 2 } .\\tag{28}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            518,
+            334,
+            781,
+            380
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "If the sensor ranges were equal (i.e., $d _ { 1 } = d _ { 2 } = d _ { 3 } = d )$ , (28) could be replaced with",
+        "bbox": [
+            518,
+            385,
+            933,
+            419
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/f59f0d1de6a217489c4196d5cf6ca2f1db026c72d79a5f15354385525afef5f6.jpg",
+        "text": "$$\n\\mathrm { e } ^ { \\mathrm { j } \\beta _ { 1 } } + \\mathrm { e } ^ { \\mathrm { j } \\beta _ { 2 } } + \\mathrm { e } ^ { \\mathrm { j } \\beta _ { 3 } } = 0 .\\tag{29}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            522,
+            423,
+            683,
+            442
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "For a given $\\beta _ { 1 }$ , this equation has the solutions $\\beta _ { 2 } =$ $\\pm 2 \\pi / 3 + \\beta _ { 1 }$ and $\\beta _ { 3 } = \\mp 2 \\pi / 3 + \\beta _ { 1 }$ The angular sensor separations are accordingly given by $\\{ \\theta _ { 2 } =$ $\\pm \\pi / 3 + \\theta _ { 1 } , \\theta _ { 3 } = \\mp \\pi / 3 + \\theta _ { 1 } \\}$ and $\\{ \\theta _ { 2 } = \\mp 2 \\pi / 3 + \\theta _ { 1 }$ $\\theta _ { 3 } = \\pm 2 \\pi / 3 + \\theta _ { 1 } \\}$ . There are two distinct maximally optimal sensor configurations; one with $2 \\pi / 3 \\mathrm { - r a d }$ angular sensor separation and the other with $\\pi / 3$ rad (see Fig. 4). The latter configuration can also be obtained from the former by using Observation 1. Note that the angular sensor separation by $\\pi / 3$ is not an equiangular separation.",
+        "bbox": [
+            518,
+            448,
+            935,
+            626
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "For arbitrary di (28) can be written as an equality",
+        "bbox": [
+            536,
+            626,
+            935,
+            642
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/8bfaf5052183092102862c99035b40bcd269762908b51f43e80b0da0723b2b7d.jpg",
+        "text": "$$\n{ \\frac { 1 } { d _ { 1 } ^ { 2 } } } \\mathrm { e } ^ { \\mathrm { j } \\beta _ { 1 } } + { \\frac { 1 } { d _ { 2 } ^ { 2 } } } \\mathrm { e } ^ { \\mathrm { j } \\beta _ { 2 } } + { \\frac { 1 } { d _ { 3 } ^ { 2 } } } \\mathrm { e } ^ { \\mathrm { j } \\beta _ { 3 } } = 0\\tag{30}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            518,
+            646,
+            755,
+            685
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "provided that none of the terms has a modulus larger than the modulus of the sum of the other two terms. The solution to (30) is given by1",
+        "bbox": [
+            518,
+            688,
+            935,
+            739
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/b4f9e67bdf6893c4fb4d2673ef9a5f7db9bf1a364c913109211069f50af68dc3.jpg",
+        "text": "$$\n\\beta _ { 2 } - \\beta _ { 1 } = \\pm \\tan ^ { - 1 } ( \\sqrt { \\zeta } , b ^ { 2 } - a ^ { 2 } - 1 ) ,\\tag{31a}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            518,
+            745,
+            805,
+            766
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/8b2948336787ad8c1be4ba12d0bb414ab21e506dc7f3a07a52e2ad88e8048b22.jpg",
+        "text": "$$\n\\beta _ { 3 } - \\beta _ { 1 } = \\mp \\tan ^ { - 1 } ( \\sqrt { \\zeta } , \\ a ^ { 2 } - b ^ { 2 } - 1 ) ,\\tag{31b}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            518,
+            776,
+            812,
+            797
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "where $a = ( d _ { 1 } / d _ { 2 } ) ^ { 2 } , b = ( d _ { 1 } / d _ { 3 } ) ^ { 2 } , \\zeta = - ( a + b + 1 )$ $( a - b + 1 ) ( a + b - 1 ) ( a - b - 1 )$ and $\\tan ^ { - 1 } ( y , x )$ is the four-quadrant inverse tangent of $y / x .$ . Eq. (31) in general leads to four distinct maximally optimal sensor placement configurations obtained by reflecting each of the sensors about the emitter location using Observation 1. Fig. 5 illustrates two of the optimal angular separation configurations.",
+        "bbox": [
+            518,
+            800,
+            935,
+            884
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "page_number",
+        "text": "1252",
+        "bbox": [
+            71,
+            57,
+            106,
+            70
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "header",
+        "text": "K. Dog˘anc-ay, H. Hmam / Signal Processing 88 (2008) 1248–1260",
+        "bbox": [
+            290,
+            56,
+            716,
+            71
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "page_footnote",
+        "text": "1 The mathematics software package MAPLE was utilized to arrive at this solution.",
+        "bbox": [
+            518,
+            897,
+            935,
+            924
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "image",
+        "img_path": "images/aaf4441822c7df63738302d46c6225f9fc0ef63b107121fa662c161a8f77b469.jpg",
+        "image_caption": [
+            "Fig. 4. Illustration of maximally optimal angular sensor separation for $N = 3$ with equal sensor ranges. Two optimal configurations exist with sensor separation by $2 \\pi / 3$ and $\\pi / 3$"
+        ],
+        "image_footnote": [],
+        "bbox": [
+            95,
+            88,
+            439,
+            350
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "image",
+        "img_path": "images/b6be1500e52b36272eae488a743a36e1c3d6d2417db87844f0505e17c2b8907a.jpg",
+        "image_caption": [
+            "Fig. 5. Maximally optimal angular sensor separation for $N = 3$ with different sensor ranges $( d _ { 1 } = 6 , d _ { 2 } = 5 , d _ { 3 } = 5 . 5 )$ where $\\beta _ { 2 } -$ $\\beta _ { 1 } = 1 2 5 . 1 ^ { \\circ }$ and $\\beta _ { 3 } - \\beta _ { 1 } = - 9 8 . 3 ^ { \\circ }$ . Only two of the four distinct optimal configurations are shown."
+        ],
+        "image_footnote": [],
+        "bbox": [
+            64,
+            416,
+            472,
+            714
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            62,
+            796,
+            476,
+            845
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "If there exits $m \\in \\{ 1 , 2 , 3 \\}$ such that",
+        "bbox": [
+            80,
+            845,
+            367,
+            861
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/541ec0255c1cab864ed5a897e132cd3bb719ba21b768f6a65c2471db289cfb3f.jpg",
+        "text": "$$\n\\frac { 1 } { d _ { m } ^ { 2 } } > \\sum _ { 1 \\leqslant i \\leqslant 3 } \\frac { 1 } { d _ { i } ^ { 2 } }\\tag{32}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            60,
+            874,
+            178,
+            923
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "that is, one of the terms in (30) has a modulus greater than the modulus of the sum of the other terms, then (30) has no solution. This is also equivalent to $\\zeta < 0$ in (31), which yields a complex solution. In this case we seek to minimize (28) in order to maximize the determinant of FIM. The minimizing solution is given by placing ${ \\mathfrak { v } } _ { m }$ in the opposite direction to the other vectors, i.e.,",
+        "bbox": [
+            511,
+            87,
+            928,
+            218
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/2331b8e4ef76adf8c3f07d4ee81e18ff046ef4ef513796d0a29c38b353b7c466.jpg",
+        "text": "$$\n\\mathrm { e } ^ { \\mathrm { j } \\beta _ { k } } = - \\mathrm { e } ^ { \\mathrm { j } \\beta _ { m } } , \\quad k \\in \\{ 1 , 2 , 3 \\} \\backslash m\\tag{33}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            512,
+            222,
+            750,
+            241
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "which results in the following optimal angular separation as illustrated in Fig. 6",
+        "bbox": [
+            512,
+            246,
+            926,
+            280
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/d2a9ff9ee392ff1c809518ef6ab454a5ef76925543c6c7beccc09063cbf058c4.jpg",
+        "text": "$$\n\\theta _ { k } = \\pm \\frac { \\pi } { 2 } + \\theta _ { m } , \\quad k \\in \\{ 1 , 2 , 3 \\} \\backslash m .\\tag{34}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            512,
+            284,
+            773,
+            312
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "Here n denotes set subtraction.",
+        "bbox": [
+            512,
+            318,
+            766,
+            334
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "For $N = 4$ and equal sensor ranges, the maximally optimal angular separation is determined from",
+        "bbox": [
+            511,
+            334,
+            926,
+            382
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/cde0eba5cc4c8a55f9d2ef65adafd46e1bcc67ddbeb3e8be5c6d0a081af16aa6.jpg",
+        "text": "$$\n\\mathrm { e } ^ { \\mathrm { j } \\beta _ { 1 } } + \\mathrm { e } ^ { \\mathrm { j } \\beta _ { 2 } } + \\mathrm { e } ^ { \\mathrm { j } \\beta _ { 3 } } + \\mathrm { e } ^ { \\mathrm { j } \\beta _ { 4 } } = 0 .\\tag{35}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            512,
+            388,
+            726,
+            407
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "The solutions to the above equation are simply given by placing a pair of complex exponentials in the opposite direction to the other pair, e.g.,",
+        "bbox": [
+            511,
+            412,
+            926,
+            463
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/343f5c31847a66202a8dbc1f930dfc0b0a7ff91cc776d99cafc508e96f90a571.jpg",
+        "text": "$$\n\\begin{array} { r } { \\mathtt { e } ^ { \\mathrm { j } \\beta _ { 2 } } = \\mathtt { e } ^ { \\mathrm { j } ( \\beta _ { 1 } \\pm \\pi ) } , } \\end{array}\\tag{36a}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            512,
+            466,
+            625,
+            485
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/316f4d891bddad1f64f5c206aff2112adeeafc16566a89015f815f8f93706593.jpg",
+        "text": "$$\n\\mathrm { e } ^ { \\mathrm { j } \\beta _ { 4 } } = \\mathrm { e } ^ { \\mathrm { j } ( \\beta _ { 3 } \\pm \\pi ) }\\tag{36b}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            512,
+            497,
+            619,
+            514
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "giving $\\theta _ { 2 } = \\theta _ { 1 } \\pm \\pi / 2$ and $\\theta _ { 4 } = \\theta _ { 3 } \\pm \\pi / 2$ . We observe that there are infinitely many distinct maximally optimal configurations since $\\theta _ { 1 }$ and $\\theta _ { 3 }$ are arbitrary. The maximally optimal configurations are characterized by the property that angle pairs $\\{ \\theta _ { 1 } , \\theta _ { 2 } \\}$ and $\\{ \\theta _ { 3 } , \\theta _ { 4 } \\}$ define perpendicular bearing lines as depicted in Fig. 7. The equiangular separation is a special case of (36) with $\\theta _ { 2 } - \\theta _ { 1 } = \\theta _ { 3 } - \\theta _ { 2 } =$ $\\theta _ { 4 } - \\theta _ { 3 } = \\pm \\pi / 2$",
+        "bbox": [
+            511,
+            521,
+            926,
+            605
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "image",
+        "img_path": "images/b7c782c5e75c73ce3980975981088497251099adcc460bd048db6ab720984376.jpg",
+        "image_caption": [
+            "Fig. 6. Optimal angular sensor separation for $N = 3$ when the minimum value of (28) is not zero or (32) holds."
+        ],
+        "image_footnote": [],
+        "bbox": [
+            584,
+            618,
+            856,
+            886
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "header",
+        "text": "K. Dog˘anc-ay, H. Hmam / Signal Processing 88 (2008) 1248–1260",
+        "bbox": [
+            281,
+            56,
+            707,
+            71
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "page_number",
+        "text": "1253",
+        "bbox": [
+            893,
+            57,
+            926,
+            70
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            69,
+            87,
+            483,
+            152
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "If the sensors have different ranges to the emitter and (7) can be minimized to zero, the maximally optimal sensor configurations will obey",
+        "bbox": [
+            68,
+            152,
+            485,
+            202
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/dabb2845aca8a4009b47c92a713f3171ead6409abc072dacf03fc0ac6b243bad.jpg",
+        "text": "$$\n{ \\frac { 1 } { d _ { 1 } ^ { 2 } } } \\mathrm { e } ^ { \\mathrm { j } \\beta _ { 1 } } + { \\frac { 1 } { d _ { 2 } ^ { 2 } } } \\mathrm { e } ^ { \\mathrm { j } \\beta _ { 2 } } + { \\frac { 1 } { d _ { 3 } ^ { 2 } } } \\mathrm { e } ^ { \\mathrm { j } \\beta _ { 3 } } + { \\frac { 1 } { d _ { 4 } ^ { 2 } } } \\mathrm { e } ^ { \\mathrm { j } \\beta _ { 4 } } = 0 .\\tag{37}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            68,
+            211,
+            378,
+            249
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "Assuming that $\\beta _ { 1 } = 0$ with no loss of generality and $\\beta _ { 2 }$ is given, the solution to the above equation ${ \\mathrm { i s } } ^ { 1 }$",
+        "bbox": [
+            69,
+            260,
+            483,
+            293
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "generalized to an arbitrary number of sensors. In general, if",
+        "bbox": [
+            518,
+            87,
+            935,
+            121
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/2328cbc29228a4ab2abb024cd4f51fd8f0f197da9bf92c5bd1ea77cb9f44f25f.jpg",
+        "text": "$$\n\\frac { 2 } { d _ { m } ^ { 2 } } > \\sum _ { i = 1 } ^ { N } \\frac { 1 } { d _ { i } ^ { 2 } } , \\quad m = \\arg \\operatorname* { m i n } _ { i } d _ { i }\\tag{42}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            518,
+            130,
+            770,
+            172
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "then the optimal angular separation is governed by",
+        "bbox": [
+            518,
+            180,
+            935,
+            198
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/d61d29d113974b50e368909ce4c1b2eb67c1eff8bdae86721a4ae06d6eb912b2.jpg",
+        "text": "$$\n\\theta _ { k } = \\pm \\frac { \\pi } { 2 } + \\theta _ { m } , \\quad k \\in \\{ 1 , . . . , N \\} \\backslash m .\\tag{43}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            520,
+            207,
+            803,
+            237
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "Such a geometry arises when one sensor is very close to the emitter in comparison with the others. If (42) is true, (7) cannot be minimized to zero, i.e., a",
+        "bbox": [
+            518,
+            243,
+            935,
+            295
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/c00335bac2f84fcc1d2de741c7a9cff877d79c90bb8f2ac2abb3a398a3e040cb.jpg",
+        "text": "$$\n\\begin{array} { r l r } { \\beta _ { 3 } = \\tan ^ { - 1 } \\bigg ( \\frac { a ^ { 2 } ( \\cos ^ { 2 } \\beta _ { 2 } - 1 ) ( a ^ { 2 } + b ^ { 2 } - c ^ { 2 } + 2 a \\cos \\beta _ { 2 } + 1 ) \\pm \\sqrt { \\gamma } ( a \\cos \\beta _ { 2 } + 1 ) } { a \\sin \\beta _ { 2 } } , - ( ( a \\cos \\beta _ { 2 } + 1 ) ( a ^ { 2 } + b ^ { 2 } - c ^ { 2 } + 2 a \\cos \\beta _ { 2 } + 1 ) \\pm \\sqrt { \\gamma } ( a \\cos \\beta _ { 2 } + 1 ) } & \\\\ {  } & {  } & {  } \\\\  + 2 a \\cos \\beta _ { 2 } + 1 ) \\pm \\sqrt { \\gamma } ) \\bigg ) , \\quad \\quad \\quad \\quad \\quad ( \\mathrm  ~ c ~ o ~ s ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c ~ e ~ - ~ c  \\end{array}\\tag{38aÞ}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            68,
+            307,
+            900,
+            489
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "38bÞ",
+        "bbox": [
+            887,
+            460,
+            931,
+            478
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "where $a = d _ { 1 } ^ { 2 } / d _ { 2 } ^ { 2 } , b = d _ { 1 } ^ { 2 } / d _ { 3 } ^ { 2 } , c = d _ { 1 } ^ { 2 } / d _ { 4 } ^ { 2 }$ and",
+        "bbox": [
+            68,
+            514,
+            422,
+            535
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/cedfd5394d916646bc8c1528af8b858dfc5d618f0fe1e8fb1795aa53771836f7.jpg",
+        "text": "$$\n\\begin{array} { c } { { \\gamma = a ^ { 2 } ( \\cos ^ { 2 } \\beta _ { 2 } - 1 ) ( ( a ^ { 2 } - b ^ { 2 } - c ^ { 2 } + 2 a \\cos \\beta _ { 2 } + 1 ) ^ { 2 } } } \\\\ { { { } } } \\\\ { { - 4 b ^ { 2 } c ^ { 2 } ) . } } \\end{array}\\tag{39Þ}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            68,
+            540,
+            461,
+            582
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "If $\\beta _ { 2 }$ is such that $\\gamma$ is negative, then a maximally optimal angular sensor separation satisfying (37) cannot be found. This places a limitation on the values of $\\beta _ { 2 }$ that can be used to obtain a maximally optimal configuration. Fig. 8 illustrates maximally optimal angular separations for $N = 4$ that satisfy (37).",
+        "bbox": [
+            68,
+            591,
+            485,
+            704
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "If one of the terms in (37) has a modulus greater than the modulus of the sum of the other terms, i.e., there exists $m \\in \\{ 1 , 2 , 3 , 4 \\}$ such that",
+        "bbox": [
+            68,
+            704,
+            485,
+            754
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/33910945ebb351f3af05b709eda9ccc7f25f63ee70c7ed4967bc2e43a4aa20e1.jpg",
+        "text": "$$\n\\frac { 1 } { d _ { m } ^ { 2 } } > \\sum _ { 1 \\leqslant i \\leqslant 4 } \\frac { 1 } { d _ { i } ^ { 2 } }\\tag{40}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            69,
+            761,
+            187,
+            808
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "then the optimal configuration is given by",
+        "bbox": [
+            69,
+            816,
+            411,
+            834
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/38b59c7023edb300d050ff6fc8b6c3ac79b0fc42646a162b82eb215b88877d3f.jpg",
+        "text": "$$\n\\theta _ { k } = \\pm \\frac { \\pi } { 2 } + \\theta _ { m } , \\quad k \\in \\{ 1 , 2 , 3 , 4 \\} \\backslash m .\\tag{41}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            69,
+            840,
+            347,
+            870
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "In this case the angular separation between the ‘‘dominant’’ sensor at $r _ { m }$ and the other sensors is $\\pm \\pi / 2$ rad. This optimal configuration can be",
+        "bbox": [
+            68,
+            877,
+            485,
+            925
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "maximally optimal configuration cannot be obtained. In this case the determinant of FIM has the maximum value",
+        "bbox": [
+            518,
+            516,
+            935,
+            566
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/3b53caf3fedca5a8aa159e1e3b8b3cd1c81d882d86eace8efc1839fa9b3c0090.jpg",
+        "text": "$$\n\\operatorname* { m a x } _ { \\theta _ { 1 } , \\ldots , \\theta _ { N } } | \\boldsymbol { \\varPhi } | = \\frac { 1 } { 4 \\sigma ^ { 4 } } \\left( \\left( \\sum _ { i = 1 } ^ { N } \\frac { 1 } { d _ { i } ^ { 2 } } \\right) ^ { 2 } - \\left( \\frac { 2 } { d _ { m } ^ { 2 } } - \\sum _ { i = 1 } ^ { N } \\frac { 1 } { d _ { i } ^ { 2 } } \\right) ^ { 2 } \\right) ,\\tag{ð44aÞ}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            518,
+            571,
+            926,
+            622
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/6e06f6794e1793680ff82083f33a253c07543e533540a9da1001db57ed335b68.jpg",
+        "text": "$$\n= \\frac { 1 } { \\sigma ^ { 4 } d _ { m } ^ { 2 } } \\sum _ { \\stackrel { { \\scriptstyle i \\leqslant i \\leqslant N } } { i \\neq m } } \\frac { 1 } { d _ { i } ^ { 2 } }\\tag{ð44bÞ}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            597,
+            645,
+            738,
+            694
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "which corresponds to the minimum MSE",
+        "bbox": [
+            518,
+            700,
+            856,
+            718
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/60418d2171a83b67e18693c651dc4a2bda8f4bde7c6672cd1c4519409a998aac.jpg",
+        "text": "$$\n\\mathrm { M S E } = \\sigma ^ { 2 } d _ { m } ^ { 2 } \\frac { \\sum _ { i = 1 } ^ { N } \\frac { 1 } { d _ { i } ^ { 2 } } } { \\sum _ { 1 \\le i \\le N } \\frac { 1 } { d _ { i } ^ { 2 } } } .\\tag{45}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            520,
+            725,
+            715,
+            773
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "For $N \\geqslant 4$ there are infinitely many maximally optimal sensor configurations unless (42) holds. Maximally optimal configurations can be identified by following the approach that was adopted in this section. Alternatively the sensors can be grouped into smaller clusters with two or three sensors. Then a maximally optimal angular separation can be found by optimizing angular sensor separation in each cluster. Rotation of the optimized clusters does not affect the optimality and can be used to obtain distinct maximally optimal sensor configurations. This is particularly appealing when all sensors have the same range. As an example, for $N = 5 ,$ , we can consider grouping the sensors into two clusters with three and two sensors $\\mathcal { C } = \\{ 3 , 2 \\}$ or a single cluster with all five sensors $\\mathcal { C } = \\{ 5 \\}$ , where $\\mathcal { C }$ is the set of cluster sizes (the number of sensors in each cluster). For $N = 6$ the sensors can be grouped into clusters $\\mathcal { C } = \\{ 2 , 2 , 2 \\}$ or $\\mathcal { C } = \\{ 3 , 3 \\}$ . For a larger number of sensors similar clustering can be applied to simplify the task of finding a maximally optimal sensor configuration.",
+        "bbox": [
+            518,
+            780,
+            935,
+            925
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "page_number",
+        "text": "1254",
+        "bbox": [
+            71,
+            57,
+            106,
+            70
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "header",
+        "text": "K. Dog˘anc-ay, H. Hmam / Signal Processing 88 (2008) 1248–1260",
+        "bbox": [
+            290,
+            56,
+            716,
+            71
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "image",
+        "img_path": "images/8a36babde257925c9b47e141fec27786ba1b5bc3c05b0aae45600008c882c954.jpg",
+        "image_caption": [
+            "Fig. 7. Examples of maximally optimal angular sensor separations for $N = 4$ with equal sensor ranges. Note that the sensor pairs $\\{ r _ { 1 } , r _ { 2 } \\}$ and $\\{ r _ { 3 } , r _ { 4 } \\}$ have perpendicular bearing lines with the equiangular sensor separation being a special case."
+        ],
+        "image_footnote": [],
+        "bbox": [
+            68,
+            90,
+            470,
+            363
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "image",
+        "img_path": "images/fc1170b1979c24e1c465f29f699613ca141cbaa6bb4ef65dc0852d300566271d.jpg",
+        "image_caption": [
+            "Fig. 8. Maximally optimal angular sensor separation for $N = 4$ with different sensor ranges $( d _ { 1 } = 6 , \\ d _ { 2 } = 5 , \\ d _ { 3 } = 4 , \\ d _ { 4 } = 5 )$ where $\\beta _ { 1 } = 0 ^ { \\circ }$ , $\\beta _ { 2 } = 5 0 ^ { \\circ }$ , $\\beta _ { 3 } = 1 7 2 . 2 ^ { \\circ }$ and $\\beta _ { 4 } = - 7 7 . 8 ^ { \\circ }$ . Only two of the optimal configurations are shown."
+        ],
+        "image_footnote": [],
+        "bbox": [
+            64,
+            456,
+            470,
+            735
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            60,
+            827,
+            476,
+            925
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            511,
+            87,
+            928,
+            202
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "5. Simulation examples",
+        "text_level": 2,
+        "bbox": [
+            512,
+            231,
+            704,
+            247
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "The simulated localization scenarios use the geometry depicted in Fig. 9 where sensor 1 has the AOA angle $\\theta _ { 1 } = 0$ and the emitter is at the origin with no loss of generality. The objective is to determine $\\theta _ { 2 } , . . . , \\theta _ { N }$ for the given $d _ { i }$ so as to minimize the MSE performance for emitter localization. In the simulations the cases of $N = 3 .$ , 4 and 5 are considered. The PLE and MLE are used to check the MSE performance in optimal configurations. The MLE is implemented using the Nelder– Mead simplex method [12] and is initialized to the true emitter location to ensure convergence.",
+        "bbox": [
+            511,
+            262,
+            928,
+            456
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "Fig. 10 shows the determinant of FIM and the corresponding contour plot as a function of $\\theta _ { 2 }$ and $\\theta _ { 3 }$ for $N = 3$ and equal sensor ranges (i.e., $d _ { 1 } =$ $d _ { 2 } = d _ { 3 } = 1 0 0 \\mathrm { m } )$ ). The bearing noise standard deviation is $\\sigma = 5 ^ { \\circ }$ . The maximum value of $| \\Phi |$ is $3 . 8 7 9 7 \\times 1 0 ^ { - 4 }$ which is attained if $\\{ \\theta _ { 2 } , \\theta _ { 3 } \\} \\in$ $\\{ \\{ - 1 2 0 ^ { \\circ } , - 6 0 ^ { \\circ } \\} , \\{ - 1 2 0 ^ { \\circ } , 1 2 0 ^ { \\circ } \\} , \\{ - 6 0 ^ { \\circ } , - 1 2 0 ^ { \\circ } \\} , \\{ - 6 0 ^ { \\circ }$ $6 0 ^ { \\circ } \\} , \\ \\{ 6 0 ^ { \\circ } , - 6 0 ^ { \\circ } \\} , \\ \\{ 6 0 ^ { \\circ } , 1 2 0 ^ { \\circ } \\} , \\ \\{ 1 2 0 ^ { \\circ } , \\ - 1 2 0 ^ { \\circ } \\} , \\ \\{ 1 2 0 ^ { \\circ }$ $6 0 ^ { \\circ } \\} \\}$ . As illustrated in Fig. 4 there are only two distinct maximally optimal geometries, one with $6 0 ^ { \\circ }$ separation between the sensors, and the other with 120\t separation representing an equiangular sensor separation. For these geometries the bias and MSE of the PLE and MLE were estimated using 10,000 Monte Carlo simulations. The estimation results are listed in Table 1. Considering that the optimal MSE for the simulated geometry is $4 \\sigma ^ { 2 } d ^ { 2 } / \\bar { N } = 1 0 1 . 5 3 9 1$ [see (20)], we conclude that the optimized geometries do lead to significantly improved localization performance.",
+        "bbox": [
+            511,
+            456,
+            928,
+            781
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "image",
+        "img_path": "images/15c2ed7555d5157a0f975f41b004bf011735954a73ee69acf2d70ebef902185c.jpg",
+        "image_caption": [],
+        "image_footnote": [],
+        "bbox": [
+            628,
+            803,
+            810,
+            886
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "Fig. 9. Simulated localization geometry with $\\theta _ { 1 } = 0$ and $\\boldsymbol { p } = [ 0 , 0 ] ^ { \\mathrm { T } }$",
+        "bbox": [
+            512,
+            896,
+            926,
+            925
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "header",
+        "text": "K. Dog˘anc-ay, H. Hmam / Signal Processing 88 (2008) 1248–1260",
+        "bbox": [
+            283,
+            56,
+            707,
+            71
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "page_number",
+        "text": "1255",
+        "bbox": [
+            893,
+            57,
+            926,
+            70
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "image",
+        "img_path": "images/11a954eda6150d123fafc1e2cd1235fc882b6045cc56b4b89f3fbe17a9f5dc84.jpg",
+        "image_caption": [
+            "a",
+            "a",
+            "b"
+        ],
+        "image_footnote": [],
+        "bbox": [
+            91,
+            90,
+            477,
+            297
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "image",
+        "img_path": "images/7b172bc4602a188245dc94abd30ce60832ae344d787bfc39a7f5da07f0701f54.jpg",
+        "image_caption": [
+            "Fig. 10. (a) The determinant of FIM as a function of $\\theta _ { 2 }$ and $\\theta _ { 3 }$ for $N = 3$ and equal sensor ranges, and (b) the contour plot of the determinant of FIM with maxima indicated with ‘þ’."
+        ],
+        "image_footnote": [],
+        "bbox": [
+            79,
+            316,
+            477,
+            545
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "table",
+        "img_path": "images/f3ba0103602a5185fe91b1984240d9ae283e385cea45ad7995f10d7154162d06.jpg",
+        "table_caption": [
+            "Bias and MSE performance $( N = 3 )$"
+        ],
+        "table_footnote": [],
+        "table_body": "<table><tr><td></td><td colspan=\"2\">PLE</td><td colspan=\"2\">MLE</td></tr><tr><td></td><td>Bias norm</td><td>MSE</td><td>Bias norm</td><td>MSE</td></tr><tr><td> $6 0 ^ { \\circ }$  separation</td><td>0.2593</td><td>102.4700</td><td>0.1136</td><td>102.7051</td></tr><tr><td> $1 2 0 ^ { \\circ }$  separation</td><td>0.1570</td><td>104.8630</td><td>0.1003</td><td>102.4685</td></tr></table>",
+        "bbox": [
+            69,
+            668,
+            483,
+            756
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "We next consider a localization scenario where the sensors have different ranges to the emitter. For $N = 3$ , $d _ { 1 } = 1 0 0 \\mathrm { m } , d _ { 2 } = 9 0 \\mathrm { m }$ and $d _ { 3 } = 8 0 \\mathrm { m }$ Fig. 11 shows the determinant of FIM versus $\\theta _ { 2 }$ and $\\theta _ { 3 }$ . The determinant of FIM has the maximum value of $6 . 2 1 5 1 \\times 1 0 ^ { - 4 }$ for bearing noise standard deviation $\\sigma = 5 ^ { \\circ }$ . The maximally optimal bearing angles $\\{ \\theta _ { 2 } , \\theta _ { 3 } \\}$ maximizing jUj belong to the set $\\{ \\{ \\beta _ { 2 } / 2 ,$ $\\beta _ { 3 } / 2 \\} , ~ \\{ ( \\beta _ { 2 } - 3 6 0 ^ { \\circ } ) / 2 , \\beta _ { 3 } / 2 \\} , ~ \\{ \\beta _ { 2 } / 2 , ( \\beta _ { 3 } + 3 6 0 ^ { \\circ } ) / 2 \\}$ $\\{ ( \\beta _ { 2 } { - } 3 6 0 ^ { \\circ } ) / 2 , ( \\beta _ { 3 } { + } 3 6 0 ^ { \\circ } ) / 2 \\} , \\{ - \\beta _ { 2 } / 2 , { - } \\beta _ { 3 } / 2 \\} , \\{ - ( \\beta _ { 2 } { - }$ $3 6 0 ^ { \\circ } ) / 2 , - \\beta _ { 3 } / 2 \\} , \\ \\{ - \\beta _ { 2 } / 2 , - ( \\beta _ { 3 } + 3 6 0 ^ { \\circ } ) / 2 \\} , \\ \\{ - ( \\beta _ { 2 } -$ $3 6 0 ^ { \\circ } ) / 2 , - ( \\beta _ { 3 } + 3 6 0 ^ { \\circ } ) / 2 \\} \\}$ where $\\beta _ { 2 } = 9 1 . 9 2 0 6 ^ { \\circ }$ and $\\beta _ { 3 } = - 1 2 7 . 8 4 4 4 ^ { \\circ }$ . There are four distinct maximally optimal angular sensor separations that are given by the first four members of the above set (see Fig. 12). The remaining four configurations are simply mirror images of the first four configurations. The bias and MSE of the PLE and MLE for the distinct maximally optimal configurations were estimated using 10,000 Monte Carlo simulations and are listed in Table 2. In this case the optimal MSE is 80:2244. We observe that the PLE and MLE do not have identical performance for all optimal configurations. For example, configuration 4, which resembles equiangular separation, produces a relatively small bias.",
+        "bbox": [
+            69,
+            796,
+            483,
+            927
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "image",
+        "img_path": "images/16512a38ae2c5ac6a69dc8ce5905102166f3d0bd4109d66cc084b76baf9a2aa5.jpg",
+        "image_caption": [
+            "b"
+        ],
+        "image_footnote": [],
+        "bbox": [
+            547,
+            87,
+            926,
+            296
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "image",
+        "img_path": "images/e3df4fa635dd433f66dac20915217f55bdb24570d552cbdb82568a430ed7984f.jpg",
+        "image_caption": [
+            "Fig. 11. (a) The determinant of FIM as a function of y and $\\theta _ { 3 }$ for $N = 3$ and sensor ranges $d _ { 1 } = 1 0 0 \\mathrm { m }$ $d _ { 2 } = 9 0$ m and $d _ { 3 } = 8 0 \\mathrm { m }$ , and (b) the contour plot of the determinant of FIM with maxima indicated with ‘þ’."
+        ],
+        "image_footnote": [],
+        "bbox": [
+            527,
+            316,
+            926,
+            543
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            518,
+            634,
+            935,
+            925
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "page_number",
+        "text": "1256",
+        "bbox": [
+            73,
+            57,
+            106,
+            70
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "header",
+        "text": "K. Dog˘anc-ay, H. Hmam / Signal Processing 88 (2008) 1248–1260",
+        "bbox": [
+            290,
+            56,
+            715,
+            71
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "Bringing one of the three sensors close to the emitter while keeping the other sensors away from it creates a situation where the inequality in (32) becomes valid. The optimal separation in this case is given by (34), i.e., the sensor with the smallest range is separated from the others perpendicularly. Fig. 13 illustrates this for sensor ranges $d _ { 1 } = 3 0 \\mathrm { m }$ 1, $d _ { 2 } =$ 90 m and $d _ { 3 } = 1 0 0 \\mathrm { m }$ , and bearing noise $\\sigma = 5 ^ { \\circ }$ . The determinant of FIM is maximized when $\\theta _ { 2 } , \\theta _ { 3 } \\in$ $\\{ - 9 0 ^ { \\circ } , 9 0 ^ { \\circ } \\}$ which represents two distinct configurations as in Fig. 6. The maximum value of jUj is 0.0043. Table 3 shows the bias and MSE of the PLE and MLE for the distinct optimal configurations using 10,000 Monte Carlo simulations. The minimum MSE obtained from (45) is 40.9340. Both estimators favour the optimal geometry with sensors 2 and 3 on the opposite sides of the emitter.",
+        "bbox": [
+            60,
+            87,
+            477,
+            362
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "text",
+        "text": "Fig. 14 shows the determinant of FIM versus $\\theta _ { 3 }$ and $\\theta _ { 4 }$ with $\\theta _ { 1 } = 0 ^ { \\circ }$ and $\\theta _ { 2 } = 3 0 ^ { \\circ }$ for $N = 4$ sensors and sensor ranges $d _ { 1 } = 1 0 0 \\mathrm { n }$ m, $d _ { 2 } = 9 0$ m, $d _ { 3 } = 7 0$ m and $d _ { 4 } = 8 0 \\mathrm { m }$ . It is possible to vary $\\theta _ { 2 }$ to obtain other maximally optimal angular separations as long as $\\gamma$ in (39) remains positive. The bearing noise standard deviation is $\\sigma = 5 ^ { \\circ }$ . The bearing angle pairs $\\{ \\theta _ { 3 } , \\theta _ { 4 } \\}$ maximizing the determinant of FIM are given by the set $\\{ \\{ \\beta _ { 3 1 } / 2 , \\beta _ { 4 1 } / 2 \\}$ ,",
+        "bbox": [
+            60,
+            361,
+            476,
+            394
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "image",
+        "img_path": "images/022f35a071a96366839e7fe4030e125015573d914b39cf619e80ecec7a89326c.jpg",
+        "image_caption": [
+            "Fig. 12. Distinct maximally optimal configurations for $N = 3$ and different sensor ranges."
+        ],
+        "image_footnote": [],
+        "bbox": [
+            101,
+            411,
+            441,
+            710
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            509,
+            87,
+            928,
+            202
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "image",
+        "img_path": "images/da000841026c9ca76bd53d0736789669381ba4816a6bd3c1fe46855d65c5b338.jpg",
+        "image_caption": [],
+        "image_footnote": [],
+        "bbox": [
+            534,
+            222,
+            917,
+            431
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "image",
+        "img_path": "images/3dd92e4691621e8cb9ed7424a5d82e0e9d5774dfb94d4a149b29946607a125f3.jpg",
+        "image_caption": [
+            "Fig. 13. (a) The determinant of FIM as a function of $\\theta _ { 2 }$ and $\\theta _ { 3 }$ for N ¼ 3 and sensor ranges $d _ { 1 } = 3 0 \\mathrm { m }$ $d _ { 2 } = 9 0 \\mathrm { m }$ and $d _ { 3 } = 1 0 0 \\mathrm { m } .$ , and (b) the contour plot of the determinant of FIM with maxima indicated with $\\cdot _ { + } ,$"
+        ],
+        "image_footnote": [],
+        "bbox": [
+            520,
+            452,
+            919,
+            680
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "table",
+        "img_path": "images/3e5d22066df2b223c36dc8ebe169043f5e9e9020b10a619b4039eb22c0d0daf7.jpg",
+        "table_caption": [
+            "Bias and MSE performance (N ¼ 3, different sensor ranges)"
+        ],
+        "table_footnote": [],
+        "table_body": "<table><tr><td> $\\{ \\theta _ { 2 } , \\theta _ { 3 } \\}$ </td><td colspan=\"2\">PLE</td><td colspan=\"2\">MLE</td></tr><tr><td></td><td>Bias norm</td><td>MSE</td><td>Bias norm</td><td>MSE</td></tr><tr><td> $\\{ \\beta _ { 2 } / 2 , \\beta _ { 3 } / 2 \\}$ </td><td>0.3003</td><td>82.3443</td><td>0.1114</td><td>81.7197</td></tr><tr><td> $\\{ ( \\beta _ { 2 } - 3 6 0 ^ { \\circ } ) / 2 , \\beta _ { 3 } / 2 \\}$ </td><td>0.3811</td><td>81.4945</td><td>0.0333</td><td>80.8305</td></tr><tr><td> $\\{ \\beta _ { 2 } / 2 , ( \\beta _ { 3 } + 3 6 0 ^ { \\circ } ) / 2 \\}$ </td><td>0.3860</td><td>80.1846</td><td>0.0586</td><td>81.8269</td></tr><tr><td> $\\{ ( \\beta _ { 2 } - 3 6 0 ^ { \\circ } ) / 2 , ( \\beta _ { 3 } + 3 6 0 ^ { \\circ } ) / 2 \\}$ </td><td>0.0472</td><td>83.8571</td><td>0.0378</td><td>83.2766</td></tr></table>",
+        "bbox": [
+            62,
+            803,
+            926,
+            919
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "header",
+        "text": "K. Dog˘anc-ay, H. Hmam / Signal Processing 88 (2008) 1248–1260",
+        "bbox": [
+            283,
+            56,
+            707,
+            71
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "page_number",
+        "text": "1257",
+        "bbox": [
+            893,
+            57,
+            926,
+            70
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "table",
+        "img_path": "images/ebb549c5d168bbaa93cb2041f4692a67cd5aff474d933237514f6eaff078d8cf.jpg",
+        "table_caption": [
+            "Table 3",
+            "Bias and MSE performance (N ¼ 3, different sensor ranges)"
+        ],
+        "table_footnote": [],
+        "table_body": "<table><tr><td> $\\{ \\theta _ { 2 } , \\theta _ { 3 } \\}$ </td><td colspan=\"2\">PLE</td><td colspan=\"2\">MLE</td></tr><tr><td></td><td>Bias norm</td><td>MSE</td><td>Bias norm</td><td>MSE</td></tr><tr><td> $\\{ 9 0 ^ { \\circ } , 9 0 ^ { \\circ } \\}$ </td><td>0.7231</td><td>42.7069</td><td>0.0740</td><td>42.1065</td></tr><tr><td> $\\{ 9 0 ^ { \\circ } , - 9 0 ^ { \\circ } \\}$ </td><td>0.1056</td><td>41.6384</td><td>0.0683</td><td>41.5284</td></tr></table>",
+        "bbox": [
+            71,
+            121,
+            483,
+            207
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "image",
+        "img_path": "images/745ad64cea3dbfedd875420a3f44b2e3ad2aa17e9648f061f6d02de992bab017.jpg",
+        "image_caption": [
+            "Fig. 14. (a) The determinant of FIM as a function of $\\theta _ { 3 }$ and $\\theta _ { 4 }$ for $N = 4 , \\ \\theta _ { 2 } = 3 0 ^ { \\circ }$ and sensor ranges $d _ { 1 } = 1 0 0 \\mathrm { m }$ $d _ { 2 } = 9 0 \\mathrm { m }$ $d _ { 3 } = 7 0 \\mathrm { m }$ and $d _ { 4 } = 8 0 \\mathrm { m }$ , and (b) the contour plot of the determinant of FIM with maxima indicated with $\\cdot _ { + } ,$"
+        ],
+        "image_footnote": [],
+        "bbox": [
+            79,
+            247,
+            479,
+            711
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "text",
+        "text": "$\\{ ( \\beta _ { 3 1 } - 3 6 0 ^ { \\circ } ) / 2 , \\beta _ { 4 1 } / 2 \\} , \\{ \\beta _ { 3 1 } / 2 , ( \\beta _ { 4 1 } + 3 6 0 ^ { \\circ } ) / 2 \\} , \\ \\{ ( \\beta _ { 3 1 } -$ $3 6 0 ^ { \\circ } ) / 2 , ( \\beta _ { 4 1 } + 3 6 0 ^ { \\circ } ) / 2 \\} , \\quad \\{ \\beta _ { 3 2 } / 2 , \\beta _ { 4 2 } / 2 \\}$ $\\{ ( \\beta _ { 3 2 } +$ $3 6 0 ^ { \\circ } ) / 2 , \\beta _ { 4 2 } / 2 \\} , \\quad \\{ \\beta _ { 3 2 } / 2 , ( \\beta _ { 4 2 } - 3 6 0 ^ { \\circ } ) / 2 \\}$ $\\{ ( \\beta _ { 3 2 } +$ $3 6 0 ^ { \\circ } ) / 2 , ( \\beta _ { 4 2 } - 3 6 0 ^ { \\circ } ) / 2 \\} \\}$ where $\\beta _ { 3 1 } = 1 6 7 . 3 2 0 0 ^ { \\circ }$ $\\beta _ { 3 2 } = \\ - 1 0 0 . 3 8 3 5 ^ { \\circ }$ , $\\beta _ { 4 1 } = - 7 6 . 1 6 0 3 ^ { \\circ }$ and $\\beta _ { 4 2 } =$ $1 4 3 . 0 9 6 8 ^ { \\circ }$ as obtained from (38). The distinct maximally optimal configurations are illustrated in Fig. 15. The maximum of jUj is 0.0015, yielding a minimum MSE of 52.1794. The bias and MSE estimates of the PLE and MLE for the maximally optimal configurations are shown in Table 4.",
+        "bbox": [
+            69,
+            795,
+            483,
+            925
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "image",
+        "img_path": "images/b813dca4b59b2fad95ead64c6d6d1029f8560cccda39b0b025fa03d7ccb79646.jpg",
+        "image_caption": [
+            "Fig. 15. Distinct maximally optimal configurations for $N = 4$ and different sensor ranges with $\\theta _ { 1 } = 0$ and $\\theta _ { 2 } = 3 0 ^ { \\circ }$"
+        ],
+        "image_footnote": [],
+        "bbox": [
+            560,
+            87,
+            893,
+            605
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            518,
+            667,
+            933,
+            715
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "text",
+        "text": "The final simulation considers a localization scenario with $N = 5$ sensors. All sensors are equidistant from the emitter with $d = 1 0 0 \\mathrm { m }$ . The sensors are clustered into two groups with three and two sensors. The group with three sensors comprises sensors 1, 2 and 3 with bearing angles $\\theta _ { 1 } = 0 , \\theta _ { 2 } =$ $6 0 ^ { \\circ }$ and $\\theta _ { 3 } = - 6 0 ^ { \\circ }$ , which represents a maximally optimal configuration for three sensors. The determinant of FIM as a function of $\\theta _ { 4 }$ and $\\theta _ { 5 }$ is shown in Fig. 16. The maximum value achieved is 0.0011 which is identical to the upper-bound given in Corollary 2. The bearing angles maximizing the determinant of FIM are not unique and form a set of lines defined by $| \\theta _ { 5 } - \\theta _ { 4 } | = 9 0 ^ { \\circ }$ representing a $9 0 ^ { \\circ }$ separation between $\\theta _ { 4 }$ and $\\theta _ { 5 }$ regardless of the actual value of the either angle. This means that the determinant of FIM is maximized by any perpendicular angle pair $\\{ \\theta _ { 4 } , \\theta _ { 5 } \\}$ , which is maximally optimal for the cluster of sensors 4 and 5, independent of rotation. Thus there are infinitely many distinct maximally optimal configurations obtained by rotating optimal sensor clusters as discussed in Section 4. Four such configurations are shown in Fig. 17. Table 5 lists the bias and MSE estimates for these maximally optimal configurations. The minimum MSE given by (20) is 60.9235. The bias of the PLE is significantly larger than that of the MLE for all configurations while the MSE performance somewhat varies from one configuration to another with configuration 2 producing the best MSE performance.",
+        "bbox": [
+            518,
+            715,
+            935,
+            927
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "page_number",
+        "text": "1258",
+        "bbox": [
+            73,
+            57,
+            104,
+            70
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "header",
+        "text": "K. Dog˘anc-ay, H. Hmam / Signal Processing 88 (2008) 1248–1260",
+        "bbox": [
+            290,
+            56,
+            715,
+            71
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "table",
+        "img_path": "images/7c267ba7439275bf07756f3ab6e62ee9bb6a006e8fdd8f049b31268d46a25d00.jpg",
+        "table_caption": [
+            "Table 4",
+            "Bias and MSE performance (N ¼ 4)"
+        ],
+        "table_footnote": [],
+        "table_body": "<table><tr><td rowspan=\"2\"> $\\{ \\theta _ { 3 } , \\theta _ { 4 } \\}$ </td><td colspan=\"2\">PLE</td><td colspan=\"2\">MLE</td></tr><tr><td>Bias norm</td><td>MSE</td><td>Bias norm</td><td>MSE</td></tr><tr><td> $\\{ \\beta _ { 3 1 } / 2 , \\beta _ { 4 1 } / 2 \\}$ </td><td>0.6181</td><td>53.0705</td><td>0.0645</td><td>52.5850</td></tr><tr><td> $\\{ ( \\beta _ { 3 1 } - 3 6 0 ^ { \\circ } ) / 2 , \\beta _ { 4 1 } / 2 \\}$ </td><td>0.6414</td><td>52.6376</td><td>0.0460</td><td>52.6524</td></tr><tr><td> $\\{ \\beta _ { 3 1 } / 2 , ( \\beta _ { 4 1 } + 3 6 0 ^ { \\circ } ) / 2 \\}$ </td><td>0.4923</td><td>54.1014</td><td>0.0888</td><td>52.5953</td></tr><tr><td> $\\{ ( \\beta _ { 3 1 } - 3 6 0 ^ { \\circ } ) / 2 , ( \\beta _ { 4 1 } + 3 6 0 ^ { \\circ } ) / 2 \\}$ </td><td>0.3069</td><td>53.9769</td><td>0.0673</td><td>52.9520</td></tr><tr><td> $\\{ \\beta _ { 3 2 } / 2 , \\beta _ { 4 2 } / 2 \\}$ </td><td>0.5560</td><td>53.3838</td><td>0.0483</td><td>52.5868</td></tr><tr><td> $\\{ ( \\beta _ { 3 2 } + 3 6 0 ^ { \\circ } ) / 2 , \\beta _ { 4 2 } / 2 \\}$ </td><td>0.5040</td><td>53.7554</td><td>0.0674</td><td>52.5008</td></tr><tr><td> $\\{ \\beta _ { 3 2 } / 2 , ( \\beta _ { 4 2 } - 3 6 0 ^ { \\circ } ) / 2 \\}$ </td><td>0.4883</td><td>53.3606</td><td>0.0135</td><td>52.5549</td></tr><tr><td> $\\{ ( \\beta _ { 3 2 } + 3 6 0 ^ { \\circ } ) / 2 , ( \\beta _ { 4 2 } - 3 6 0 ^ { \\circ } ) / 2 \\}$ </td><td>0.4690</td><td>54.9129</td><td>0.0640</td><td>53.0437</td></tr></table>",
+        "bbox": [
+            62,
+            118,
+            926,
+            288
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "image",
+        "img_path": "images/278febdd4ee39180895f5ebc22807565d4bfa44918b2c8f4e527528923d8c364.jpg",
+        "image_caption": [],
+        "image_footnote": [],
+        "bbox": [
+            73,
+            332,
+            470,
+            543
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "image",
+        "img_path": "images/bbab0ea90a3dbe3a9ca00dd6bafda7728a95908b549fe1a765879409279e6a07.jpg",
+        "image_caption": [
+            "Fig. 16. (a) The determinant of FIM as a function of $\\theta _ { 4 }$ and $\\theta _ { 5 }$ for N ¼ 5, $\\theta _ { 2 } = 6 0 ^ { \\circ }$ , $\\theta _ { 3 } = - 6 0 ^ { \\circ }$ and equal sensor ranges $d = 1 0 0 \\mathrm { m }$ , and (b) the contour plot of the determinant of FIM."
+        ],
+        "image_footnote": [],
+        "bbox": [
+            69,
+            566,
+            468,
+            796
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            60,
+            876,
+            476,
+            925
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "image",
+        "img_path": "images/4c15654713587e123b1df77693d7c4a668bfd9646b3b699e05ee22257c5ccddb.jpg",
+        "image_caption": [
+            "Fig. 17. Maximally optimal configurations for $N = 5$ obtained by rotating the cluster of sensors 4 and 5."
+        ],
+        "image_footnote": [],
+        "bbox": [
+            520,
+            328,
+            920,
+            650
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            509,
+            731,
+            928,
+            927
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "header",
+        "text": "K. Dog˘anc-ay, H. Hmam / Signal Processing 88 (2008) 1248–1260",
+        "bbox": [
+            283,
+            56,
+            707,
+            71
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "page_number",
+        "text": "1259",
+        "bbox": [
+            893,
+            57,
+            926,
+            70
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "table",
+        "img_path": "images/ce4eabe3525a33ac61860bde41e7495237e4f59bbf2d517aef1c67bd06021908.jpg",
+        "table_caption": [
+            "Table 5",
+            "Bias and MSE Performance (N ¼ 5)"
+        ],
+        "table_footnote": [],
+        "table_body": "<table><tr><td>Configuration</td><td colspan=\"2\">PLE</td><td colspan=\"2\">MLE</td></tr><tr><td></td><td>Bias norm</td><td>MSE</td><td>Bias norm</td><td>MSE</td></tr><tr><td>1</td><td>0.2076</td><td>60.4219</td><td>0.0503</td><td>60.7546</td></tr><tr><td>2</td><td>0.2469</td><td>60.1014</td><td>0.0950</td><td>59.9449</td></tr><tr><td>3</td><td>0.4674</td><td>60.1201</td><td>0.0936</td><td>60.8365</td></tr><tr><td>4</td><td>0.5366</td><td>61.0679</td><td>0.0459</td><td>62.5985</td></tr></table>",
+        "bbox": [
+            69,
+            121,
+            483,
+            234
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            68,
+            264,
+            483,
+            314
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "6. Conclusions and discussion",
+        "text_level": 2,
+        "bbox": [
+            69,
+            328,
+            308,
+            346
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "In this paper we have developed a complete characterization of optimal angular separation for AOA sensors in passive localization problems. Theorem 1 states the key optimization problem that must be solved to obtain optimal sensor configurations. A detailed interpretation of the optimality condition was provided. Optimal sensor configurations were illustrated with comprehensive computer simulations.",
+        "bbox": [
+            68,
+            361,
+            485,
+            506
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "The theoretical development for determining optimal sensor placement assumes perfect knowledge of the emitter location. In practical applications the exact location of the emitter is not available. However a rough estimate of the likely region of the emitter would be sufficient to determine where the sensors should be positioned to obtain significantly improved localization results. In this context the results of the paper can be utilized to establish guidelines for sensor placement leading to improved performance.",
+        "bbox": [
+            68,
+            506,
+            485,
+            683
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "In the simulations presented in Section 5 we noticed that both the PLE and MLE get very close to the optimal MSE even though neither of them is an efficient estimator. For sufficiently large N the MLE becomes approximately efficient and unbiased. The PLE on the other hand suffers from severe bias problems. It was shown in [13] that the asymptotic bias of the PLE is dependent on $\\pmb { p } - \\pmb { \\bar { r } }$ where r¯ is the mean sensor location. This suggests that a geometry with small $\\| p - { \\bar { r } } \\|$ will have a small PLE bias. An evidence of this is seen in configuration 4 in Fig. 12 for which the PLE has a relatively small bias (Table 2). For this optimal configuration the mean sensor location is $\\bar { r } = \\left[ - 0 . 7 5 6 2 , - 2 . 3 8 6 2 \\right] ^ { \\mathrm { T } }$ which is very close to the emitter location. Out of all optimal configurations shown in Fig. 12, configuration 4 has the smallest $\\| p - { \\bar { r } } \\|$ . Generalizing this to arbitrary geometries, one can conclude that the PLE would favour optimal configurations with the smallest $\\| p - { \\bar { r } } \\|$ as far as its bias performance is concerned. For equal sensor ranges, equiangular sensor separation has $\\| \\pmb { p } - \\bar { r } \\| = 0$ and is therefore the best optimal configuration for the PLE. The future work will focus on extending the results presented in this paper to optimal trajectory control for moving AOA sensor platforms.",
+        "bbox": [
+            68,
+            683,
+            485,
+            894
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            518,
+            87,
+            935,
+            299
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "References",
+        "text_level": 2,
+        "bbox": [
+            522,
+            323,
+            612,
+            339
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "list",
+        "sub_type": "ref_text",
+        "list_items": [
+            "[1] R.G. Stansfield, Statistical theory of DF fixing, Journal of IEE 94 (15) (December 1947) 762–770.",
+            "[2] M. Gavish, A.J. Weiss, Performance analysis of bearingonly target location algorithms, IEEE Trans. Aerosp. Electron. Syst. 28 (3) (1992) 817–828.",
+            "[3] S.C. Nardone, A.G. Lindgren, K.F. Gong, Fundamental properties and performance of conventional bearings-only target motion analysis, IEEE Trans. Automatic Control 29 (9) (September 1984) 775–787.",
+            "[4] W.H. Foy, Position-location solutions by Taylor-series estimation, IEEE Trans. Aerosp. Electron. Syst. 12 (2) (March 1976) 187–194.",
+            "[5] K. Spingarn, Passive position location estimation using the extended Kalman filter, IEEE Trans. Aerosp. Electron. Syst. 23 (4) (July 1987) 558–567.",
+            "[6] H.D. Hoelzer, G.W. Johnson, A.O. Cohen, Modified polar coordinates—the key to well behaved bearings-only ranging, Technical Report 78-M19-0001A, IBM Shipboard and Defence Systems, Manassas, VA, August 1978.",
+            "[7] D. Lerro, Y. Bar-Shalom, Bias compensation for improved recursive bearings-only target state estimation, in: Proceedings of American Control Conference, Seattle, Washington, June 1995, pp. 648–652.",
+            "[8] K. Dog˘ anc-ay, Online optimization of receiver trajectories for scan-based emitter localization, IEEE Trans. Aerosp. Electron. Syst. 43 (3) (2007) 1117–1125.",
+            "[9] Y. Oshman, P. Davidson, Optimization of observer trajectories for bearings-only target localization, IEEE Trans. Aerosp. Electron. Syst. 35 (3) (1999) 892–902.",
+            "[10] S.M. Kay, Fundamentals of Statistical Signal Processing: Estimation Theory, Prentice-Hall, Upper Saddle River, NJ, 1993.",
+            "[11] D.J. Torrieri, Statistical theory of passive location systems, IEEE Trans. Aerosp. Electron. Syst. 20 (March 1984) 183–198.",
+            "[12] J.A. Nelder, R. Mead, A simplex method for function minimization, Comput. J. 7 (1965) 308–313.",
+            "[13] K. Dog˘ anc-ay, On the bias of linear least squares algorithms for passive target localization, Signal Process. 84 (3) (2004) 475–486."
+        ],
+        "bbox": [
+            529,
+            354,
+            935,
+            382
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "page_number",
+        "text": "1260",
+        "bbox": [
+            73,
+            57,
+            106,
+            70
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "header",
+        "text": "K. Dog˘anc-ay, H. Hmam / Signal Processing 88 (2008) 1248–1260",
+        "bbox": [
+            290,
+            56,
+            715,
+            71
+        ],
+        "page_idx": 12
+    }
+]

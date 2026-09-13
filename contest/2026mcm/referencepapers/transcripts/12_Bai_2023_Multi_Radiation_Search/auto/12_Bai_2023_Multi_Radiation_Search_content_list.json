@@ -1,0 +1,4170 @@
+[
+    {
+        "type": "text",
+        "text": "A study of robotic search strategy for multi-radiation sources in unknown environments",
+        "text_level": 1,
+        "bbox": [
+            57,
+            201,
+            737,
+            244
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "image",
+        "img_path": "images/a4ac2949ed4ad71031dc7fb9937ca33f75998a70872d16d18dff9caf3224dbb4.jpg",
+        "image_caption": [],
+        "image_footnote": [],
+        "bbox": [
+            833,
+            204,
+            884,
+            240
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Hua Bai a,1, Wenrui Gao a,b,1, Haofei Ma a, Pengchao Ding a, Gongcheng Wang a, Wenda Xu a, Weidong Wang a,∗, Zhijiang Du a",
+        "bbox": [
+            57,
+            250,
+            719,
+            284
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "a Robotics Institution, Harbin Institute of Technology, China",
+        "bbox": [
+            58,
+            286,
+            366,
+            298
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "b Link Sense Laboratory, Nanjing Research Institute of Electronics Technology, China",
+        "bbox": [
+            58,
+            297,
+            490,
+            311
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "a r t i c l e i n f o",
+        "text_level": 2,
+        "bbox": [
+            58,
+            335,
+            223,
+            348
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Article history:   \nReceived 29 October 2021   \nReceived in revised form 17 June 2023   \nAccepted 4 September 2023   \nAvailable online 9 September 2023",
+        "bbox": [
+            58,
+            360,
+            265,
+            417
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Keywords:   \nParticle filter   \nInformation gain   \nRRT   \nReceding horizon   \nDifferential evolution",
+        "bbox": [
+            58,
+            423,
+            174,
+            490
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "a b s t r a c t",
+        "text_level": 2,
+        "bbox": [
+            332,
+            334,
+            450,
+            348
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "This paper focuses on the multiple radiation source search problems, where the mobile robot identifies the number and parameters of sources online while exploring an unknown environment. The radiation superposition and the limited observations improve the difficulty of estimation, and the exploration trajectory is also associated with estimation. A novel search strategy based on receding horizon planning is proposed, which includes the observation, estimation, and exploration modules. The observation module filters and records the radiation intensity for estimation. In the estimation module, an adaptive differential evolution algorithm is integrated into the peak suppression particle filter to avoid the local optimum. The multi-source radiation gain model is conceived to determine the observation position in the exploration module. The strategy trades off exploration of unknown areas and exploitation of known radiation fields. The results of simulations and experiments demonstrate that the proposed strategy can identify the parameters and quantities of all sources in multi-modal radiation fields. Furthermore, our strategy exhibits superior performance in searching for multi-radiation sources in unknown environments compared with the boustrophedon path and the Next-Best-View planner.",
+        "bbox": [
+            331,
+            360,
+            939,
+            519
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "© 2023 Elsevier B.V. All rights reserved.",
+        "bbox": [
+            710,
+            517,
+            937,
+            529
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "1. Introduction",
+        "text_level": 2,
+        "bbox": [
+            58,
+            567,
+            169,
+            581
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Radioactive materials have made significant contributions to medicine and industry. However, they also pose severe threats when radioactive and nuclear accidents occur [1–3]. When the radiation sources get out of control, the operators must wear nuclear protective equipment to search for them. The mobile robots that can autonomously seek out radiation sources may protect the operators from radiation [4,5]. This paper focuses on robotic search strategies that can find out the parameters of sources while exploring unknown scenarios.",
+        "bbox": [
+            57,
+            592,
+            487,
+            712
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Several studies have been done on source term estimation, which is the basis for source search. The essence of these approaches is to infer the parameters that can most likely fit the radiation observations. Some studies employed fixed sensor arrays to measure the radiation field. In these studies, the position and measurement of each sensor are usually known. The leastsquares or maximum likelihood estimation (MLE) is efficient in the face of one source [6–10]. However, these methods do not apply to multi-source term estimation (MSTE). In MSTE, observations are the cumulative intensities from multiple sources, but the number of sources is unknown. Cheng et al. [11] coupled the MSTE with a limited discretization grid. Each discrete position was predicted according to the constraints of the observation model. Since the resolution of the grid limits the estimated accuracy, the method cannot be applied to large-scale scenarios. Ding et al. [12] used the Gaussian mixture model (GMM) and Bayesian information criterion to figure out the number of sources. They considered the superposition of radiation fields. But the algorithm needs a known number of sources, so it has to run after the radiation field is sampled. Therefore, the subsequent studies focused on the efficiency of estimation. Morelande et al. [10] compared the results in MLE and Bayesian estimation. They proved that as the number of sources increases, Bayesian estimation has better accuracy and efficiency. On this basis, an estimation framework was proposed in research [13], which integrates the particle filter, fusion range, and mean shift. The framework selectively evaluates and updates the particles based on the fusion range.",
+        "bbox": [
+            57,
+            712,
+            487,
+            819
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            507,
+            567,
+            941,
+            825
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "The above methods have limitations where the sensor arrays have not been deployed. In contrast, using robots equipped with sensors has significant advantages. However, robots need iterative searches to observe and estimate the radiation field. Therefore, the robot search strategies have gradually attracted scholars’ attention. The observation–estimation–exploration (OEE) iteration has become a generic search pattern.",
+        "bbox": [
+            509,
+            825,
+            941,
+            894
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "header",
+        "text": "Robotics and Autonomous Systems 169 (2023) 104529",
+        "bbox": [
+            349,
+            41,
+            647,
+            56
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "header",
+        "text": "",
+        "bbox": [
+            60,
+            74,
+            163,
+            143
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "header",
+        "text": "Contents lists available at ScienceDirect",
+        "bbox": [
+            369,
+            75,
+            631,
+            89
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "header",
+        "text": "",
+        "bbox": [
+            62,
+            146,
+            163,
+            161
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "header",
+        "text": "Robotics and Autonomous Systems",
+        "bbox": [
+            310,
+            105,
+            690,
+            126
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "header",
+        "text": "journal homepage: www.elsevier.com/locate/robot",
+        "bbox": [
+            336,
+            145,
+            665,
+            160
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "header",
+        "text": "",
+        "bbox": [
+            835,
+            66,
+            934,
+            160
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "page_footnote",
+        "text": "∗ Corresponding author.",
+        "bbox": [
+            68,
+            834,
+            208,
+            847
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "page_footnote",
+        "text": "E-mail addresses: wangweidong@hit.edu.cn (W. Wang), duzj01@hit.edu.cn (Z. Du).",
+        "bbox": [
+            57,
+            846,
+            484,
+            870
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "page_footnote",
+        "text": "1 These authors contributed equally to this work and should be considered co-first authors.",
+        "bbox": [
+            57,
+            870,
+            487,
+            894
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "footer",
+        "text": "https://doi.org/10.1016/j.robot.2023.104529 0921-8890/© 2023 Elsevier B.V. All rights reserved.",
+        "bbox": [
+            57,
+            904,
+            337,
+            928
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            57,
+            65,
+            485,
+            93
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "The studies [14–19] discussed search strategies in singlesource scenarios. Tandon et al. used Bayesian data fusion to figure out the parameters of sources [14]. Given the fluctuation of background radiation, the work [15] proposed a prediction framework based on iterative MLE. Han et al. [16] proposed a circular loop search strategy with a decreasing radius based on radiation gradient and contour information. On this basis, three strategies were compared in [17] to evaluate search efficiency. Huo et al. [18] proposed a search strategy based on the particle filter and the partial observation Markov decision process (POMDP). The information entropy was used to select appropriate behaviors for the next exploration. Similarly, a novel strategy was proposed for source localization in unknown environments, which provides a new idea for source search in unknown environments [19].",
+        "bbox": [
+            57,
+            93,
+            487,
+            278
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "The multi-radiation source search (MRSS) is still a problem worth studying. Ristic et al. [20] proposed a strategy for searching multi-sources for the first time that combined particle filter with POMDP. Newaz et al. [21] combined variational Bayesian inference and the Hough transform to balance predicted accuracy and exploration efficiency. In the scene where multiple point sources exist, Gao et al. [22] proposed a method based on the peak-suppressed particle filter (PSPF) to figure out the parameters online. Then Wang et al. [23] fused the Gaussian process and PSPF to improve the accuracy and robustness. In order to solve the overfitting in the maximum likelihood expectation maximization (ML-EM) algorithm, Hellfeld et al. proposed an additive pointsource localization algorithm [24]. Kishimoto et al. designed a method to generate the measurement paths that surround the radiation sources [25].",
+        "bbox": [
+            57,
+            278,
+            489,
+            476
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "Search strategies become more sophisticated when the scenario is unknown [26]. Groves et al. combined the radiation costmap with the topological costmap for path planning [27]. Mascarich et al. [28] proposed a framework to combine a field estimation and spectroscopy algorithm with an informative path planning strategy for GPS-denied radioactive environments. The work in [29] developed a curiosity-driven path planner to estimate a 3D-distributed radiation field.",
+        "bbox": [
+            57,
+            476,
+            487,
+            582
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "For unknown radiation environments containing multiple point sources, we propose an online MRSS strategy with three modules: observation, estimation, and exploration. In the estimation module, we combine adaptive differential evolution (ADE) with the PSPF algorithm to avoid the results being trapped in the local optimum. In the exploration module, the paths are generated based on rapidly exploring random trees (RRT) and a radiation gain model. According to the optimal leaf-node criterion, the path with the best gain is extracted, which balances exploration and exploitation. Additionally, the strategy employs a receding horizon path planning paradigm to iterate the observation, estimation, and exploration modules. Finally, we evaluate the performance of the proposed strategy in GPS-denied radioactive scenarios. Specifically, the main contributions of this work are as follows:",
+        "bbox": [
+            57,
+            581,
+            489,
+            779
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "(1) A novel robotic search strategy was suggested for unknown radiation scenarios where multiple point sources exist. And its performance was evaluated in simulations and actual experiments.",
+        "bbox": [
+            57,
+            779,
+            487,
+            832
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "(2) We combine ADE optimization with the PSPF algorithm to improve estimation accuracy under the same observation conditions.",
+        "bbox": [
+            57,
+            832,
+            487,
+            871
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "(3) An exploration scheme was proposed based on the radiation gain model to trade off exploration of unknown areas and exploitation of known radiation fields.",
+        "bbox": [
+            57,
+            871,
+            487,
+            911
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "The remainder of this paper is organized as follows: Section 2 introduces two core issues in the MRSS and the components of the entire system. Section 3 describes the ADE-PSPF algorithm that identifies the number and parameters of sources, namely the estimation module. Section 4 presents the procedure for the best path generation, namely the exploration module. The simulations and experiments coupled with quantitative analysis are provided in Section 5. The conclusion is drawn in Section 6.",
+        "bbox": [
+            57,
+            911,
+            487,
+            939
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "image",
+        "img_path": "images/c72a6cf70b4f3ac41831f9ec8168d8524b750aff15f01af0c1fc572d1de5b8e9.jpg",
+        "image_caption": [
+            "Fig. 1. The process of radiation source searching by robot."
+        ],
+        "image_footnote": [],
+        "bbox": [
+            539,
+            74,
+            910,
+            250
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            507,
+            307,
+            941,
+            389
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "2. Problem and system description",
+        "text_level": 2,
+        "bbox": [
+            509,
+            401,
+            756,
+            414
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "2.1. Problem description",
+        "text_level": 2,
+        "bbox": [
+            510,
+            427,
+            668,
+            441
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "The suspicious area consists of several radiation fields, each of which has an unknown number of sources. Mobile robots with sensors cannot densely observe the radiation field because the robot’s endurance is limited [30] and the radiation fluctuates in the short term [31]. Estimation based on observations of coupled fields is also a challenging problem. Fig. 1 shows the process of source searching.",
+        "bbox": [
+            507,
+            452,
+            941,
+            546
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "To simplify the calculation, we assume that all point sources have the same height and are of the same type. Therefore, a source’s parameter can be represented by its intensity $S ^ { i n t }$ and two-dimensional position $S ^ { p o s }$ . The kth source can be parameterized as a three-dimensional vector $S _ { k } = [ S _ { k } ^ { x } , S _ { k } ^ { y } , S _ { k } ^ { i n t } ]$ . We define $M _ { i } ^ { p o s }$ and $M _ { i } ^ { i n t }$ as the position and intensity of the ith observation point, respectively. This paper focuses on the problem of point-source search in coupled radiation fields. In this paper, the sources and sensors are higher than the obstacles to prevent obstacles from affecting the radiation superposition. Radiation propagation from point sources in the air obeys the inverse square law [32]. Given a set of sources $\\{ S _ { k } \\} , k = 1 , \\ldots , N s ,$ the superposed intensity (mean radiation count) at the observation position $M _ { i } ^ { p o s }$ is as follows:",
+        "bbox": [
+            507,
+            546,
+            941,
+            732
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "equation",
+        "img_path": "images/694d63a529bc921adf6060c3570fff4f634f4fb47e22c84cfeef93f00043be50.jpg",
+        "text": "$$\n\\left\\{ \\begin{array} { l } { { \\displaystyle M _ { i } ^ { i n t } = I _ { c u m } ^ { \\prime } ( M _ { i } ^ { p o s } , \\{ S _ { k } \\} _ { k = 1 } ^ { N s } ) = E \\tau _ { i } \\left( \\sum _ { k = 1 } ^ { N s } \\mathbb { Z } ( M _ { i } ^ { p o s } , S _ { k } ) + R _ { b a c k } ^ { i } \\right) } } \\\\ { { \\displaystyle \\mathbb { Z } ( M _ { i } ^ { p o s } , S _ { k } ) = \\frac { S _ { k } ^ { i n t } } { h ^ { 2 } + \\left| M _ { i } ^ { p o s } - S _ { k } ^ { p o s } \\right| ^ { 2 } } \\cdot e x p \\left( - \\mu _ { a i r } \\left| M _ { i } ^ { p o s } - S _ { k } ^ { p o s } \\right| \\right) } } \\end{array} \\right.\\tag{1}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            512,
+            733,
+            912,
+            808
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "where E represents the conversion constant from nSv/h to counts per second (CPS), $\\tau _ { i }$ is the duration of ith observation and $R _ { b a c k } ^ { i }$ denotes the fluctuating background radiation. The total number of radiation sources is represented by Ns. h is the height of the source from the observation plane. $S _ { k } ^ { \\bar { p } o s } = [ S _ { k } ^ { x } , S _ { k } ^ { y } ]$ is the position of the kth source. $\\mu _ { a i r }$ is the air absorption coefficient which depends on the energy spectrum of gamma radiation. For cobalt-60 sources, this coefficient equals $\\mathit { \\bar { 6 . 8 6 } } \\times \\mathit { 1 0 ^ { - 3 } } \\mathit { \\Pi } \\mathfrak { m } ^ { - 1 }$ [33] and $\\left| M _ { i } ^ { p o s } - S _ { k } ^ { p o s } \\right|$ indicates the observation distance between $M _ { i } ^ { p o s }$ and $S _ { k } ^ { p o s }$ . Since the robot was restricted to relatively small search areas (about a few tens of meters), we adopted the approximation $e x p \\left( - \\mu _ { a i r } \\left| M _ { i } ^ { p o s } - S _ { k } ^ { p o s } \\right| \\right) \\approx 1$",
+        "bbox": [
+            507,
+            832,
+            939,
+            939
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "header",
+        "text": "H. Bai, W. Gao, H. Ma et al.",
+        "bbox": [
+            58,
+            42,
+            208,
+            54
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "header",
+        "text": "Robotics and Autonomous Systems 169 (2023) 104529",
+        "bbox": [
+            655,
+            42,
+            939,
+            55
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "page_number",
+        "text": "2",
+        "bbox": [
+            492,
+            947,
+            504,
+            957
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            57,
+            64,
+            487,
+            121
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "The two core issues in the MRSS are as follows:",
+        "bbox": [
+            78,
+            119,
+            396,
+            133
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "(1) Effective non-parametric estimation from the multi-modal radiation field",
+        "text_level": 2,
+        "bbox": [
+            57,
+            138,
+            487,
+            165
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "The particle filter becomes a fundamental method for source term estimation [18–23]. A particle corresponds to the parameter of a source, and the state of sources can be approximated by particle swarms. When there are multiple sources, we may obtain multiple solutions. We are interested in finding all solutions, each corresponding to an actual source. It is significant to figure out the global optimal solution under the same observation conditions.",
+        "bbox": [
+            57,
+            165,
+            487,
+            258
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "(2) The contradiction between exploration and exploitation in search",
+        "text_level": 2,
+        "bbox": [
+            57,
+            262,
+            487,
+            287
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "The load capacity and endurance of robots are limited. Searching for radiation sources in unknown environments is more challenging. The robot employs information about the radiation field and the geometric structure to search the entire suspicious area. The strategy needs to not only explore the unknown region but also exploit the nearby radiation field.",
+        "bbox": [
+            57,
+            288,
+            487,
+            366
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "The two issues are interrelated. The estimation provides information about sources and requires the appropriate observations that exploration contributes. This work proposes a novel robotic search strategy that aims to quickly and accurately figure out each source’s parameters in an unknown environment.",
+        "bbox": [
+            57,
+            366,
+            487,
+            433
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "2.2. System description",
+        "text_level": 2,
+        "bbox": [
+            58,
+            443,
+            211,
+            459
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "The receding horizon method is used because neither the radiation field nor the geometric structure are known. We identify the parameters of each source through the OEE iterations. As shown in Fig. 2, the overall system mainly comprises three modules: the observation module samples and filters the radiation intensity to reduce fluctuations. The identification of source parameters depends on the estimation module. The exploration module determines the next observation position.",
+        "bbox": [
+            57,
+            469,
+            487,
+            575
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "After the robot and the particle swarms have been initialized, the estimation module starts to infer source terms. Subsequently, update the radiation field confidence (RFC) according to the predicted result. Continue to execute the other modules until the termination condition is met. In the exploration module, the candidate path set is generated by the RRT algorithm and costmap. Then, evaluate the gain of the node in the path set according to the radiation gain model to screen out the path whose leaf node has the highest gain. Eventually, the robot moves to the target node and observes. Through the iterations of the three modules, the robot will gradually enrich the observation dataset and improve prediction accuracy.",
+        "bbox": [
+            57,
+            575,
+            489,
+            732
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "3. Source term estimation based on ADE-PSPF",
+        "text_level": 2,
+        "bbox": [
+            58,
+            742,
+            381,
+            756
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "In the sequential prediction, each particle swarm is affected by the others, and as iterations progress, the particle diversity may decrease. When the state of particle swarms is stable, they may get stuck in a local optimum. The particle swarms cannot get much closer to the actual solution without leaving the local optimum.",
+        "bbox": [
+            57,
+            767,
+            487,
+            847
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "In differential evolution, the scale factor controls the amplification of the difference vector, which is related to the global optimization ability. The crossover rate determines the diversity of individuals in the population. Therefore, the scale factor and crossover rate should change based on particle weights. We combine the ADE and PSPF, which increase the diversity of particles, to avoid the local optimum.",
+        "bbox": [
+            57,
+            846,
+            487,
+            939
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "image",
+        "img_path": "images/c4c1d45979825e5f2ba9318a9193a3cabd50fb3acc614a6596bec8d0f90c37e8.jpg",
+        "image_caption": [
+            "Fig. 2. The framework of the proposed search strategy."
+        ],
+        "image_footnote": [],
+        "bbox": [
+            522,
+            65,
+            927,
+            271
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "code",
+        "sub_type": "code",
+        "code_caption": [],
+        "code_footnote": [],
+        "code_body": "```latex\nAlgorithm 1 The ADE-PSPF Algorithm\nInput: Sensor data $\\mathcal { M } = \\{ M _ { i } ^ { i n t } , M _ { i } ^ { p o s } \\} _ { i = 1 } ^ { N o }$\nOutput: Radiation source parameters $\\boldsymbol { S } = \\{ S _ { k } \\} _ { k = 1 } ^ { N s }$\n1: for s=1 to $N _ { p s }$ do\n2: for r=1 to $N _ { p }$\n3: $p _ { r , { \\cdot } }$ ~rand(configmin, configmax)\n4: end for\n5: end for\n6: for $i { = } 1 , { \\ldots } , N _ { o }$ do\n7: for $s { = } 1$ to $N _ { p s }$ do\n8: for r=1 to $N _ { p }$ do\n9: $w _ { s y n } ^ { s , r }  w _ { o b s } ^ { s , r } \\bullet w _ { p s } ^ { s , r } \\bullet w _ { d i s t } ^ { s , r }$\n10: end for\n11: $\\{ p _ { s , r } \\} _ { r = 1 } ^ { N p }  \\mathrm { A D E } _ { - }$ resampling\n12: $C _ { s }$ ←Mean Shift $( \\{ p _ { s , r } \\} _ { r = 1 } ^ { N p } )$\n13: end for\n14: $\\mathcal { F } \\gets \\mathsf { 1 }$ Confidence( {Cs }N−1 , M )\n15: if $\\mathcal { F } > \\mathcal { F } _ { b e s t }$ then\n16: $\\{ C _ { s } ^ { b e s t } , \\mathcal { P } _ { s } ^ { b e s t } , \\mathcal { F } _ { b e s t } \\} _ { s = 1 } ^ { N p s }  \\{ C _ { s } , \\mathcal { P } _ { s } , \\mathcal { F } \\} _ { s = 1 } ^ { N p s }$\n17: end if\n18: end for\n19: if $\\mathcal { F } _ { b e s t } > T H R _ { e n d }$ then\n20: $\\begin{array} { r } { S = \\{ S _ { k } \\} _ { k = 1 } ^ { N s } {  } \\{ C _ { s } ^ { b e s t } \\} _ { s = 1 } ^ { N p s } , N _ { p s } { \\geq } N _ { s } } \\end{array}$\n21: else then\n22: repeat Lines 6-18 loop\n23: end if\n```",
+        "bbox": [
+            514,
+            322,
+            801,
+            721
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "3.1. Overall ADE-PSPF framework",
+        "text_level": 2,
+        "bbox": [
+            510,
+            736,
+            727,
+            750
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "Particle filter and differential evolution have similar ideas. They continuously extrapolate the results based on current information through iterative updates. On the other hand, each individual or particle can be seen as a possible state. The larger the particle weight in the particle filter, the closer the particle is to the actual term. In differential evolution, the higher fitness of the individual means that it is closer to the optimum of the objective function. In this paper, the state space of the particles is regarded as the search space of the differential evolution. The particles move to a higher posterior probability position through ADE optimization. In mutation operation, the scale factor based on the particle weight can avoid particle impoverishment. The ADE-PSPF algorithm mainly contains synthesized particle weight calculation, ADE resampling, and RFC calculation. The ADE-PSPF is summarized in Algorithm 1.",
+        "bbox": [
+            507,
+            762,
+            941,
+            939
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "header",
+        "text": "H. Bai, W. Gao, H. Ma et al.",
+        "bbox": [
+            58,
+            42,
+            208,
+            54
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "header",
+        "text": "Robotics and Autonomous Systems 169 (2023) 104529",
+        "bbox": [
+            655,
+            42,
+            939,
+            54
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "page_number",
+        "text": "3",
+        "bbox": [
+            494,
+            947,
+            504,
+            957
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            57,
+            65,
+            487,
+            94
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "3.2. Synthesized particle weight computing",
+        "text_level": 2,
+        "bbox": [
+            58,
+            105,
+            334,
+            121
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Divide the state space into $N _ { p s }$ particle swarms. Each particle swarm $\\mathcal { P } _ { s }$ contains $N _ { p }$ particles, which is used to estimate the parameters of a source. The particle swarm can be expressed as below:",
+        "bbox": [
+            57,
+            132,
+            487,
+            185
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/a4ea2e3f03103a7caaf0f75cc39ee1f0c453e0f25b36ec3f181ba051237d1a37.jpg",
+        "text": "$$\n\\mathcal { P } _ { s } = \\{ p _ { s , r } \\in \\mathbb { R } ^ { 3 } \\} _ { r = 1 } ^ { N p } , s \\in [ 1 , . . . , N _ { p s } ]\\tag{2}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            57,
+            191,
+            297,
+            208
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "The synthesized weight represents the degree of approximation from a particle to its corresponding source. The weight correlates with the observation weight and also considers the interference between various particle swarms and the superposition of the radiation fields. Furthermore, sequential prediction can realize the iterative update of the particle in different swarms. The synthesized weight $w _ { s y n } ^ { s , r }$ is computed as follows:",
+        "bbox": [
+            57,
+            214,
+            487,
+            308
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/e0c5417c9a2774d0cd88fe625b115441cc9930296cf7a52ee9f90502068fde34.jpg",
+        "text": "$$\n\\left\\{ \\begin{array} { l } { { w _ { s s p } ^ { s , r } = w _ { o b s } ( M _ { i } ^ { i n t } , p _ { s , r } , C _ { - s } ) \\cdot w _ { p s } ( p _ { s , r } , \\theta _ { p s } ) \\cdot w _ { d i s t } ( p _ { s , r } , C _ { - s } ) } } \\\\ { { w _ { o b s } ( M _ { i } ^ { i n t } , p _ { s , r } , C _ { - s } ) = \\displaystyle { \\frac { f _ { p } ( M _ { i } ^ { i n t } | I ^ { \\prime } ( p _ { s , r } , C _ { - s } ) ) } { f _ { p } ( \\left| I ^ { \\prime } ( p _ { s , r } , C _ { - s } ) \\right| | I ^ { \\prime } ( p _ { s , r } , C _ { - s } ) ) } } } } \\\\ { { w _ { d i s t } ( p _ { s , r } , C _ { - s } ) = \\displaystyle { \\frac { 1 } { 1 + e x p [ ( \\theta _ { d i s t } - f _ { d } ( p _ { s , r } , C _ { - s } ) ) / b _ { d i s t } ] } } } } \\\\ { { w _ { p s } ( p _ { s , r } , \\theta _ { p s } ) = ( 1 - \\alpha ) + \\alpha \\cdot \\displaystyle { \\frac { 1 } { 1 + e x p [ ( p _ { s , r } ^ { i n t } - \\theta _ { p s } ) / b _ { p s } ] } } } } \\\\ { { f _ { p } ( N _ { Z } | \\lambda ( \\{ S _ { k } \\} ) ) = \\displaystyle { \\frac { \\lambda ( \\{ S _ { k } \\} ) ^ { N _ { Z } } } { N _ { Z } ! } } e x p ( - \\lambda ( \\{ S _ { k } \\} ) ) } }  \\end{array} \\right.\\tag{3}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            62,
+            312,
+            438,
+            448
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "An explanation of the terms in the Eq. (3) follows:",
+        "bbox": [
+            77,
+            453,
+            415,
+            466
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "(1) $w _ { o b s }$ denotes the observation weight. $M _ { i } ^ { i n t }$ represents the observed intensity; $I ^ { \\prime } ( p _ { s , r } , C _ { - s } )$ is the estimated intensity computed from the particle $p _ { s , r }$ and other swarms’ centroids $C _ { - s } . \\lfloor \\cdot \\rfloor$ denotes the rounding operation; and $f _ { p } ( \\cdot )$ indicates the Poisson probability distribution function. $N _ { Z }$ represents the number of particles to the sensor during the measurement. $\\lambda ( \\{ S _ { k } \\}$ represents the number of average particles calculated based on set $\\{ S _ { k } \\}$",
+        "bbox": [
+            57,
+            465,
+            487,
+            558
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "(2) $w _ { d i s t }$ and $w _ { p s }$ indicate the peak suppression and swarm distance correction factor respectively. $\\theta _ { d i s t }$ and $\\theta _ { p s }$ are the horizontal offset value of the correction curve. $b _ { d i s t }$ and $b _ { p s }$ respectively denote the scale parameters. $f _ { d } ( \\cdot )$ is the minimal distance between current particle and other swarms’ centroids, and α indicates the vertical adjustment parameter of the peak suppression. In [22] we described the formulas in detail.",
+        "bbox": [
+            57,
+            558,
+            487,
+            653
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "3.3. ADE resampling",
+        "text_level": 2,
+        "bbox": [
+            58,
+            664,
+            193,
+            678
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "In the resampling stage, an ADE algorithm based on particle weights is designed to improve the prediction accuracy with the same number of iterations. The flow of the ADE resampling process is as follows:",
+        "bbox": [
+            57,
+            691,
+            487,
+            744
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "(1) The particles in each swarm are regarded as the ADE initial population. The number of individuals in a population is equal to the number of particles. The gth generation population can be expressed as $\\{ p _ { s , r } ( g ) \\} _ { r = 1 } ^ { N p }$ . The synthesized particle weight calculation formula is regarded as the fitness function, denoted as w(·).",
+        "bbox": [
+            57,
+            744,
+            487,
+            824
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "(2) A mutation operation based on particle weight is designed to obtain mutant individuals, and as follows:",
+        "bbox": [
+            57,
+            823,
+            487,
+            851
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/7704c40d6ff6e6bfd020100d3152ba813fd16e9988f33fd536f705a0f8180939.jpg",
+        "text": "$$\n\\begin{array} { c } { { v _ { s , r } ( g ) = p _ { s , r } ( g ) + { \\cal F } _ { 1 } \\cdot ( p _ { s } ^ { b e s t } ( g ) - p _ { s , r } ( g ) ) } } \\\\ { { + { \\cal F } _ { 2 } \\cdot ( p _ { s } ^ { r 1 } ( g ) - p _ { s } ^ { r 2 } ( g ) ) } } \\end{array}\\tag{4}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            57,
+            857,
+            324,
+            892
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "where $p _ { s , r } ( g )$ is the sampled particle(target individual); $p _ { s } ^ { b e s t } ( g )$ represents the particle with the highest weight (the individual with the best fitness value in the current population). $p _ { s } ^ { r 1 } ( g )$ and $p _ { s } ^ { r 2 } ( g )$ are the randomly selected particles $\\stackrel { \\prime } { r } \\ne r 1 \\ne r 2 ) . \\ F _ { 1 } = \\alpha$ $\\left( 1 - w _ { s , r } \\right)$ and $F _ { 2 } = \\beta \\cdot ( w _ { s , r 1 } - \\overline { { w } } _ { s , r } ) / w _ { s , r 1 } )$ represent the adaptive scaling factor. α is the elite movement scale used to control the distance between $p _ { s } ^ { b e s t } ( g )$ and $p _ { s , r } ( g )$ , and $w _ { s , r }$ is the particle weight corresponding to $p _ { s , r } ( g ) . \\beta$ is the random movement scale used to control the distance between $p _ { s } ^ { r 1 } ( g )$ and $p _ { s } ^ { r 2 } ( g ) . w _ { s , r 1 }$ is the particle weight corresponding to $p _ { s } ^ { r 1 } ( \\bar { g } )$ , and $\\overline { { w } } _ { s , r }$ is the average value of the particle weight.",
+        "bbox": [
+            57,
+            897,
+            487,
+            939
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            509,
+            65,
+            939,
+            172
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "(3) In crossover operation, test individuals are generated. It should be pointed out that this stage is different from the standard crossover operation. We adjust the crossover rate based on particle weights to control the proportion of mutant individuals among the trial individuals.",
+        "bbox": [
+            509,
+            171,
+            939,
+            239
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/9fc9a7ff8717b0753bda1347f725a29af4fe597ec245e9054fbf146dd2116d43.jpg",
+        "text": "$$\nu _ { s , r } ( g ) [ j ] = \\left\\{ \\begin{array} { l l } { v _ { s , r } ( g ) [ j ] } & { , r a n d < C R \\mathrm { o r } j = j _ { r a n d } } \\\\ { p _ { s , r } ( g ) [ j ] + \\sigma ^ { r } } & { , o t h e r w i s e } \\end{array} \\right.\\tag{5}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            509,
+            244,
+            848,
+            281
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "where, $C R = C R _ { b a s e } + C R _ { s c a l e } ( w _ { s , r } - \\overline { { w } } _ { s , r } ) / w _ { s , r }$ is the crossover rate adaptively adjusted based on the particle weight. It can be seen that the influence of the mutation individuals will increase as the particle weight improve. When the random number does not meet the crossover condition, the target individual will add a Gaussian noise $\\sigma _ { } ^ { r } ,$ , whose mean value is zero to avoid particle impoverishment.",
+        "bbox": [
+            509,
+            286,
+            939,
+            378
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "(4) Compare the fitness of the two individuals and select the individual with better fitness. The process is as follows:",
+        "bbox": [
+            509,
+            378,
+            939,
+            406
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/fbd1828f2b37245455781a2d94b1bd1781808a425b2a07af83130008918cdef0.jpg",
+        "text": "$$\np _ { s , r } ( g + 1 ) = \\left\\{ \\begin{array} { l l } { u _ { s , r } ( g ) } & { , w ( u _ { s , r } ( g ) ) > w ( p _ { s , r } ( g ) ) } \\\\ { p _ { s , r } ( g ) } & { , o t h e r w i s e } \\end{array} \\right.\\tag{6}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            509,
+            411,
+            826,
+            448
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "(5) If the limit of the iteration number is reached, the current individuals will be the input of the mean shift algorithm to compute the centroid of each particle swarm. Otherwise, let $p _ { s , r } ( g + 1 )$ be the initial individual for the next iteration. Then, calculate the weight, normalize it, and repeat step (2) to step (5).",
+        "bbox": [
+            507,
+            452,
+            939,
+            522
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "3.4. The radiation field confidence calculation",
+        "text_level": 2,
+        "bbox": [
+            509,
+            532,
+            803,
+            547
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Since the mean shift algorithm cannot cluster the redundant particle swarms, we obtain the centroids of effective particle swarms. The recursive non-parametric prediction can be realized by centroid representation.",
+        "bbox": [
+            509,
+            559,
+            939,
+            612
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Based on the observation data $\\{ M _ { i } ^ { i n t } , M _ { i } ^ { p o s } \\} _ { i = 1 } ^ { N o }$ and the prediction centroids $\\{ C _ { s } \\} _ { s = 1 } ^ { N p s }$ , the RFC can be calculated when at least one particle swarm has the centroid. The RFC can be computed from the expression:",
+        "bbox": [
+            509,
+            611,
+            939,
+            667
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/063af3972353de57822af66e950db16ddcf510aa23bc55d8daf026c734f25792.jpg",
+        "text": "$$\n\\left\\{ \\begin{array} { l } { \\displaystyle { \\mathcal { F } ( \\{ M _ { i } ^ { i n t } , M _ { i } ^ { p o s } \\} _ { i = 1 } ^ { N o } , \\{ C _ { s } \\} _ { s = 1 } ^ { N p s } ) } } \\\\ { \\displaystyle = \\frac { 1 } { N o } \\cdot \\sum _ { i = 1 } ^ { N o } \\frac { f _ { p } ( M _ { i } ^ { i n t } | I _ { c u m } ^ { \\prime } ( M _ { i } ^ { p o s } , \\{ C _ { s } \\} _ { s = 1 } ^ { N p s } ) ) } { f _ { p } ( \\left\\lfloor I _ { c u m } ^ { \\prime } ( M _ { i } ^ { p o s } , \\{ C _ { s } \\} _ { s = 1 } ^ { N p s } ) \\right\\rfloor | I _ { c u m } ^ { \\prime } ( M _ { i } ^ { p o s } , \\{ C _ { s } \\} _ { s = 1 } ^ { N p s } ) ) } } \\end{array} \\right.\\tag{7}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            512,
+            670,
+            882,
+            733
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "where $I _ { c u m } ^ { \\prime } ( \\cdot )$ represents the cumulative radiation intensity based on the predictions at a specific position. It is similar to $\\mathbb { E } { \\mathsf { q . } } ( 1 ) ,$ , but here $C _ { s } , s = 1 , \\ldots , N _ { p s }$ represents a potential source parameter.",
+        "bbox": [
+            509,
+            738,
+            939,
+            780
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "The configuration maintenance [22] will start when the current RFC is lower than the historical best confidence. It utilizes the particle swarms, which have the highest confidence, as the basis for recovery. When the multi-modal balance is broken, it can ensure that the best state is returned.",
+        "bbox": [
+            507,
+            779,
+            939,
+            846
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "4. Exploration strategy based on radiation gain",
+        "text_level": 2,
+        "bbox": [
+            509,
+            858,
+            840,
+            873
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "When the radiation environment is unknown, OEE iteration is a general strategy. The observations around the sources are more meaningful for estimation [27]. We propose an exploration approach based on RRT and the radiation gain model. The candidate paths or branches are generated according to the costmap and RRT, which are regarded as the basis of path evaluation. Then, evaluate each candidate node based on the radiation gain model. Finally, determine the best path using the optimal leaf-node criterion.",
+        "bbox": [
+            509,
+            885,
+            939,
+            939
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "header",
+        "text": "H. Bai, W. Gao, H. Ma et al.",
+        "bbox": [
+            58,
+            42,
+            208,
+            54
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "header",
+        "text": "Robotics and Autonomous Systems 169 (2023) 104529",
+        "bbox": [
+            655,
+            42,
+            939,
+            54
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "page_number",
+        "text": "4",
+        "bbox": [
+            494,
+            947,
+            504,
+            957
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            57,
+            66,
+            487,
+            133
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "4.1. Path generation based on RRT",
+        "text_level": 2,
+        "bbox": [
+            57,
+            145,
+            282,
+            158
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "We use the RRT structure to construct paths in the robot configuration space. In addition, the predictions often change with the exploration. Hence, the robot only executes the first edge of the branch whose leaf node has the highest gain. Repeating the above procedure can efficiently search the unknown region and sample the radiation field. The path generation based on the RRT is as follows:",
+        "bbox": [
+            57,
+            171,
+            487,
+            263
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "(1) Build a new tree based on the current state of the robot, where the configuration space includes the 2D position and the angle of rotation. The nodes that grow uniformly are added to the expanded tree to ensure the possibility of motion in all directions.",
+        "bbox": [
+            57,
+            263,
+            487,
+            317
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/9cff1d0f4568d4591e34b81e96523825ae38ef87146b07c7bf44b0c884cc37e1.jpg",
+        "text": "$$\n\\mathcal { T } _ { i n i t } ^ { \\prime } = \\mathcal { O } \\cup \\psi , ( \\psi _ { h } \\cap C _ { f r e e } ) \\in \\psi , h = 1 , 2 , \\cdot \\cdot \\cdot N _ { u n i }\\tag{8}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            57,
+            335,
+            374,
+            351
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "where $\\mathcal { T } _ { i n i t } ^ { \\prime }$ denotes the expanded tree uniformly initialized. $\\psi$ represents the set of collision-free nodes and edges starting from the robot position. $\\psi _ { h }$ means the hth node and edge combination extending from the current position in the circumferential direction. $C _ { f r e e }$ is a collision-free configuration space, $N _ { u n i }$ and represents the total number of uniform sampling.",
+        "bbox": [
+            57,
+            356,
+            487,
+            436
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "(2) In order to prevent high-gain branches, the algorithm adds the rest of the best branch to the tree in the next iteration. It also updates the gain according to the latest estimation.",
+        "bbox": [
+            57,
+            435,
+            487,
+            476
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/7967b4ba4011a9dae4b5a8ac16689bc39959d76017b4c3c236ae096ba84c22a2.jpg",
+        "text": "$$\n\\mathcal { T } _ { i n i t } = \\mathcal { T } _ { i n i t } ^ { \\prime } \\cup B\\tag{9}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            57,
+            481,
+            161,
+            496
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "where $\\mathcal { T } _ { i n i t }$ is the entire initialized expansion tree, and B represents the remaining part of the best branch produced by the planner in the previous iteration.",
+        "bbox": [
+            57,
+            503,
+            487,
+            542
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "(3) Randomly sample in the collision-free space $q _ { r a n d } \\in C _ { f r e e }$ and find the nearest neighbor node $q _ { n e a r }$ of the random sampling point $q _ { r a n d }$ in the extended tree $\\mathcal { T } _ { i n i t }$",
+        "bbox": [
+            57,
+            542,
+            487,
+            582
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "(4) Perform collision detection according to costmap and generate an appropriate leaf node combined with the distance threshold $( S _ { m i n }$ and $S _ { m a x } )$ . Add node $q _ { n e w }$ to the extended tree. The connection between $q _ { n e a r }$ and $q _ { n e w }$ determines the rotation angle of $q _ { n e w } ,$ , which can be expressed as:",
+        "bbox": [
+            57,
+            581,
+            487,
+            649
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/1a830137db93292795261b52097c6855519c95c45b4a9c5cee6f5a7d9821d83c.jpg",
+        "text": "$$\nq _ { n e w } ( \\theta ) = a t a n 2 ( y _ { n e w } - y _ { n e a r } , x _ { n e w } - x _ { n e a r } )\\tag{10}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            57,
+            655,
+            334,
+            670
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "Since the robot executes the first edge of the branch, the construction does not include edge reconnection to improve efficiency.",
+        "bbox": [
+            57,
+            675,
+            485,
+            715
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "(5) Iteratively execute steps (3) and (4) until the iteration times reach the threshold. The set of candidate paths consists of the above branches.",
+        "bbox": [
+            57,
+            715,
+            487,
+            755
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "The path generation process includes expanded tree initialization, spatial random sampling, new node generation, and branch construction.",
+        "bbox": [
+            57,
+            755,
+            487,
+            794
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "4.2. Radiation gain evaluation",
+        "text_level": 2,
+        "bbox": [
+            58,
+            807,
+            253,
+            820
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "4.2.1. Radiation gain model",
+        "text_level": 2,
+        "bbox": [
+            58,
+            833,
+            238,
+            846
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "Enlightened by the idea of surrounding search, we proposed a multi-source radiation gain model. It conforms to the following principles:",
+        "bbox": [
+            57,
+            846,
+            487,
+            886
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "(1) The model should guide the robot to observe emphatically around the radiation sources.",
+        "bbox": [
+            57,
+            885,
+            487,
+            911
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "(2) When the sensor is close to the radiation source, the measurement deviation increases significantly. The algorithm should control the observation distance (distance from point source to sensor).",
+        "bbox": [
+            57,
+            911,
+            487,
+            939
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "chart",
+        "img_path": "images/666b45c52d2823c0da30a2a56385824e07375b4729d158145cb00d242ecddd30.jpg",
+        "content": "",
+        "chart_caption": [
+            "Distance from node to source (m)",
+            "Fig. 3. Changes in radiation intensity ratio and gain at different observation distances."
+        ],
+        "chart_footnote": [],
+        "bbox": [
+            552,
+            66,
+            894,
+            243
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            509,
+            319,
+            939,
+            345
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "(3) Similar to the radiation field, the multi-source radiation gain can also be superposed. It is necessary to reduce the abnormal gain in the sources’ common neighborhood.",
+        "bbox": [
+            509,
+            345,
+            939,
+            387
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "This section introduces the radiation gain model based on the above principles. For omnidirectional radiation sensors, the measured intensity is related to the observation distance. Similarly, the radiation gain macroscopically increases as distance is reduced. Given principle $( 2 ) ,$ it is necessary to decrease the node’s gain when it is too close to the sources.",
+        "bbox": [
+            507,
+            385,
+            939,
+            467
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "In Fig. 3, the blue curve shows the relationship between measured intensity and observation distance in a single-source scenario. When the observation distance is less than 1 m, the radiation intensity ratio (the measured intensity divided by the intensity whose observation distance equals 1 m) changes sharply. When the distance exceeds 3 m, the ratio changes slowly, which leads to a relatively small contribution to the estimation.",
+        "bbox": [
+            507,
+            466,
+            941,
+            561
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "The effective gain range is controlled between 1 m and 3 m, which conforms to principle (1) and (2). In one radiation source scene, the radiation gain function at the node $n _ { t }$ is defined as:",
+        "bbox": [
+            509,
+            561,
+            939,
+            602
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/5150def73a5ef0d37f4522f848204dd4e032fcb5f4efa9a875fbb2dec87303c2.jpg",
+        "text": "$$\n\\widetilde { G } _ { s r c } ( n _ { t } ) = \\sigma _ { d i s t } ^ { g a i n } + \\frac { 1 - \\sigma _ { d i s t } ^ { g a i n } } { \\sqrt { 2 \\pi } r _ { s r c } } \\cdot e x p ( \\frac { - ( d _ { s r c } ^ { ( t ) } - d _ { s r c } ) ^ { 2 } } { 2 { r _ { s r c } } ^ { 2 } } )\\tag{11}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            509,
+            607,
+            835,
+            641
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "where $r _ { s r c }$ is the radiation gain coefficient, which is used to adjust the range of radiation gain. $d _ { s r c } ^ { ( t ) }$ means the distance from the node n to source. $d _ { s r c }$ represents the radiation gain’s peak distance. $\\sigma _ { d i s t } ^ { \\dot { g } a i n }$ denotes the background value of the radiation gain.",
+        "bbox": [
+            509,
+            645,
+            941,
+            703
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "In the multi-source scenario, the radiation gain becomes as follows:",
+        "bbox": [
+            509,
+            713,
+            939,
+            740
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/96bee31352194a0902da344fec8e7a154f0b7c1652e3283b17f669226b980e2e.jpg",
+        "text": "$$\n\\left\\{ \\begin{array} { l l } { \\widetilde { G } _ { s r c } ( n _ { t } ) = \\displaystyle \\sum _ { k } ^ { N _ { s } } \\widetilde { G } _ { s r c } ^ { ( t , k ) } ( n _ { t } ) } \\\\ { \\widetilde { G } _ { s r c } ^ { ( t , k ) } ( n _ { t } ) = \\displaystyle \\sigma _ { d i s t } ^ { g a i n } + \\frac { 1 - \\sigma _ { d i s t } ^ { g a i n } } { \\sqrt { 2 \\pi } r _ { s r c } } \\cdot \\exp ( - \\frac { ( d _ { s r c } ^ { ( t , k ) } - d _ { s r c } ) ^ { 2 } } { 2 { r _ { s r c } } ^ { 2 } } ) } \\end{array} \\right.\\tag{12}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            512,
+            738,
+            863,
+            809
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "where $\\widetilde { G } _ { s r c } ^ { ( t , k ) } ( n _ { t } )$ denotes the radiation gain contributed by the kth radiation source at node $n _ { t } ,$ and $N _ { s }$ is the total number of predicted sources. $d _ { s r c } ^ { ( t , k ) }$ represents the distance from the node $n _ { k }$ to the kth radiation source.",
+        "bbox": [
+            509,
+            815,
+            939,
+            871
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "When multiple point sources are concentrated in a local area, the superposition of gains will lead to abnormalities in the common neighborhood, as shown in Fig. 4. The situation destroys the gain near the source and ultimately causes the robot to be unable to perform the surrounding observations.",
+        "bbox": [
+            507,
+            871,
+            939,
+            939
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "header",
+        "text": "H. Bai, W. Gao, H. Ma et al.",
+        "bbox": [
+            58,
+            42,
+            208,
+            54
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "header",
+        "text": "Robotics and Autonomous Systems 169 (2023) 104529",
+        "bbox": [
+            655,
+            42,
+            939,
+            55
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "page_number",
+        "text": "5",
+        "bbox": [
+            492,
+            947,
+            504,
+            957
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "chart",
+        "img_path": "images/90ea21ba32fadd68f1f4f0160d614488cebbf6d08d138f2da912336051816b40.jpg",
+        "content": "",
+        "chart_caption": [],
+        "chart_footnote": [],
+        "bbox": [
+            235,
+            70,
+            484,
+            226
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "image",
+        "img_path": "images/0bba004fdb3bd95f847b81bf541636ca4181f78bd2c67aa9c80103f141032f0a.jpg",
+        "image_caption": [
+            "Fig. 4. The radiation gain in the multi-source scenario."
+        ],
+        "image_footnote": [],
+        "bbox": [
+            529,
+            69,
+            763,
+            235
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "chart",
+        "img_path": "images/3203035a29af6c2567892b444b62b99287b5a05a1a2beffae371cf6e66789f99.jpg",
+        "content": "",
+        "chart_caption": [],
+        "chart_footnote": [],
+        "bbox": [
+            228,
+            281,
+            480,
+            437
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "chart",
+        "img_path": "images/527ceeed47b4f53222a4b4fc22874f199e5cc1ecbd613f84db6d78fc6c71f9cf.jpg",
+        "content": "",
+        "chart_caption": [
+            "Fig. 5. The radiation gain with superposition suppression."
+        ],
+        "chart_footnote": [],
+        "bbox": [
+            536,
+            278,
+            769,
+            446
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "This paper designs the superposition suppression factor to eliminate the abnormality. The kth source’s suppression factor $F _ { s r c } ^ { ( t , k ) } ( n _ { t } )$ at node n is as follows:",
+        "bbox": [
+            57,
+            486,
+            487,
+            528
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/3eb02a7366b8ce0fd39526511884739bdff95b1dc4dcab95461959a9a9d447d1.jpg",
+        "text": "$$\n\\begin{array} { l } { { F _ { s r c } ^ { ( t , k ) } ( n _ { t } ) = \\displaystyle \\sum _ { j , j \\neq k } ^ { N _ { s } } ( 1 - C _ { s u p } ^ { d i s t } + \\frac { C _ { s u p } ^ { d i s t } } { 1 + e x p [ ( T _ { s u p } ^ { d i s t } - d _ { t } ^ { ( k , j ) } ) / S _ { s u p } ^ { d i s t } ] } ) } } \\\\ { { d _ { t } ^ { ( k , j ) } = \\left| n _ { t } - ( C _ { k } ^ { p o s } + C _ { j } ^ { p o s } ) / 2 \\right| } } \\end{array}\\tag{13}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            57,
+            527,
+            426,
+            587
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "where $d _ { t } ^ { ( k , j ) }$ represents the distance from node $n _ { t }$ to the midpoint of the kth and jth sources. |·| is the second norm. $C _ { k } ^ { p o s }$ and $C _ { j } ^ { p \\sp { \\underline { { { s } } } } \\sp { \\underline { { { s } } } } }$ are the positions of the kth and jth sources respectively. $T _ { s u p } ^ { d i s t }$ is the parameter for adjusting the translation scale of the suppression curve. $S _ { s u p } ^ { d i s t }$ denotes the scale parameter for adjusting the rate of change of the suppression curve. $C _ { s u p } ^ { d i s t }$ represents the coefficient of the superposition suppression range and is as follows:",
+        "bbox": [
+            57,
+            593,
+            489,
+            692
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/8e68c8b652a5e589ed3dc323bd5eccfeb3ca68bfebfb8ca1ec8bbc105e242150.jpg",
+        "text": "$$\nC _ { s u p } ^ { d i s t } = \\sigma _ { r } ^ { d i s t } + \\frac { 1 - \\sigma _ { r } ^ { d i s t } } { 1 + e x p [ ( d _ { r } ^ { ( k , j ) } - T _ { r } ^ { d i s t } ) / S _ { r } ^ { d i s t } ] }\\tag{14}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            57,
+            694,
+            337,
+            730
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "where $\\sigma _ { r } ^ { d i s t }$ is the background value of the suppression range’s coefficient. $d _ { r } ^ { ( k , j ) }$ means the distance from the kth to the jth source. $T _ { r } ^ { d i s t }$ denotes the parameter for adjusting the translation distance of the suppression range curve. $S _ { r } ^ { \\ ' { d i s t } }$ represents the parameter for adjusting the gain suppression range curve. $\\sigma _ { c r t } ^ { d i s t }$ indicates the background value of the suppression range’s coefficient.",
+        "bbox": [
+            57,
+            733,
+            487,
+            825
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "In summary, the multi-source radiation gain model at node $n _ { t }$ is as follows:",
+        "bbox": [
+            55,
+            825,
+            485,
+            852
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/7a03d1ad4bf9859358522a88e2a04bc0743c9e2c09ad7f9c3f85f9ceb80ceb18.jpg",
+        "text": "$$\nG _ { s r c } ( n _ { t } ) = \\sum _ { k } ^ { N _ { s } } \\widetilde { G } _ { s r c } ^ { ( t , k ) } ( n _ { t } ) \\cdot F _ { s r c } ^ { ( t , k ) } ( n _ { t } )\\tag{15}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            57,
+            854,
+            277,
+            895
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "Fig. 5 shows the multi-source radiation gain considering superposition suppression. Comparing the gain distribution in Figs. 4 and 5, we can draw the following conclusions:",
+        "bbox": [
+            57,
+            899,
+            489,
+            939
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "(1) When two sources are close to each other, the suppression factor can eliminate the abnormal gain.",
+        "bbox": [
+            509,
+            486,
+            939,
+            514
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "(2) The suppression factor will not change the radiation gain in places where the gain is not superimposed.",
+        "bbox": [
+            509,
+            514,
+            939,
+            542
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "4.2.2. Best branch extraction",
+        "text_level": 2,
+        "bbox": [
+            509,
+            556,
+            697,
+            568
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "Source search is different from other environmental exploration missions in that it needs to focus on the area around sources. The gain should consider the distance cost to constrain the gain at the farthest node. In addition, the frequent rotation will reduce the search efficiency of the robot. The gain should also include the rotation cost. Given the above costs, the gain relationship between node $n _ { t }$ and its parent node $n _ { t - 1 }$ in the expansion tree can be as follows:",
+        "bbox": [
+            507,
+            568,
+            941,
+            677
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/b65960fea4f41a56c31a751cfe90d470a17f3aa164885d32a2ebf5eb95975db3.jpg",
+        "text": "$$\nG a i n _ { c u m } ( n _ { t } ) = G a i n _ { c u m } ( n _ { t - 1 } ) + G a i n _ { s r c } ( n _ { t } ) \\cdot C _ { d i s t } ^ { ( t , t - 1 ) } \\cdot C _ { r o t } ^ { ( t , t - 1 ) }\\tag{16}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            509,
+            680,
+            892,
+            699
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "where $G a i n _ { c u m } ( n _ { t } )$ is the accumulation radiation gain at node $n _ { t } .$ $G a i n _ { s r c } ( n _ { t } )$ denotes the multi-source radiation gain of node nt . $C _ { d i s t } ^ { ( t , t - 1 ) }$ and $C _ { r o t } ^ { ( t , t - 1 ) }$ represent the distance and rotation cost, respectively. And their specific calculation method is as follows:",
+        "bbox": [
+            509,
+            704,
+            939,
+            759
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/1e4732ed4f6f88f2183b71704963fa9d782d50ae91df378303faa87c681f9b3d.jpg",
+        "text": "$$\n\\left\\{ \\begin{array} { l l } { C _ { d i s t } ^ { ( t , t - 1 ) } = \\exp ( - \\eta _ { s r c } ^ { g a i n } \\cdot \\widetilde { d } _ { s r c } ^ { ( t , t - 1 ) } ) } \\\\ { \\widetilde { d } _ { s r c } ^ { ( t , t - 1 ) } = \\widetilde { d } _ { s r c } ^ { ( t - 1 , t - 2 ) } + \\Vert \\overline { { n _ { t - 1 } } } \\overrightarrow { n _ { t } } \\Vert } \\end{array} \\right.\\tag{17}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            512,
+            762,
+            724,
+            802
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "where $\\eta _ { s r c } ^ { g a i n }$ denotes the distance attenuation constant. $\\widetilde { d } _ { s r c } ^ { ( t , t - 1 ) }$ is the path distance from node $n _ { t }$ to node $n _ { t - 1 }$",
+        "bbox": [
+            509,
+            808,
+            939,
+            839
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/2ba21287f1f51cb7daabac14111505092f1d3c4eba1b64163282ac3d3b4fb2f4.jpg",
+        "text": "$$\n\\left\\{ \\begin{array} { l l } { C _ { r o t } ^ { ( t , t - 1 ) } = \\exp ( \\theta _ { t } ^ { 2 } / \\sigma _ { \\theta } ^ { 2 } ) } \\\\ { \\theta _ { t } = \\operatorname { a r c c o s } ( \\frac { \\overrightarrow { n _ { t - 1 } n _ { t } } \\cdot \\overrightarrow { n _ { t - 2 } n _ { t - 1 } } } { \\lVert \\overrightarrow { n _ { t - 1 } n _ { t } } \\rVert \\cdot \\lVert \\overrightarrow { n _ { t - 2 } n _ { t - 1 } } \\rVert } ) } \\end{array} \\right.\\tag{18}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            512,
+            841,
+            756,
+            895
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "where $\\theta _ { t }$ is the angle between the target vector and the previous planning vector. $\\sigma _ { \\theta }$ denotes the scale factor in the rotation cost function.",
+        "bbox": [
+            509,
+            897,
+            941,
+            938
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "header",
+        "text": "H. Bai, W. Gao, H. Ma et al.",
+        "bbox": [
+            58,
+            42,
+            208,
+            54
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "header",
+        "text": "Robotics and Autonomous Systems 169 (2023) 104529",
+        "bbox": [
+            655,
+            42,
+            939,
+            55
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "page_number",
+        "text": "6",
+        "bbox": [
+            492,
+            947,
+            504,
+            957
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "image",
+        "img_path": "images/a20dd6e8ba3377a317759b5ab17b26960e7c0ff282b327f36cf6c4c5e9e3cabf.jpg",
+        "image_caption": [
+            "Fig. 6. The best branch in the two-point source scenario. The level of radiation gain is displayed by color. The green branches are the candidate, and the purple branch is optimal.. (For interpretation of the references to color in this figure legend, the reader is referred to the web version of this article.)"
+        ],
+        "image_footnote": [],
+        "bbox": [
+            114,
+            70,
+            438,
+            284
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "We can iteratively calculate the gain at each node based on the cumulative gain. On this basis, compare the leaf node’s gain and extract the branch that has the best-gain node. Fig. 6 shows the extracted results in a two-source scene and indicates the radiation gain by color. The branch with the highest gain is closer to the sources than the other branches. According to the gain model and optimal leaf-node criterion, the proposed approach can find the best branch from the extended tree.",
+        "bbox": [
+            57,
+            369,
+            487,
+            476
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "4.2.3. Gain correction",
+        "text_level": 2,
+        "bbox": [
+            57,
+            486,
+            201,
+            500
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "The radiation gain generates gravitation, which prompts the robot to explore the sources’ neighborhoods. However, when the robot has not yet observed the entire radiation field, the predictions often deviate from the actual state of the sources. This paper corrects the gravitation to mitigate the misleading caused by prediction bias and greedy search.",
+        "bbox": [
+            57,
+            500,
+            487,
+            580
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "We propose the observation intensity correction (OIC) to improve search efficiency. The corrected gain is according to the predictions and the observed intensities. Considering that the intensity at the node cannot be directly calculated, the correction utilizes the observed intensity closest to the node to judge the confidence of the predictions. The OIC is as follows:",
+        "bbox": [
+            57,
+            578,
+            487,
+            659
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/ef315bbcdaca68cff383713985acfd968fedf64e97e85bad37a4d6eb13175e50.jpg",
+        "text": "$$\nC _ { o b s } ( n _ { t } ) = \\sigma _ { s r c } ^ { g a i n } + \\frac { 1 - \\sigma _ { s r c } ^ { g a i n } } { 1 + e x p [ ( T _ { s r c } ^ { g a i n } - I _ { t } ^ { n e a r } / I _ { s r c } ^ { b a c k } ) / S _ { s r c } ^ { g a i n } ] }\\tag{19}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            57,
+            663,
+            398,
+            699
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "where $I _ { t } ^ { n e a r }$ is the radiation intensity at node $n _ { t }$ closest to the node. $I _ { s r c } ^ { b i c k }$ denotes the background radiation, and $T _ { s r c } ^ { g a i n }$ is the horizontal offset of the OIC curve. $S _ { s r c } ^ { g a i n }$ indicates the scale parameter of the OIC. $\\sigma _ { s r c } ^ { g a i n }$ is the background value of the OIC.",
+        "bbox": [
+            57,
+            702,
+            487,
+            760
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "It is significant to find all the sources within finite iterations. When the robot has exploited the known radiation field, it is necessary to allocate exploration opportunities to unknown regions to protect several sources from being missed. This paper designs the redundant sampling correction (RSC) to prevent the robot from excessively sampling. The calculation process is as follows:",
+        "bbox": [
+            57,
+            759,
+            487,
+            839
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/637517b9eea6ab3d12ab25ddd657b74db5031e01d8ed0128f78081e1e3665dc9.jpg",
+        "text": "$$\nC _ { r s } ( n _ { t } ) = 1 + \\frac { ( \\sigma _ { r s } - 1 ) \\cdot e x p ( N _ { s a m } ^ { ( t ) } - S _ { r s } \\cdot d _ { n e a r } ^ { ( t ) } ) } { e x p ( S _ { r s } \\cdot d _ { n e a r } ^ { ( t ) } - N _ { s a m } ^ { ( t ) } ) + e x p ( N _ { s a m } ^ { ( t ) } - S _ { r s } \\cdot d _ { n e a r } ^ { ( t ) } ) }\\tag{20}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            57,
+            843,
+            445,
+            880
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "where $d _ { n e a r } ^ { ( t ) }$ is the distance from node $n _ { t }$ to its nearest radiation source. $N _ { s a m } ^ { ( t ) }$ represents the number of nodes that have been sampled in the neighborhood of the radiation source. $S _ { r s }$ is the scale parameter of RSC. $\\sigma _ { r s }$ is the slight offset.",
+        "bbox": [
+            57,
+            883,
+            487,
+            939
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "For online search, the robot can only estimate based on several observations at each iteration. Given the diversity of observation positions, we propose the repeat exploring correction (REC) to reduce the gain in explored areas. The robot can iteratively explore the whole region with REC. The REC is expressed as follows:",
+        "bbox": [
+            509,
+            65,
+            939,
+            133
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/d2efcda693430bb9b069c0ef12af7446b3aee764b2b730f0ecad3f894f0c192f.jpg",
+        "text": "$$\nC _ { r e x } ( n _ { t } ) = \\prod _ { b } ^ { N _ { n b h } } e x p ( \\frac { - 1 } { ( d _ { ( t , b ) } / S _ { r e x } ) + \\sigma _ { r e x } } )\\tag{21}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            509,
+            139,
+            754,
+            177
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "where $d _ { ( t , b ) }$ is the distance between node $n _ { t }$ and the bth observation point. $S _ { r e x }$ indicates the scale parameter of REC. $\\sigma _ { r e x }$ is the offset. $N _ { n b h }$ is the total number of observation points in the neighborhood of node $n _ { t }$",
+        "bbox": [
+            509,
+            184,
+            939,
+            237
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "In summary, the cumulative calculation formula of the radiation gain is as follows:",
+        "bbox": [
+            509,
+            237,
+            939,
+            264
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/d49c49c91b69d0be488cdbc21ac826f63ca54e7f1513c1687ca63ca5d4dee8df.jpg",
+        "text": "$$\n\\begin{array} { r l } & { G a i n _ { c u m } ( n _ { t } ) = G a i n _ { c u m } ( n _ { t - 1 } ) + G a i n _ { s r c } ( n _ { t } ) \\cdot C _ { d i s t } ^ { ( t , t - 1 ) } \\cdot C _ { r o t } ^ { ( t , t - 1 ) } } \\\\ & { \\phantom { G a i n } \\cdot C _ { o b s } ( n _ { t } ) \\cdot C _ { r s } ( n _ { t } ) \\cdot C _ { r e x } ( n _ { t } ) } \\end{array}\\tag{22}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            509,
+            268,
+            892,
+            306
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "Fig. $7 ( \\mathsf { a } ) \\mathsf { - } ( \\mathsf { c } ) ,$ respectively, show the trajectories that iterate 50 times without the above three corrections. The above trajectories indicate that the uncorrected gain model limits the search efficiency. Fig. 7(d) shows the trajectory considering the above corrections. With the help of these corrections, the robot focused on the neighborhood of sources and roughly explored the low-radiation area.",
+        "bbox": [
+            507,
+            311,
+            939,
+            404
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "Fig. 8 presents the RFC of the above trajectories. It indicates that prediction accuracy with corrections has significantly improved. The comparison of RFC also proves the necessity of corrections. It should be noted that RFC is abnormally high at the beginning of the iteration. This phenomenon is caused by too few observations. As the exploration scope expands, the RFC will gradually become more reasonable.",
+        "bbox": [
+            507,
+            404,
+            941,
+            499
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "5. Simulation and experiment",
+        "text_level": 2,
+        "bbox": [
+            509,
+            511,
+            724,
+            525
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "5.1. Evaluation of ADE-PSPF algorithm",
+        "text_level": 2,
+        "bbox": [
+            509,
+            538,
+            757,
+            553
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "We compared the results of different algorithms based on the same observations. The scenes are designed based on the Robot Operating System (ROS) and Gazebo simulation software. In the simulation, the measurements are determined based on the inverse square law and the source terms. In order to approximate the actual scenario, we added background radiation and white Gaussian noise to the measurements. The background radiation exhibits constant fluctuations on the scale of nanosieverts per hour (nSv/h). This noise level was employed to assess the performance of ADE-PSPF. In the source search, we utilized this noise level to evaluate the effectiveness of the observation intensity correction. To mitigate the influence of noise, the robot employs a first-order filter to process a series of 100 measurements while observing the radiation field. The result of this filtering process is regarded as the intensity corresponding to the observation point. Furthermore, during the weight-updating process, it is crucial to subtract the mean value of the background radiation from the filtered observations. Given that background radiation can be easily obtained in both simulated and experimental environments, this preprocessing approach is feasible.",
+        "bbox": [
+            507,
+            564,
+            941,
+            832
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "Fig. 9 presents the radiation field and observation trajectory in the simulation scenario. We utilize five particle swarms to predict four sources with unknown positions and intensities. Table 1 shows the configuration of the environment, where each swarm contains 150 particles in the ADE-PSPF. In contrast, each swarm in the PSPF algorithm has 150 or 300 particles. In order to accurately evaluate the ADE resampling, other parts of the algorithm are the same.",
+        "bbox": [
+            507,
+            831,
+            941,
+            938
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "header",
+        "text": "H. Bai, W. Gao, H. Ma et al.",
+        "bbox": [
+            58,
+            42,
+            208,
+            54
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "header",
+        "text": "Robotics and Autonomous Systems 169 (2023) 104529",
+        "bbox": [
+            655,
+            42,
+            939,
+            55
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "page_number",
+        "text": "7",
+        "bbox": [
+            492,
+            947,
+            504,
+            957
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "chart",
+        "img_path": "images/a8456d91b1beed84753d85fafbb1d8e1a69456b527e5e52b87cf383f32284f68.jpg",
+        "content": "",
+        "chart_caption": [],
+        "chart_footnote": [],
+        "bbox": [
+            225,
+            68,
+            492,
+            261
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "chart",
+        "img_path": "images/2b10549eb2a1376f059b853cb5d6574cfef2827702c31592cfdd4b300516e7ad.jpg",
+        "content": "",
+        "chart_caption": [],
+        "chart_footnote": [],
+        "bbox": [
+            504,
+            68,
+            774,
+            261
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "chart",
+        "img_path": "images/139bf8bccd888b4223494785feef283e05d9cb83599476796374e79057ecda5e.jpg",
+        "content": "",
+        "chart_caption": [],
+        "chart_footnote": [],
+        "bbox": [
+            225,
+            277,
+            492,
+            470
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "chart",
+        "img_path": "images/307e4460a6284e5dd642197612170f857e510f7504e5b095b57ec4b5510731e7.jpg",
+        "content": "",
+        "chart_caption": [
+            "Fig. 7. The trajectory and results at step 50, (a) without observation intensity correction, (b) without redundant sampling correction, (c) without repeat exploring correction, and (d) consider all corrections."
+        ],
+        "chart_footnote": [],
+        "bbox": [
+            504,
+            276,
+            773,
+            470
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "table",
+        "img_path": "images/94aa6dd969d60bfec844451520504586cc65666c459d328aa5ddbab363712ba0.jpg",
+        "table_caption": [
+            "Table 1",
+            "The configuration of simulation environment."
+        ],
+        "table_footnote": [],
+        "table_body": "<table><tr><td>Scenario item</td><td>Parameter setting</td></tr><tr><td>Size of Surveillance area</td><td> $5 \\mathrm { ~ m ~ } \\times 5 \\mathrm { ~ m ~ }$ </td></tr><tr><td>Number of particles</td><td> $1 5 0 ~ 0 \\Gamma ~ 3 0 0$ </td></tr><tr><td>Parameters about radiation sources</td><td>(1.8, 1.3, 820), (3.8, 1.9, 850), (3.2, 3.9, 880), (1.3, 3.1, 860)</td></tr><tr><td>Background radiation</td><td>150 nSv/h (SD: 100 nSv/h)</td></tr></table>",
+        "bbox": [
+            191,
+            543,
+            806,
+            626
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "chart",
+        "img_path": "images/06ead784413fd875923bfdc546ecd070c474532572a14d7a0c28b25c24de3238.jpg",
+        "content": "",
+        "chart_caption": [
+            "Fig. 8. The RFC in 50 iterations under different circumstances."
+        ],
+        "chart_footnote": [],
+        "bbox": [
+            109,
+            643,
+            435,
+            868
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "Fig. 10 shows the RFC and the resampling runtime in the iterations. In order to achieve an accurate contrast, each algorithm was run 50 times. After 15 iterations, the average RFC of the ADE-PSPF algorithm is 91.7%, which has the highest accuracy among the three algorithms. Its average resampling time is 3.88 s. The mean runtime of the resampling of the PSPF algorithm (with 150 particles) is 2.11 s, but the mean RFC is only 81.3%. Comparing the RFC and resampling time, the conclusions are as follows:",
+        "bbox": [
+            57,
+            911,
+            487,
+            939
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            509,
+            641,
+            939,
+            723
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "(1) When the number of iterations is the same, the ADE strategy significantly improves the particle swarm’s efficiency in searching for the actual parameters.",
+        "bbox": [
+            509,
+            723,
+            939,
+            764
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "(2) When the number of particles is the same, the ADE strategy causes the runtime of resampling to increase. As the search ability of each particle improves, ADE-PSPF can reduce the number of particles to balance efficiency and accuracy.",
+        "bbox": [
+            509,
+            762,
+            941,
+            818
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "(3) Since the iteration times of the ADE optimization can be changed, the runtime can meet the requirements of online search.",
+        "bbox": [
+            509,
+            817,
+            939,
+            846
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "When the swarm number is less than the actual source number, ADE-PSPF cannot accurately estimate the source parameters. However, each swarm is loosely coupled in ADE-PSPF. The proposed method can increase the number of swarms to infer more precise source parameters. Therefore, we evaluated the effectiveness of this method in this scenario. Fig. 11 shows the change in prediction results (we adjusted the swarm number at step 11). When the number of swarms is insufficient, the predicted source number is wrong. Compared with Fig. 10, RFC cannot achieve the previous accuracy in steps 1–10. However, when the number of swarms exceeded the number of sources, ADE-PSPF quickly found more accurate parameters. Additionally, RFC increased with the reduction of location error (LE) and intensity error (IE). Therefore, when the robot searches for sources, the proposed method can adjust the number of swarms based on RFC.",
+        "bbox": [
+            509,
+            857,
+            941,
+            939
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "header",
+        "text": "H. Bai, W. Gao, H. Ma et al.",
+        "bbox": [
+            58,
+            42,
+            208,
+            54
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "header",
+        "text": "Robotics and Autonomous Systems 169 (2023) 104529",
+        "bbox": [
+            655,
+            42,
+            939,
+            55
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "page_number",
+        "text": "8",
+        "bbox": [
+            494,
+            947,
+            504,
+            957
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "table",
+        "img_path": "images/9e4e847e2585ae985a6be1a5797f9835ff07b9ef8ba980f7f6c9456aa994e02c.jpg",
+        "table_caption": [
+            "Table 2",
+            "The results with different distance between sources."
+        ],
+        "table_footnote": [],
+        "table_body": "<table><tr><td>Distance</td><td colspan=\"3\">ADE-PSPF</td><td colspan=\"3\">PSPF</td></tr><tr><td></td><td>RFC</td><td> $\\mathrm { L E ~ ( m ) }$ </td><td> $\\mathrm { I E ~ } ( \\mathrm { n S v / h } )$ </td><td>RFC</td><td> $\\mathrm { L E } \\ ( \\mathrm { m } )$ </td><td> $\\mathrm { I E \\ ( n S v / h ) }$ </td></tr><tr><td>1,4 m</td><td> $0 . 9 5 \\pm 0 . 0 3$ </td><td> $0 . 1 9 \\pm 0 . 1 3$ </td><td> $3 7 . 8 1 \\pm 1 3 . 9 2$ </td><td> $0 . 9 0 \\pm 0 . 0 5$ </td><td> $0 . 3 7 \\pm 0 . 1 8$ </td><td> $5 9 . 8 3 \\pm 3 0 . 6 2$ </td></tr><tr><td>1.2 m</td><td> $0 . 9 4 \\pm 0 . 0 4$ </td><td> $0 . 3 1 \\pm 0 . 2 2$ </td><td> $5 2 . 2 3 \\pm 2 1 . 3 0$ </td><td> $0 . 8 9 \\pm 0 . 0 3$ </td><td> $0 . 4 4 \\pm 0 . 1 2$ </td><td> $6 4 . 0 7 \\pm 2 3 . 5 4$ </td></tr><tr><td>1.0 m</td><td> $0 . 9 4 \\pm 0 . 0 5$ </td><td> $0 . 2 9 \\pm 0 . 2 3$ </td><td> $5 1 . 8 2 \\pm 2 9 . 7 3$ </td><td> $0 . 8 8 \\pm 0 . 0 5$ </td><td> $0 . 4 6 \\pm 0 . 1 8$ </td><td> $6 8 . 5 0 \\pm 4 2 . 0 6$ </td></tr><tr><td>0.8 m</td><td> $0 . 9 3 \\pm 0 . 0 6$ </td><td> $0 . 3 1 \\pm 0 . 1 8$ </td><td> $5 5 . 7 5 \\pm 2 9 . 4 1$ </td><td> $0 . 8 7 \\pm 0 . 0 5$ </td><td> $0 . 4 7 \\pm 0 . 0 8$ </td><td> $6 8 . 9 2 \\pm 2 6 . 8 4$ </td></tr><tr><td>0.6 m</td><td> $0 . 9 0 \\pm 0 . 0 1$ </td><td> $0 . 3 3 \\pm 0 . 0 6$ </td><td> $6 1 . 5 1 \\pm 2 2 . 1 2$ </td><td> $0 . 8 5 \\pm 0 . 0 6$ </td><td> $0 . 4 9 \\pm 0 . 1 9$ </td><td> $7 2 . 7 7 \\pm 3 3 . 4 2$ </td></tr></table>",
+        "bbox": [
+            146,
+            87,
+            852,
+            206
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "table",
+        "img_path": "images/302cdda4537f8858aa051fdec6b9671e6b3871564c7fa7c36788042a53241f5e.jpg",
+        "table_caption": [
+            "Table 3",
+            "The results with different IDR."
+        ],
+        "table_footnote": [],
+        "table_body": "<table><tr><td rowspan=\"2\">ADE-PSPF</td><td colspan=\"3\"></td><td colspan=\"3\">PSPF</td></tr><tr><td>IDR RFC</td><td> $\\mathrm { L E } \\ ( \\mathrm { m } )$ </td><td> $\\mathrm { I E \\ ( n S v / h ) }$ </td><td>RFC</td><td> $\\mathrm { L E } \\ ( \\mathrm { m } )$ </td><td> $\\mathrm { I E \\ ( n S v / h ) }$ </td></tr><tr><td>10%</td><td> $0 . 9 5 \\pm 0 . 0 1$ </td><td> $0 . 2 6 \\pm 0 . 0 5$ </td><td> $1 3 0 . 1 1 \\pm 4 4 . 5 0$ </td><td> $0 . 8 9 \\pm 0 . 0 1$ </td><td> $0 . 5 5 \\pm 0 . 1 2$ </td><td> $1 2 1 . 3 4 \\pm 5 4 . 3 5$ </td></tr><tr><td>20%</td><td> $0 . 9 3 \\pm 0 . 0 1$ </td><td> $0 . 4 2 \\pm 0 . 1 3$ </td><td> $1 6 9 . 6 1 \\pm 9 0 . 5 5$ </td><td> $0 . 8 8 \\pm 0 . 0 5$ </td><td> $0 . 5 4 \\pm 0 . 2 2$ </td><td> $1 5 6 . 7 7 \\pm 5 5 . 2 3$ </td></tr><tr><td>30%</td><td> $0 . 9 2 \\pm 0 . 0 1$ </td><td> $0 . 3 8 \\pm 0 . 1 2$ </td><td> $1 8 9 . 8 8 \\pm 4 0 . 6 8$ </td><td> $0 . 8 7 \\pm 0 . 0 1$ </td><td> $0 . 6 1 \\pm 0 . 1 3$ </td><td> $2 4 7 . 9 7 \\pm 6 0 . 6 9$ </td></tr><tr><td>40%</td><td> $0 . 9 1 \\pm 0 . 0 1$ </td><td> $0 . 5 4 \\pm 0 . 1 9$ </td><td> $2 7 5 . 4 7 \\pm 3 9 . 1 5$ </td><td> $0 . 8 6 \\pm 0 . 0 2$ </td><td> $0 . 6 5 \\pm 0 . 1 4$ </td><td> $2 3 0 . 2 9 \\pm 9 5 . 9 2$ </td></tr><tr><td>50%</td><td> $0 . 9 0 \\pm 0 . 0 1$ </td><td> $0 . 6 7 \\pm 0 . 0 5$ </td><td> $3 9 4 . 9 1 \\pm 1 1 0 . 5 9$ </td><td> $0 . 8 5 \\pm 0 . 0 3$ </td><td> $0 . 7 1 \\pm 0 . 1 5$ </td><td> $3 2 8 . 6 5 \\pm 4 1 . 7 6$ </td></tr></table>",
+        "bbox": [
+            142,
+            243,
+            852,
+            360
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "image",
+        "img_path": "images/e0a2528c050dc7002014545473e34387ec38c2957d4a7c385afe9aebba79f073.jpg",
+        "image_caption": [],
+        "image_footnote": [],
+        "bbox": [
+            109,
+            378,
+            435,
+            621
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            507,
+            375,
+            941,
+            494
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "chart",
+        "img_path": "images/d30af0334f362c991fedc61cf6d4b3d79bf88259f89089d21a8204785e8d52ec.jpg",
+        "content": "",
+        "chart_caption": [
+            "Fig. 9. The radiation field and observation trajectory in the simulation.",
+            "In the case of nuclear accidents, the radiation sources may be randomly distributed. So we compared the predicted results when the distance between point sources was changed. Fig. 12 shows the radiation field and observation trajectory. In the experiment, the distance between sources ranged from 0.6 m to 1.4 m. Table 2 shows the RFC, LE, and IE of ADE-PSPF and PSPF. As the distance between sources decreases, both LE and IE improve. However, ADE-PSPF outperforms PSPF. When the distance between sources equals 0.6 m, the average LE exceeds half of the distance between sources. The results indicated that the proposed method cannot accurately identify the source terms when the distance between two point sources is less than 0.6 m.",
+            "Fig. 10. The RFC and resampling runtime in iterations."
+        ],
+        "chart_footnote": [],
+        "bbox": [
+            109,
+            660,
+            435,
+            883
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "Then we tested ADE-PSPF in which the intensity differences of the sources were changed. Table 3 presents the experimental results, where the intensities of the sources belong to the arithmetic progression. We compared the performance when the intensity difference ratio (IDR) was 10% to 50%. As the IDR increased, the LE and IE decreased. However, ADE-PSPF achieved a better performance. When IDR exceeded 50%, the ESR of the algorithm decreased rapidly, implying that ADE-PSPF is not suitable for high IDR scenarios. The errors are mainly caused by the wrong number of predicted sources. For example, if the radiation field produced by a centroid can be approximated as a superposition of two radiation fields, then the parameters with a high RFC may not be corrected. Although many algorithms have been devoted to solving this problem, there is still no perfect method.",
+        "bbox": [
+            507,
+            650,
+            941,
+            836
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "5.2. Validation of the strategy in simulation environments",
+        "text_level": 2,
+        "bbox": [
+            509,
+            846,
+            880,
+            861
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "In this section, we used two radiation scenarios to evaluate different search strategies. Fig. 13 displays the two simulated scenarios. In order to simulate the actual environment, the obstacles are randomly arranged in both scenarios. Table 4 shows the scenes’ configuration.",
+        "bbox": [
+            507,
+            871,
+            941,
+            939
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "header",
+        "text": "H. Bai, W. Gao, H. Ma et al.",
+        "bbox": [
+            58,
+            41,
+            208,
+            55
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "header",
+        "text": "Robotics and Autonomous Systems 169 (2023) 104529",
+        "bbox": [
+            655,
+            41,
+            939,
+            55
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "page_number",
+        "text": "9",
+        "bbox": [
+            492,
+            947,
+            505,
+            957
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "chart",
+        "img_path": "images/21ab204f48b5a3a802cd794632bf0c547c7c8b0e5cec1f72cca5782c54a4b549.jpg",
+        "content": "",
+        "chart_caption": [],
+        "chart_footnote": [],
+        "bbox": [
+            193,
+            65,
+            484,
+            262
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "chart",
+        "img_path": "images/fa3d8f509764ded41e4c93f68277cd5fc2d73b757df7b29501b1459f2b2196f8.jpg",
+        "content": "",
+        "chart_caption": [
+            "Fig. 11. The effect of swarm number on predicted results (RFC, LE, and IE) in iterations. In steps 1–10, we use three swarms to estimate. In steps 11–20, the number of swarms becomes five."
+        ],
+        "chart_footnote": [],
+        "bbox": [
+            512,
+            66,
+            803,
+            262
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "table",
+        "img_path": "images/40d11c860f9f9c78189b47ba05c112a871368b7818637be98f139cde882eb77d.jpg",
+        "table_caption": [
+            "Table 4",
+            "The configuration of simulation environment for MRSS."
+        ],
+        "table_footnote": [],
+        "table_body": "<table><tr><td colspan=\"2\">Scenario item</td><td>Parameter setting</td></tr><tr><td colspan=\"2\">The scope of the scene</td><td> $2 1 \\textrm { m } \\times 2 1 \\textrm { m }$ </td></tr><tr><td colspan=\"2\">Number of RRT nodes</td><td>50</td></tr><tr><td colspan=\"2\">Number of particles in each swarm</td><td>250</td></tr><tr><td colspan=\"2\">Background radiation</td><td>160 nSv/h (SD: 80 nSv/h)</td></tr><tr><td rowspan=\"4\">Scenario 1</td><td>Initial robot state</td><td>(-7.0, -8.0, 90°)</td></tr><tr><td>Swarms and sources number</td><td>4 and 3</td></tr><tr><td>Parameters about sources</td><td>(0.5, 2.0, 1050), (-1.5, 0.0, 1200),(1.5, −1.5, 950)</td></tr><tr><td>Radiation field distribution</td><td>One multi-modal radiation field</td></tr><tr><td rowspan=\"4\">Scenario2</td><td>Initial robot state</td><td>(-3.0, 7.0, 0°)</td></tr><tr><td>Swarms and sources number</td><td>5 and 4</td></tr><tr><td>Parameters about sources</td><td>(0.5, −4.0, 900), (-1.5, −6.0, 950),(2.5, 7.0, 985), (0.5, 5.0, 950)</td></tr><tr><td>Radiation field distribution</td><td>Two multi-modal radiation fields</td></tr></table>",
+        "bbox": [
+            146,
+            331,
+            850,
+            548
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "chart",
+        "img_path": "images/7a15c6c3dd6ceacd13b6b949483c9abf46b5118c66f405c2aea0adeacded4c42.jpg",
+        "content": "",
+        "chart_caption": [
+            "Fig. 12. The radiation field and observation trajectory in the simulation."
+        ],
+        "chart_footnote": [],
+        "bbox": [
+            114,
+            568,
+            430,
+            805
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "text",
+        "text": "5.2.1. Three radiation sources search",
+        "text_level": 2,
+        "bbox": [
+            58,
+            848,
+            295,
+            862
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "text",
+        "text": "In the first scene, there are three sources close to each other; they create a multi-modal radiation field. The robot starts at the area’s boundary to test its ability to find sources. Fig. 14 shows the distribution of particle swarms and the observation trajectory during the search. The entire exploration process is summarized as follows:",
+        "bbox": [
+            57,
+            862,
+            487,
+            938
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "text",
+        "text": "(1) During the stage of tracking down suspicious sources (iterations 1–36), the robot kept tracking the closest predicted source (Fig. 14(a)–(c)) because the radiation gain attracted it. At this stage, the robot has not yet detected the high radiation. So the OIC reduces the gain around the inaccurately predicted source (pseudo source), which results in the robot exploring the unknown areas. Fig. 15 shows the RFC, which indicates the predicted result is not accurate at this stage.",
+        "bbox": [
+            509,
+            564,
+            941,
+            670
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "text",
+        "text": "(2) Fig. 14(d)–(g) indicate the robot is at the surrounding observation phase (iterations 37–63). The observed intensity increased, and these observations are more useful for prediction. There is still a prediction deviation; even the number of predicted sources does not match the actual number at this stage. However, because of the REC, the radiation gain guided the robot to surround, which ensured the positional diversity of observations. In the process of surrounding exploration, the accuracy of ADE-PSPF prediction has significantly improved. When the robot observed the neighborhood of sources (Fig. 14(g)), the number of sources in the predictions became correct.",
+        "bbox": [
+            509,
+            670,
+            941,
+            818
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "text",
+        "text": "(3) The final predicted result and the entire observation trajectory are shown in Fig. 14(i). In the stage of exploring unknown regions (iterations 64–83), the RSC and REC drove the robot to areas that had not yet been explored. In order to ensure online search, ADE-PSPF randomly selects parts of the observations for prediction in each iteration. When surrounding observations were complete, the deviation of the prediction still decreased with iteration. In exploring the unknown area, the robot gradually moved away from the area of high radiation. In the termination criterion, we set a RFC threshold and a threshold for the number of iterations to stop searching. Therefore, the robot continues to search until the RFC is not improved in ten consecutive iterations. When the robot had explored 83 times, the RFC reached 94.23%.",
+        "bbox": [
+            507,
+            818,
+            941,
+            939
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "header",
+        "text": "H. Bai, W. Gao, H. Ma et al.",
+        "bbox": [
+            58,
+            42,
+            208,
+            54
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "header",
+        "text": "Robotics and Autonomous Systems 169 (2023) 104529",
+        "bbox": [
+            655,
+            42,
+            939,
+            55
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "page_number",
+        "text": "10",
+        "bbox": [
+            490,
+            947,
+            509,
+            957
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "image",
+        "img_path": "images/abe66334287291e31837413adb85aa497dca764da50763184a9663900c21bd4d.jpg",
+        "image_caption": [],
+        "image_footnote": [],
+        "bbox": [
+            228,
+            69,
+            494,
+            267
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "image",
+        "img_path": "images/da0b093152fa58fe9a0aa32bb832eee5ff22562a6ed50d9430f729735cdf3fe1.jpg",
+        "image_caption": [
+            "Fig. 13. Two scenarios in the simulation. (a) the three-source scenario. (b) the four-source scenario."
+        ],
+        "image_footnote": [],
+        "bbox": [
+            505,
+            69,
+            771,
+            267
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "chart",
+        "img_path": "images/20fc0b511debb8c3994533e893e1700c7e61617f2696b975248b5de1150001eb.jpg",
+        "content": "",
+        "chart_caption": [],
+        "chart_footnote": [],
+        "bbox": [
+            179,
+            313,
+            384,
+            466
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "chart",
+        "img_path": "images/9bb486c2c53b63dfb15416f4fe9d4fd359abf4ba6b361b38b6dc14bd3f60d6e0.jpg",
+        "content": "",
+        "chart_caption": [],
+        "chart_footnote": [],
+        "bbox": [
+            396,
+            313,
+            605,
+            466
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "chart",
+        "img_path": "images/897f6eb7c64b37aa09bd53d6e526cb8c46827ec4381ea045a9cf9d1dbf19f230.jpg",
+        "content": "",
+        "chart_caption": [],
+        "chart_footnote": [],
+        "bbox": [
+            615,
+            320,
+            823,
+            466
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "chart",
+        "img_path": "images/b8083acec3dcc634ca4f59afcc0db012060d181c798d32f07a4442b9925f1f99.jpg",
+        "content": "",
+        "chart_caption": [],
+        "chart_footnote": [],
+        "bbox": [
+            179,
+            471,
+            386,
+            624
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "chart",
+        "img_path": "images/9fc179174ea3b2a92553f4f4f2644cbe5f7f4668178a182c8cd4ba9cc480bcf7.jpg",
+        "content": "",
+        "chart_caption": [],
+        "chart_footnote": [],
+        "bbox": [
+            396,
+            471,
+            603,
+            622
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "chart",
+        "img_path": "images/07b24a7234a49a868cfb9c775d4a0986f7d6fa0b5f04e651ec4d0ecd5ed17eb6.jpg",
+        "content": "",
+        "chart_caption": [],
+        "chart_footnote": [],
+        "bbox": [
+            615,
+            471,
+            823,
+            622
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "chart",
+        "img_path": "images/10d91f1300e44f07a98293d2aa97541b5671da6d5894df8ae745b262a4110102.jpg",
+        "content": "",
+        "chart_caption": [],
+        "chart_footnote": [],
+        "bbox": [
+            178,
+            629,
+            386,
+            780
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "chart",
+        "img_path": "images/f798f7b844b392b9ad437021e586ed4a68ade90016af805f36ffdc01534f1970.jpg",
+        "content": "",
+        "chart_caption": [],
+        "chart_footnote": [],
+        "bbox": [
+            396,
+            629,
+            605,
+            780
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "chart",
+        "img_path": "images/1833d3871b6c1bb439cb36885ab473cdc00da54a1dbabb763289c7197b32fd0c.jpg",
+        "content": "",
+        "chart_caption": [
+            "Fig. 14. In the first scenario, the predicted results and the observation trajectory are shown at (a) iteration 7, (b) iteration 22, (c) iteration 36, (d) iteration 44, (e) iteration 52, (f) iteration 56, (g) iteration 63, (h) iteration 72, and (i) iteration 83."
+        ],
+        "chart_footnote": [],
+        "bbox": [
+            615,
+            629,
+            825,
+            780
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            57,
+            829,
+            487,
+            883
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "text",
+        "text": "5.2.2. Four radiation sources search process",
+        "text_level": 2,
+        "bbox": [
+            57,
+            897,
+            339,
+            911
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "text",
+        "text": "In the four-source scene, there are two relatively independent radiation fields. Each field consists of two radiation sources. This simulation wants to verify the proposed method’s robustness in the case where all sources are not distributed in a local area. Fig. 16 shows the results and the observation trajectory during searching. The entire process is summarized as follows:",
+        "bbox": [
+            57,
+            911,
+            489,
+            938
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            507,
+            829,
+            939,
+            883
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "text",
+        "text": "(1) In the surrounding observation phase (iterations 1–25), the robot exploited the nearest radiation field. When the robot has observed the common neighborhood of the two sources, it starts to perform surrounding observations around the predicted source (Fig. 16(a)). With the help of REC, the observations maintained a sufficient distance. After iteration 25, the robot began to observe unknown areas. The predicted result gradually became correct. However, the predictions deviated from the actual terms in the unknown region. In Fig. 17, although the RFC was high at this stage, it can only represent the predicted accuracy in the known area. Since the observations were not enough, the RFC has fluctuated dramatically.",
+        "bbox": [
+            507,
+            883,
+            941,
+            939
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "header",
+        "text": "H. Bai, W. Gao, H. Ma et al.",
+        "bbox": [
+            58,
+            42,
+            208,
+            54
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "header",
+        "text": "Robotics and Autonomous Systems 169 (2023) 104529",
+        "bbox": [
+            655,
+            42,
+            939,
+            54
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "page_number",
+        "text": "11",
+        "bbox": [
+            490,
+            947,
+            507,
+            957
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "chart",
+        "img_path": "images/7b044bb7a4f837957f1477798f3961454df7f2565b89000dd79f4c400b6a2efd.jpg",
+        "content": "",
+        "chart_caption": [
+            "Fig. 15. RFC and number of predicted sources in the three-source simulation."
+        ],
+        "chart_footnote": [],
+        "bbox": [
+            107,
+            68,
+            436,
+            284
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            55,
+            336,
+            489,
+            409
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            507,
+            65,
+            941,
+            104
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "(2) Fig. 16(c)–(d) show the results and the observation trajectories in the stage of tracking the suspicious source (iterations 26–46). When the robot tracks a source, it approaches the source by the shortest path (Fig. 16(d)). During this phase, the OIC helped the robot keep moving toward the suspicious sources. Since the pseudo-sources’ intensity is close to that of the background radiation, ADE-PSPF eliminated the predicted results. At this stage, since the new observations are not near the sources, the RFC does not improve significantly.",
+        "bbox": [
+            507,
+            104,
+            941,
+            219
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "(3) In the surrounding observation phase, the robot detected high radiation again (iterations 47–73). At the beginning of the stage, due to the deviation from the prediction, the robot did not explore the common neighborhood of the two sources (Fig. 16(f)). Due to the three corrections, the robot successfully explored the region. In addition, the RFC has significantly improved.",
+        "bbox": [
+            507,
+            218,
+            941,
+            295
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "(4) In the stage of exploring the unknown area (iterations 74– 91), ADE-PSPF eliminated the interference of pseudo sources. And the RFC continued to increase by 3.3% after the number of sources was matched. Fig. 16(i) shows the final predicted results and the observation trajectory. At iteration 91, the RFC reached 88.7%.",
+        "bbox": [
+            507,
+            295,
+            941,
+            359
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "5.2.3. Simulation result analysis",
+        "text_level": 2,
+        "bbox": [
+            509,
+            368,
+            719,
+            382
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "Fig. 18(a) and (b) show, respectively, the LE and IE in the first scenario. For the convenience of observation, we set the maximum LE to 2.5 m. In the stage of tracing suspicious sources, ADE-PSPF cannot accurately estimate the locations of the sources due to a lack of observations in the source neighborhood. After iteration 50, the LE decreased rapidly, but the IE increased. Since the robot has not observed the entire radiation field yet, ADE-PSPF cannot accurately infer the source number. ADE-PSPF fitted the radiation fields using four sources, and the intensity of each source is underestimated. After iteration 56 (Fig. 14(f)), the number of predicted sources became correct, and both errors decreased rapidly. This process proves that the surrounding observations worked.",
+        "bbox": [
+            507,
+            380,
+            941,
+            408
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "chart",
+        "img_path": "images/3e01f4e314415814ec8b9e77cd7c6330c1b1a5ef79e21875edd64f4416b616be.jpg",
+        "content": "",
+        "chart_caption": [],
+        "chart_footnote": [],
+        "bbox": [
+            178,
+            432,
+            388,
+            586
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "chart",
+        "img_path": "images/4400b99046a6b20c1e22d8a4091b96227fcfa660a4d5997b90326cd0c2cc9b03.jpg",
+        "content": "",
+        "chart_caption": [],
+        "chart_footnote": [],
+        "bbox": [
+            394,
+            432,
+            605,
+            586
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "chart",
+        "img_path": "images/a05b9edaa48676eac23476e023441413d3ccb13f3273de6efb9dd05fd78b7766.jpg",
+        "content": "",
+        "chart_caption": [],
+        "chart_footnote": [],
+        "bbox": [
+            613,
+            432,
+            821,
+            586
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "chart",
+        "img_path": "images/1206ca27f182bc47dbdfeaecee258ee09de72b837d6445b972cc0797a3b0d491.jpg",
+        "content": "",
+        "chart_caption": [],
+        "chart_footnote": [],
+        "bbox": [
+            178,
+            590,
+            388,
+            745
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "chart",
+        "img_path": "images/5a0f66e7a8bb92bed410b6b2d370da82960c423e70405df1f33389905256229a.jpg",
+        "content": "",
+        "chart_caption": [],
+        "chart_footnote": [],
+        "bbox": [
+            394,
+            590,
+            605,
+            744
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "chart",
+        "img_path": "images/b9bfdd77cb8fd1940f536f1485a198ff84afbf159cc1d89ad504fbefd5473ac9.jpg",
+        "content": "",
+        "chart_caption": [],
+        "chart_footnote": [],
+        "bbox": [
+            615,
+            590,
+            823,
+            745
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "chart",
+        "img_path": "images/508ca3547a1900dbc4e798bf1f63d08ebaeb1b208598ec2889092e16ccb8c784.jpg",
+        "content": "",
+        "chart_caption": [],
+        "chart_footnote": [],
+        "bbox": [
+            176,
+            747,
+            386,
+            901
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "chart",
+        "img_path": "images/e5785225be8035623b4a3090fc2c535c723c8fa12363e02a8a387ed434e91c58.jpg",
+        "content": "",
+        "chart_caption": [],
+        "chart_footnote": [],
+        "bbox": [
+            394,
+            747,
+            605,
+            901
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "image",
+        "img_path": "images/2eb246c16310fcb69efa8a41b569f609ebd46b4c68207fe2c4b979e31d681009.jpg",
+        "image_caption": [
+            "Fig. 16. In the first scenario, the predicted results and the observation trajectory are shown at (a) iteration 7, (b) iteration 15, (c) iteration 31, (d) iteration 40, (e) iteration 47, (f) iteration 56, (g) iteration 65, (h) iteration 76, and (i) iteration 91."
+        ],
+        "image_footnote": [],
+        "bbox": [
+            613,
+            747,
+            823,
+            902
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "header",
+        "text": "H. Bai, W. Gao, H. Ma et al.",
+        "bbox": [
+            58,
+            42,
+            208,
+            54
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "header",
+        "text": "Robotics and Autonomous Systems 169 (2023) 104529",
+        "bbox": [
+            655,
+            42,
+            939,
+            55
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "page_number",
+        "text": "12",
+        "bbox": [
+            490,
+            947,
+            507,
+            957
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "chart",
+        "img_path": "images/e5de106f928b5d3af0abf2e75e09193ce4ba8c7f91d76a58c42ce7fc359140d4.jpg",
+        "content": "",
+        "chart_caption": [
+            "Fig. 17. RFC and number of predicted sources in the four-source simulation."
+        ],
+        "chart_footnote": [],
+        "bbox": [
+            109,
+            65,
+            435,
+            281
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            57,
+            319,
+            487,
+            466
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Fig. 19(a) and (b) show, respectively, the LE and IE in the second scene. In the phase of surrounding observation and tracing suspicious sources, both errors changed obviously. Many possible distributions in the unknown regions lead to this phenomenon. In the second surrounding observation phase, the number of predicted sources exceeded the actual number, which led to an increase in the IE. But the maximum error and the fluctuation range are less than those in the previous stages. Since all the radiation fields have been observed, both errors have significantly decreased.",
+        "bbox": [
+            57,
+            465,
+            489,
+            598
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Fig. 20(a) and (b) respectively show the runtime of different items in the two scenes. Their average runtime is shown in Table 5. The runtime of the robot movement and tree construction are almost irrelevant to the number of sources. The different number of particle swarms leads to the different runtime of ADE-PSPF. In the first scene, at iteration 58, the robot needed to rotate in a wide range to move to the target point, so the movement time reached 7.0 s. The results prove the proposed strategy can identify the terms online.",
+        "bbox": [
+            55,
+            598,
+            489,
+            694
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "chart",
+        "img_path": "images/139d3af37a1490ea92d5620646dfa63078956d344328c6a50b3cf1510d149f67.jpg",
+        "content": "",
+        "chart_caption": [
+            "Table 5",
+            "The runtime of the algorithm during the search."
+        ],
+        "chart_footnote": [],
+        "bbox": [
+            193,
+            706,
+            489,
+            911
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "table",
+        "img_path": "images/1b6257ee3ec1d4990174d23bd4d4276a19090c6074e37d0aa7527bcdf9d91398.jpg",
+        "table_caption": [],
+        "table_footnote": [],
+        "table_body": "<table><tr><td>Item</td><td>3 sources</td><td>4 sources</td></tr><tr><td>RRT construction</td><td>0.48 s</td><td>0.37 s</td></tr><tr><td>ADE-PSPF prediction</td><td>5.83 s</td><td>7.37 s</td></tr><tr><td>Robot movement</td><td>3.81 s</td><td>3.88 s</td></tr></table>",
+        "bbox": [
+            510,
+            89,
+            937,
+            156
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            509,
+            186,
+            939,
+            213
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Furthermore, we compared the performance of different search strategies to quantitatively analyze the error. The Boustrophedon Path (BP) ensures that the robot observes the whole scene uniformly [34]. And the Next-Best-View Planner (NBVP) is based on information gain, focusing on searching for the most favorable area where the robot perceives the whole environment [35]. They are both widely employed in search missions [36]. To ensure the results are reliable, each search strategy was run 20 times. In a real MRSS mission, the robot uses finite iterations to identify all parameters [37]. So we compare the success rate (SR), RFC, LE, and IE, when the number of iterations is the same. If the algorithm correctly predicts the number of sources, the estimation is successful. SR represents the proportion of successful experiments out of 20 experiments.",
+        "bbox": [
+            507,
+            213,
+            941,
+            394
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Table 6 shows the performance of the proposed strategy (PS), BP, and NBVP. The means and standard deviations of the metrics are compared. The PS has the smallest errors, which indicates that it can best exploit the radiation field information. For source search tasks, SR is also an important metric. The SR shows that PS is robust in the three strategies. Comparing the results of the two scenarios, we find that the source’s sparse distribution will increase the difficulty of prediction. This is because the particle filter uses only one observation per prediction. Compared to IE, the reduction of LE will significantly improve RFC. The results in the two scenarios confirmed that PS can effectively identify the parameters of sources in an unknown environment.",
+        "bbox": [
+            507,
+            394,
+            941,
+            553
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "5.3. Four-point sources search experiment",
+        "text_level": 2,
+        "bbox": [
+            509,
+            562,
+            781,
+            577
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "We used a mobile robot to search the real environment to evaluate the suggested strategy more objectively. Since we do not have enough cobalt-60 sources to test the proposed method, we used ultraviolet (UV) radiation sources instead. As an electromagnetic wave, gamma radiation shares many of the same wave properties as light. All electromagnetic radiation (also called electromagnetic energy) is made up of minute packets of energy, or ’particles,’ called photons, which travel in a wave-like pattern. Consequently, the number of photons received by the sensor is directly proportional to the source intensity within a given time unit. The Poisson distribution is appropriate for characterizing the probability distribution of random events occurring within a specific time interval. We use the probability mass function of the Poisson distribution to evaluate the observation weight (approximation between the predicted number of received photons and the actual number of received photons) from a microscopic (photon) perspective. Similar to gamma radiation measurements, the UV radiation measurements varies randomly over time. UV radiation measurements include noise from the environment and sensors. To accurately measure both radiations, the observations at each location are determined by multiple measurements. Therefore, it is important to establish the propagation model of ultraviolet radiation.",
+        "bbox": [
+            507,
+            587,
+            941,
+            694
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "chart",
+        "img_path": "images/e666c78df08971c2726684dc6033e34c09a10302d15d3e88521b76c662cb4187.jpg",
+        "content": "",
+        "chart_caption": [
+            "Fig. 18. The (a) localization error and (b) intensity error in the first simulation."
+        ],
+        "chart_footnote": [],
+        "bbox": [
+            505,
+            706,
+            805,
+            911
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "header",
+        "text": "H. Bai, W. Gao, H. Ma et al.",
+        "bbox": [
+            58,
+            42,
+            208,
+            54
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "header",
+        "text": "Robotics and Autonomous Systems 169 (2023) 104529",
+        "bbox": [
+            655,
+            42,
+            939,
+            55
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "page_number",
+        "text": "13",
+        "bbox": [
+            490,
+            945,
+            507,
+            957
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "table",
+        "img_path": "images/1300068968e082c114caab06fa463c534786036f70ca1a9f2ccd93336a1cc6c9.jpg",
+        "table_caption": [
+            "Table 6",
+            "The results of the proposed strategy, BP and NBVP in the two scenario."
+        ],
+        "table_footnote": [],
+        "table_body": "<table><tr><td rowspan=\"2\"></td><td colspan=\"3\">Three-source scenario</td><td colspan=\"3\">Four-source scenario</td></tr><tr><td>PS</td><td>BP</td><td>NBVP</td><td>PS</td><td>BP</td><td>NBVP</td></tr><tr><td>SR</td><td>85%</td><td>80%</td><td>65%</td><td>70%</td><td>45%</td><td>50%</td></tr><tr><td>RFC</td><td> $0 . 9 5 \\pm 0 . 0 1$ </td><td> $0 . 8 6 \\pm 0 . 0 3$ </td><td> $0 . 7 7 \\pm 0 . 1 1$ </td><td> $0 . 8 8 \\pm 0 . 0 5$ </td><td> $0 . 7 2 \\pm 0 . 0 5$ </td><td> $0 . 7 9 \\pm 0 . 1 1$ </td></tr><tr><td>LE</td><td> $0 . 2 5 \\pm 0 . 0 5$ </td><td> $1 . 1 9 \\pm 0 . 3 7$ </td><td> $1 . 3 2 \\pm 0 . 6 1$ </td><td> $0 . 4 3 \\pm 0 . 2 5$ </td><td> $1 . 2 0 \\pm 0 . 2 4$ </td><td> $0 . 9 2 \\pm 0 . 6 2$ </td></tr><tr><td>IE</td><td> $1 2 4 . 7 2 \\pm 4 7 . 4 1$ </td><td> $1 2 9 . 9 6 \\pm 3 7 . 6 4$ </td><td> $1 0 4 . 8 2 \\pm 1 8 . 8 6$ </td><td> $7 7 . 6 8 \\pm 4 7 . 0 1$ </td><td> $9 7 . 1 5 \\pm 3 3 . 7 7$ </td><td> $1 4 5 . 4 2 \\pm 1 . 0 1$ </td></tr></table>",
+        "bbox": [
+            146,
+            88,
+            850,
+            190
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            55,
+            206,
+            489,
+            399
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "We used the Philips TUV PL-L36W4P UVLS and UV245 A sensors to measure the UV irradiation intensity. Fig. 21 shows the test scene for UV irradiation intensity. We counted the intensities whose irradiation distance was from 0.8 m to 3.8 m. To reduce the interference of radiation fluctuations, we sampled 500 times at each location. Then use the intensity, which is processed by a first-order filter, as the observation result corresponding to the distance. Fig. 22 displays the fitted curve of the intensity based on the least-squares method. According to the fitted result, we draw the following conclusions:",
+        "bbox": [
+            57,
+            398,
+            489,
+            440
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            507,
+            205,
+            941,
+            302
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "(1) The UV intensity attenuates according to the 1.90th power of the observation distance. And the intensity changes in inverse proportion to the square of the distance. Taking into account background radiation and sensor error, the two types of sources follow the same propagation model.",
+        "bbox": [
+            507,
+            301,
+            941,
+            370
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "chart",
+        "img_path": "images/0ca444e49e10253262d3a9e1be1ff10e8835447b765d569ba50192e64348027a.jpg",
+        "content": "",
+        "chart_caption": [],
+        "chart_footnote": [],
+        "bbox": [
+            193,
+            452,
+            492,
+            656
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "(2) UV radiation has a weaker penetration than ionizing radiation. In the experimental scene, the height of obstacles should be lower than the observation plane. The constraint prevents the observation intensity from changing abruptly due to the occluded UV ray.",
+        "bbox": [
+            507,
+            369,
+            941,
+            440
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "chart",
+        "img_path": "images/798e2f0943988e4314265de2053f2c812b420a32c861046019cc3db8f05f8677.jpg",
+        "content": "",
+        "chart_caption": [
+            "Fig. 19. The (a) location error and (b) intensity error in the second simulation."
+        ],
+        "chart_footnote": [],
+        "bbox": [
+            504,
+            451,
+            803,
+            656
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "chart",
+        "img_path": "images/2bda6fc8aacb49bf235bc5ae489e0c8c4dd7c029c5dca822bccc42f11619ed75.jpg",
+        "content": "",
+        "chart_caption": [],
+        "chart_footnote": [],
+        "bbox": [
+            201,
+            701,
+            494,
+            905
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "chart",
+        "img_path": "images/914ce2adbdee06cb1a56400b90c5143e2ad4e4eb91bff32a21e8aaa0eb204c89.jpg",
+        "content": "",
+        "chart_caption": [
+            "Fig. 20. The runtime of the different items in the (a) three-source and (b) four-source scenarios."
+        ],
+        "chart_footnote": [],
+        "bbox": [
+            509,
+            701,
+            803,
+            905
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "header",
+        "text": "H. Bai, W. Gao, H. Ma et al.",
+        "bbox": [
+            58,
+            42,
+            208,
+            54
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "header",
+        "text": "Robotics and Autonomous Systems 169 (2023) 104529",
+        "bbox": [
+            655,
+            41,
+            939,
+            55
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "page_number",
+        "text": "14",
+        "bbox": [
+            490,
+            947,
+            509,
+            957
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "table",
+        "img_path": "images/309e6470ce7a48c040b93dfba8c3c112e22f1e439a5426c1b88628a38df9836c.jpg",
+        "table_caption": [
+            "Table 7",
+            "The configuration of four-point source environment."
+        ],
+        "table_footnote": [],
+        "table_body": "<table><tr><td>Scenario item</td><td>Parameter setting</td></tr><tr><td>The scope of the scene</td><td>15m × 12 m</td></tr><tr><td>Number of RRT nodes</td><td>60</td></tr><tr><td>Number of particles in each swarm</td><td>250</td></tr><tr><td>Initial robot state</td><td>(0.0, 0.0, 0)</td></tr><tr><td>Swarms and sources number</td><td>5 and 4</td></tr><tr><td>Parameters about sources</td><td>(4.1, −5.35, 4641), (7.3, −5.35, 4791), (4.9, −8.55, 4845) , (8.1, −8.55, 4961)</td></tr><tr><td>Radiation field distribution</td><td>One multimodal radiation field</td></tr></table>",
+        "bbox": [
+            147,
+            89,
+            850,
+            215
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "image",
+        "img_path": "images/8a59b5b89f4a7f8d5d7cc1e11d8fdfe729e875dd183e4ad2de775c8accbccc35.jpg",
+        "image_caption": [
+            "Fig. 21. The experimental scenario for observing the UV ray intensity."
+        ],
+        "image_footnote": [],
+        "bbox": [
+            131,
+            233,
+            416,
+            437
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "chart",
+        "img_path": "images/7b3e15f5068e0189e79067e808418af2cecc9dd5dc540b7a9f022a78e1d85ad3.jpg",
+        "content": "",
+        "chart_caption": [
+            "Fig. 22. The fitting curve based on the irradiation intensity."
+        ],
+        "chart_footnote": [],
+        "bbox": [
+            107,
+            480,
+            435,
+            718
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "The experimental scenario for a four-point source search is shown in Fig. 23. This scene contains a total of four nearby sources, which together form a multi-modal radiation field. Table 7 lists the configuration of the experimental scenario.",
+        "bbox": [
+            57,
+            770,
+            487,
+            823
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Fig. 24 displays the flow of the robot searching for four point sources. The robot obtains the point cloud of the scene using the Velodyne VLP-16 lidar. The robot attains its location information and the grid map of the scenario based on the Cartographer simultaneous localization and mapping (SLAM) framework. Then the costmap is generated by fusing the grid map and parameters of the robot, which helps it move while avoiding obstacles. The exploration module guides the robot to move to the new observation location by combining the costmap and output of the estimation module. The SLAM framework and search strategy are all running on the NUC minicomputer.",
+        "bbox": [
+            55,
+            822,
+            489,
+            939
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "image",
+        "img_path": "images/bdf97e5aa34d010bbfa87fd7a7b99c4b35f5b5759eda84b06242922535e0ae98.jpg",
+        "image_caption": [
+            "Fig. 23. The experimental scenario for point-source search."
+        ],
+        "image_footnote": [],
+        "bbox": [
+            522,
+            233,
+            927,
+            462
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            509,
+            517,
+            939,
+            543
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Fig. 25 shows the final predicted results and the observation trajectories. The PS observed the common neighborhood of the sources (Fig. 25(a)) through the alternation of tracking the suspicious source and the surrounding observations. However, the others ignored the area, and they both incorrectly estimated the number of sources.",
+        "bbox": [
+            509,
+            543,
+            939,
+            622
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Only the proposed strategy still observed the common neighborhood of each source. The BP strategy distributed the exploration opportunities in the whole scene to observe uniformly. The trajectory of NBVP covers almost the whole scene because its purpose is to complete the search in an unknown environment quickly. Therefore, it does not explore the source neighborhoods repeatedly. The difference between the PS and NBVP is the radiation gain, which guarantees the robot surrounds the sources. Although this evaluation criterion increases the opportunity for the robot to search the interest region, the gain correction adjusts the gravity of these regions to encourage exploration of unknown and suspicious areas.",
+        "bbox": [
+            507,
+            621,
+            941,
+            780
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "To prevent the experimental contingency from influencing the conclusion, we repeated the search experiment. All of the parts of this experiment are the same, except for the exploration module. In the repeated experiments, we tested each strategy 20 times. Table 8 shows the results of PS, BP, and NBVP in a real scenario. The proposed strategy has the lowest LE and IE, and its SR is also the highest.",
+        "bbox": [
+            507,
+            779,
+            941,
+            872
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "The estimation module did not accurately identify the terms because neither BP nor NBVP provided enough useful observations. The results show that the accuracy of predictions is linked to the number of observations close to the source. The PS is robust in two different types of radiation fields. In a real environment, the proposed method successfully finds all terms compared to other methods. It is shown that the exploration module can give ADE-PSPF more information about the area of interest. In addition, the alternation of three search phases is able to decouple the multi-modal radiation fields online.",
+        "bbox": [
+            507,
+            871,
+            941,
+            939
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "header",
+        "text": "H. Bai, W. Gao, H. Ma et al.",
+        "bbox": [
+            58,
+            42,
+            208,
+            54
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "header",
+        "text": "Robotics and Autonomous Systems 169 (2023) 104529",
+        "bbox": [
+            655,
+            42,
+            939,
+            55
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "page_number",
+        "text": "15",
+        "bbox": [
+            490,
+            947,
+            507,
+            957
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "image",
+        "img_path": "images/e99dd915998ba96f6542a9b08bf44199b3a7b6eb4d28009c1ecd5d68496d5dc1.jpg",
+        "image_caption": [],
+        "image_footnote": [],
+        "bbox": [
+            188,
+            394,
+            388,
+            547
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "image",
+        "img_path": "images/02caa6da1c85631e0db26ff0e44c95b98594deb0b3a36a00526a1d996e4cc0f5.jpg",
+        "image_caption": [
+            "Fig. 24. The flow of the robot searching for four point sources."
+        ],
+        "image_footnote": [],
+        "bbox": [
+            146,
+            93,
+            853,
+            335
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "chart",
+        "img_path": "images/6729fa22d3ba11e27ebd8c971ccb2f6946507e7ba93452d038473267ddf76d00.jpg",
+        "content": "",
+        "chart_caption": [
+            "Fig. 25. The results and the observation trajectory of (a) PS, (b) BP, and (c) NBVP."
+        ],
+        "chart_footnote": [],
+        "bbox": [
+            188,
+            394,
+            811,
+            547
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "table",
+        "img_path": "images/0251a48f0e19b867bbb7ef64af87489779baaad54f70a5db023935d9f8a7c7bd.jpg",
+        "table_caption": [
+            "Table 8",
+            "The results of PS, BP and NBVP in the real scenario."
+        ],
+        "table_footnote": [],
+        "table_body": "<table><tr><td></td><td>PS</td><td>BP</td><td>NBVP</td></tr><tr><td>SR</td><td>80%</td><td>65%</td><td>60%</td></tr><tr><td>RFC</td><td> $0 . 8 8 \\pm 0 . 0 2$ </td><td> $0 . 7 9 \\pm 0 . 0 2$ </td><td> $0 . 7 5 \\pm 0 . 0 1$ </td></tr><tr><td>LE (m)</td><td> $0 . 7 4 \\pm 0 . 2 2$ </td><td> $0 . 8 4 \\pm 0 . 2 4$ </td><td> $0 . 8 0 \\pm 0 . 4 4$ </td></tr><tr><td>IE (nSv/h)</td><td> $1 3 4 . 8 1 \\pm 1 5 . 6 9$ </td><td> $2 4 4 . 8 8 \\pm 8 0 . 5 1$ </td><td> $2 9 7 . 3 7 \\pm 7 5 . 3 1$ </td></tr></table>",
+        "bbox": [
+            60,
+            625,
+            484,
+            708
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            57,
+            737,
+            487,
+            805
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "6. Conclusion",
+        "text_level": 2,
+        "bbox": [
+            58,
+            818,
+            159,
+            832
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "We propose a novel robotic search strategy for unknown radiation environments where multiple point sources exist. In the estimation module, we combine the PSPF with ADE optimization to improve estimation accuracy under the same observation conditions. In the exploration module, we designed a planning method based on the radiation gain model that trades off exploration of unexplored areas and exploitation of known radiation fields. Furthermore, the strategy was evaluated in both simulated and real scenarios. The results verify three aspects: (1) the ability of ADE-PSPF to jump out of the local optimum; (2) the robustness of this strategy in various radiation scenarios; and (3) the contribution of the surrounding observations to the estimation module. And compared with the existing algorithms, the most apparent advantage is that it can estimate the parameters of sources while searching in an unknown environment. However, the simulated and real scenes are closed and of known size. This work did not discuss the maximum search range of the proposed strategy. In future work, we will study the MRSS strategy for large-scales scenes and other sources except for point-source.",
+        "bbox": [
+            57,
+            844,
+            489,
+            939
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            507,
+            602,
+            941,
+            757
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Declaration of competing interest",
+        "text_level": 2,
+        "bbox": [
+            509,
+            765,
+            749,
+            780
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper.",
+        "bbox": [
+            509,
+            790,
+            939,
+            831
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Data availability",
+        "text_level": 2,
+        "bbox": [
+            509,
+            839,
+            628,
+            853
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Data will be made available on request.",
+        "bbox": [
+            529,
+            863,
+            794,
+            878
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Acknowledgments",
+        "text_level": 2,
+        "bbox": [
+            510,
+            887,
+            643,
+            901
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "This research was supported by National Natural Science Foundation of China (No. 61773141 and 62273123).",
+        "bbox": [
+            509,
+            911,
+            939,
+            938
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "header",
+        "text": "H. Bai, W. Gao, H. Ma et al.",
+        "bbox": [
+            58,
+            42,
+            208,
+            54
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "header",
+        "text": "Robotics and Autonomous Systems 169 (2023) 104529",
+        "bbox": [
+            655,
+            41,
+            939,
+            55
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "page_number",
+        "text": "16",
+        "bbox": [
+            492,
+            947,
+            507,
+            957
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Appendix A. Supplementary data",
+        "text_level": 2,
+        "bbox": [
+            58,
+            66,
+            290,
+            80
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Supplementary material related to this article can be found online at https://doi.org/10.1016/j.robot.2023.104529.",
+        "bbox": [
+            57,
+            92,
+            487,
+            119
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "References",
+        "text_level": 2,
+        "bbox": [
+            58,
+            131,
+            137,
+            145
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "list",
+        "sub_type": "ref_text",
+        "list_items": [
+            "[1] World Health Organization, 1986-2016: Chernobyl at 30 - An update, 2016, https://www.who.int/publications/m/item/1986-2016-chernobyl-at-30.",
+            "[2] International Atomic Energy Agency, Radiation in everyday life, 2015, https://www.iaea.org/Publications/Factsheets/English/radlife.",
+            "[3] Z. Shang, Y. Dang, Y. Wang, et al., NORM survey within the second census on pollution sources in China, J. Environ. Radioact. 237 (2021) 106714.",
+            "[4] A. West, I. Tsitsimpelis, M. Licata, et al., Use of Gaussian process regression for radiation mapping of a nuclear reactor with a mobile robot, Sci. Rep. 11 (1) (2021) 1–11.",
+            "[5] T. Wright, A. West, M. Licata, et al., Simulating ionising radiation in gazebo for robotic nuclear inspection challenges, Robotics 10 (3) (2021) 86.",
+            "[6] X. Xu, N.S.V. Rao, S. Sahni, A computational geometry method for localization using differences of distances, ACM Trans. Sensor Netw. 6 (2) (2010) 1–25.",
+            "[7] J.C. Chin, D.K.Y. Yau, N.S.V. Rao, et al., Accurate localization of low-level radioactive source under noise and measurement errors, in: Proceedings of the 6th ACM conference on Embedded network sensor systems, 2008, pp. 183–196.",
+            "[8] C.D. Pahlajani, I. Poulakakis, H.G. Tanner, Networked decision making for Poisson processes with applications to nuclear detection, IEEE Trans. Automat. Control 59 (1) (2013) 193–198.",
+            "[9] J.W. Howse, L.O. Ticknor, K.R. Muske, Least squares estimation techniques for position tracking of radioactive sources, Automatica 37 (11) (2001) 1727–1737.",
+            "[10] M. Morelande, B. Ristic, A. Gunatilaka, Detection and parameter estimation of multiple radioactive sources, in: 2007 10th International Conference on Information Fusion, IEEE, 2007, pp. 1–7.",
+            "[11] Y.7. Cheng, T. Singh, Source term estimation using convex optimization, in: 2008 11th International Conference on Information Fusion, IEEE, 2008, pp. 1–8.",
+            "[12] M. Ding, X. Cheng, Fault tolerant target tracking in sensor networks, in: Proceedings of the tenth ACM international symposium on Mobile ad hoc networking and computing, 2009, pp. 125–134.",
+            "[13] J.C. Chin, D.K.Y. Yau, N.S.V. Rao, Efficient and robust localization of multiple radiation sources in complex environments, in: 2011 31st International Conference on Distributed Computing Systems, IEEE, 2011, pp. 780–789.",
+            "[14] P. Tandon, P. Huggins, R. Maclachlan, et al., Detection of radioactive sources in urban scenes using Bayesian aggregation of data from mobile spectrometers, Inf. Syst. 57 (2016) 195–206.",
+            "[15] E. Bai, A. Heifetz, P. Raptis, et al., Maximum likelihood localization of radioactive sources against a highly fluctuating background, IEEE Trans. Nucl. Sci. 62 (6) (2015) 3274–3282.",
+            "[16] J. Han, Y.Q. Chen, Multiple UAV formations for cooperative source seeking and contour mapping of a radiative signal field, J. Intell. Robot. Syst. 74 (1) (2014) 323–332.",
+            "[17] B. Li, Y. Zhu, Z. Wang, et al., Use of multi-rotor unmanned aerial vehicles for radioactive source search, Remote Sens. 10 (5) (2018) 728.",
+            "[18] J. Huo, M. Liu, K.A. Neusypin, et al., Autonomous search of radioactive sources through mobile robots, Sensors 20 (12) (2020) 3461.",
+            "[19] H. Zhu, Y. Wang, C. Du, et al., A novel odor source localization system based on particle filtering and information entropy, Robot. Auton. Syst. 132 (2020) 103619.",
+            "[20] B. Ristic, M. Morelande, A. Gunatilaka, Information driven search for point sources of gamma radiation, Signal Process. 90 (4) (2010) 1225–1239.",
+            "[21] A.A.R. Newaz, S. Jeong, H. Lee, et al., UAV-based multiple source localization and contour mapping of radiation fields, Robot. Auton. Syst. 85 (2016) 12–25.",
+            "[22] W. Gao, W. Wang, H. Zhu, et al., Robust radiation sources localization based on the peak suppressed particle filter for mixed multi-modal environments, Sensors 18 (11) (2018) 3784.",
+            "[23] W. Wang, W. Gao, H. Zhu, et al., Improved dynamic optimization of PSPFbased sources estimation in local multi-modal radiation field, IEEE Access 7 (2019) 153885–153899.",
+            "[24] D. Hellfeld, T.H.Y. Joshi, M.S. Bandstra, et al., Gamma-ray point-source localization and sparse image reconstruction using Poisson likelihood, IEEE Trans. Nucl. Sci. 66 (9) (2019) 2088–2099.",
+            "[25] T. Kishimoto, H. Woo, R. Komatsu, et al., Path planning for localization of radiation sources based on principal component analysis, Appl. Sci. 11 (10) (2021) 4707.",
+            "[26] Y. Ji, Y. Zhao, B. Chen, et al., Source searching in unknown obstructed environments through source estimation, target determination, and path planning, Build. Environ. 221 (2022) 109266.",
+            "[27] K. Groves, E. Hernandez, A. West, et al., Robotic exploration of an unknown nuclear environment using radiation informed autonomous navigation, Robotics 10 (2) (2021) 78.",
+            "[28] F. Mascarich, M. Kulkarni, P. De Petris, et al., Autonomous mapping and spectroscopic analysis of distributed radiation fields using aerial robots, Auton. Robots 47 (2) (2023) 139–160.",
+            "[29] F. Mascarich, P. De Petris, H. Nguyen, et al., Autonomous distributed 3d radiation field estimation for nuclear environment, in: 2021 IEEE International Conference on Robotics and Automation, (ICRA), IEEE, 2021, pp. 2163–2169.",
+            "[30] C.I. Thompson, E.E. Barritt, C. Shenton-Taylor, Predicting the air fluorescence yield of radiation sources, Radiat. Meas. 88 (2016) 48–54.",
+            "[31] R. Almadhoun, T. Taha, L. Seneviratne, et al., A survey on multi-robot coverage path planning for model reconstruction and mapping, SN Appl. Sci. 1 (8) (2019).",
+            "[32] C.G. Bowles, G.M. Reimer, Short-Term Fluctuations in Barometric Pressure, Soil-Gas Radon, and Gamma Radiation, Open-File Report, 1991.",
+            "[33] H.E. Johns, J.R. Cunningham, The physics of radiology, 1983.",
+            "[34] Y. Brouwer, A. Vale, R. Ventura, Informative path planner with exploration– exploitation trade-off for radiological surveys in non-convex scenarios, Robot. Auton. Syst. 136 (4) (2020).",
+            "[35] A. Bircher, M. Kamel, K. Alexis, et al., Receding horizon next-best-view planner for 3D exploration, in: IEEE International Conference on Robotics & Automation, IEEE, 2016.",
+            "[36] Hongbiao Zhu, et al., DSVP: Dual-stage viewpoint planner for rapid explo ration by dynamic expansion, in: 2021 IEEE/RSJ International Conference on Intelligent Robots and Systems, (IROS), IEEE, 2021.",
+            "[37] Hua Bai, et al., Multi-source term estimation based on parallel particle filtering and dynamic state space in unknown radiation environments, Build. Environ. 236 (2023) 110281."
+        ],
+        "bbox": [
+            67,
+            156,
+            485,
+            179
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "image",
+        "img_path": "images/be760b6bb478eab2f1854d3602664d278975e3105d365a7b69e1277f05809c61.jpg",
+        "image_caption": [],
+        "image_footnote": [
+            "Hua Bai received the M.S. degrees in control engineering from the Northeastern University in 2018. He is currently pursuing the Ph.D. degree at the Harbin Institute of Technology, Harbin, China. His research interests include environment exploration, probabilistic robotics and field robot."
+        ],
+        "bbox": [
+            512,
+            471,
+            633,
+            580
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "image",
+        "img_path": "images/f393b4b4c1b99058201d388b37d54db6b568915864aea1667a850b71a6e32f46.jpg",
+        "image_caption": [],
+        "image_footnote": [
+            "Wenrui Gao was born in Liaoning, China, in 1990. He received the B.S., M.S., and Ph.D. degrees from the Harbin Institute of Technology (HIT), in 2012, 2014 and 2021, respectively. His research expertise is involved in the general areas of robotics and mechatronics, which is mainly consisted of mobile manipulator, exoskeleton robot, probabilistic robotics and computer vision."
+        ],
+        "bbox": [
+            512,
+            585,
+            635,
+            692
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "image",
+        "img_path": "images/bdf4c76a1f48baab06efea522554d5561fb937a8b5285d4d90f07c396f74717d.jpg",
+        "image_caption": [],
+        "image_footnote": [],
+        "bbox": [
+            512,
+            708,
+            635,
+            814
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Haofei Ma obtained the B.S degree from the school of Hebei University of Technology in 2022. He is currently pursuing the master’s degree with the Harbin Institute of Technology. His main research focuses on computer vision and intelligent control of robotic arms.",
+        "bbox": [
+            642,
+            706,
+            939,
+            762
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "image",
+        "img_path": "images/a91506acf551ebbdbd7af0289b9d20d703742a4b50277c3abbde44abf37cba99.jpg",
+        "image_caption": [],
+        "image_footnote": [],
+        "bbox": [
+            514,
+            825,
+            635,
+            931
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Pengchao Ding obtained his M.Sc. in Mechatronic Engineering from Harbin Institute of Technology in 2020. Currently, he is a Ph.D. student at Harbin Institute of Technology, pursuing his study in State Key Laboratory of Robotics and System at Harbin Institute of Technology. His research interests lie in ground robots and SLAM.",
+        "bbox": [
+            642,
+            823,
+            939,
+            900
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "header",
+        "text": "H. Bai, W. Gao, H. Ma et al.",
+        "bbox": [
+            58,
+            42,
+            208,
+            54
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "header",
+        "text": "Robotics and Autonomous Systems 169 (2023) 104529",
+        "bbox": [
+            655,
+            42,
+            939,
+            54
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "page_number",
+        "text": "17",
+        "bbox": [
+            492,
+            947,
+            507,
+            957
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "image",
+        "img_path": "images/58346a45090f677dabbf7dec60861e942f71aa60a5848032cef6a43f572449dd.jpg",
+        "image_caption": [],
+        "image_footnote": [],
+        "bbox": [
+            60,
+            73,
+            183,
+            179
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "image",
+        "img_path": "images/da3b1d6309537b88a6cca7b13445e3b2c0ca865440e8ab45f82b8cd0221947dd.jpg",
+        "image_caption": [],
+        "image_footnote": [],
+        "bbox": [
+            60,
+            196,
+            183,
+            303
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Gongcheng Wang obtained his M.Sc. in mechanical engineering from Shandong University. Currently, he is a Ph.D. student at Harbin Institute of Technology, pursuing his study in State Key Laboratory of Robotics and System at Harbin Institute of Technology. His main research interests lie in mobile manipulator intelligent operation.",
+        "bbox": [
+            189,
+            70,
+            487,
+            148
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Wenda Xu obtained his M.Sc. in Mechatronic Engineering from Harbin Institute of Technology in 2022. Currently, he is a Ph.D. student at Harbin Institute of Technology, pursuing his study in State Key Laboratory of Robotics and System at Harbin Institute of Technology. His research interests mainly focus on unmanned aerial vehicles (UAVs) and navigation, exploration.",
+        "bbox": [
+            189,
+            195,
+            487,
+            272
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "image",
+        "img_path": "images/f13894b2bc1873f6c539aff7ac1aa26bda24fd65e63c514ab31fd061159f479d.jpg",
+        "image_caption": [],
+        "image_footnote": [],
+        "bbox": [
+            514,
+            70,
+            635,
+            177
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Weidong Wang received the B.S., M.S., and Ph.D. degrees in mechatronics engineering from the Harbin Institute of Technology, in 2002, 2004, and 2009, respectively, where he is currently with the State Key Laboratory of Robotics and System. His research expertise is in the general areas of robotics and mechatronics. His research interests include motion planning, computer vision, human–machine interaction, and its application in field robot and surgical robot.",
+        "bbox": [
+            642,
+            69,
+            939,
+            168
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "image",
+        "img_path": "images/6f5b61b2835d93bb38cba92e67bd616276df396eb870a64842a89bfa86b3ca45.jpg",
+        "image_caption": [],
+        "image_footnote": [],
+        "bbox": [
+            514,
+            201,
+            635,
+            308
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Zhijiang Du received the B.S. degree in mechanical engineering and the M.S. and Ph.D. degrees in mechatronics engineering from the State Key Laboratory of Robotics and System, Harbin Institute of Technology, Harbin, China, in 1995, 1997, and 2001, respectively. He has been a Professor of Harbin Institute of Technology, since 2006. His research interests include the general areas of medical robots, industrial robots.",
+        "bbox": [
+            642,
+            200,
+            939,
+            288
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "header",
+        "text": "H. Bai, W. Gao, H. Ma et al.",
+        "bbox": [
+            60,
+            42,
+            208,
+            54
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "header",
+        "text": "Robotics and Autonomous Systems 169 (2023) 104529",
+        "bbox": [
+            655,
+            42,
+            939,
+            54
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "page_number",
+        "text": "18",
+        "bbox": [
+            492,
+            947,
+            507,
+            957
+        ],
+        "page_idx": 17
+    }
+]

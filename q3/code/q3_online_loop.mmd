@@ -1,0 +1,41 @@
+%%{init: {'theme': 'base', 'themeVariables': {'fontFamily': 'Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif', 'fontSize': '17px', 'lineColor': '#5F6368', 'primaryTextColor': '#2B2B2B'}, 'flowchart': {'curve': 'basis', 'nodeSpacing': 24, 'rankSpacing': 34, 'htmlLabels': true}}}%%
+flowchart LR
+    A([进入测试]) --> B[初始化状态]
+    B --> D{任务完成?}
+    D -- 是 --> Z([退出测试])
+    D -- 否 --> T{选择任务}
+
+    T -- 基准点 --> S[七点巡检]
+    T -- 已发现目标 --> L[目标定位]
+    S --> P{存在 pending?}
+    L --> P
+    P -- 是 --> PR[重发原请求]
+    P -- 否 --> M[执行测向]
+    PR --> U[更新频道状态]
+    M --> O{观测结果}
+
+    O -- near --> C[立即清除]
+    O -- direction --> R[更新可能区域]
+    O -- no_signal --> N[记录结果]
+
+    R --> K{满足清除条件?}
+    K -- 是 --> C
+    K -- 否 --> Q{测向次数用尽?}
+    Q -- 否 --> L
+    Q -- 是 --> G[网格清除]
+
+    N --> NS{定位阶段?}
+    NS -- 是 --> G
+    NS -- 否 --> U
+    C --> U
+    G --> U
+    U --> D
+
+    classDef yellow fill:#FFF1B8,stroke:#C99A00,color:#2B2B2B,stroke-width:1.6px;
+    classDef purple fill:#E8D9F5,stroke:#7A52A3,color:#2B2B2B,stroke-width:1.6px;
+    classDef green fill:#D9EFD8,stroke:#4D8B55,color:#2B2B2B,stroke-width:1.6px;
+
+    class A,D,T,P,O,K,Q,NS yellow;
+    class B,S,L,PR,M,R,N,U purple;
+    class C,G,Z green;
+    linkStyle default stroke:#5F6368,stroke-width:1.5px;

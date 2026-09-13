@@ -1,0 +1,6 @@
+﻿seed,problem,strategy_name,source_count,cleared_count,cleared_ratio,all_cleared,virtual_time_s,average_localize_clear_time_s,total_distance_m,measure_count,clear_count,failed_clear_count,channel_switch_count,strategy_completed,wall_time_s
+0,Q4,GuaranteedDirectionalQ4Strategy,16,16,1.0,True,8208.092441149076,513.0057775718172,34050.462205745396,222,26,10,178,True,5.669230200001039
+1,Q4,GuaranteedDirectionalQ4Strategy,11,11,1.0,True,7725.7465842835945,702.3405985712359,29483.732921417977,301,11,0,269,True,3.490803099994082
+2,Q4,GuaranteedDirectionalQ4Strategy,16,16,1.0,True,3367.4153724959647,210.4634607809978,13607.076862479831,98,16,0,76,True,4.708218499989016
+3,Q4,GuaranteedDirectionalQ4Strategy,11,11,1.0,True,7821.933322288207,711.0848474807461,29709.666611441025,301,29,18,266,True,3.1706485000031535
+4,Q4,GuaranteedDirectionalQ4Strategy,11,11,1.0,True,7392.469221210743,672.0426564737039,28162.346106053705,290,11,0,255,True,3.3116232000029413

@@ -1,0 +1,24 @@
+{
+  "result_status": "COMPLETE",
+  "strategy_name": "GuaranteedRollingQ3Strategy",
+  "strategy_completed": true,
+  "strategy_note": "visited_search_points=7;fallback_clear_attempts=0;guaranteed_clear_attempts=13;certificate=True",
+  "successful_clear_count": 15,
+  "measure_count": 110,
+  "clear_count": 15,
+  "unique_request_count": 127,
+  "http_attempt_count": 127,
+  "virtual_time_s": 3910.157175,
+  "wall_time_s": 4.952621899996302,
+  "entered_remaining_real_duration_s": 1200.0,
+  "remaining_real_duration_s": 1195.1089999999967,
+  "final_position": {
+    "x": 51.2640858384244,
+    "y": 1713.7019364171178
+  },
+  "final_measurement_channel": 7,
+  "environment_finished": true,
+  "cleanup_error": null,
+  "request_log": "D:\\1A-project\\mcm-2026\\contest\\2026mcm\\q3\\results\\q3_official_20260912_103604_141749.jsonl",
+  "output": "D:\\1A-project\\mcm-2026\\contest\\2026mcm\\q3\\results\\q3_official_20260912_103604_141749.json"
+}
