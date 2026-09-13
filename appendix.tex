@@ -50,7 +50,8 @@ mcm-2026/
 |   `-- run_q1.py              # 问题一命令行求解与算例验证入口
 |-- q2/code/                   # 问题二：第二检测点寻优与安全带几何评估
 |   |-- q2_fast.py             # 保守接收凸包络、安全裕度与最劣直径极小化求解
-|   `-- run_q2_fast.py         # 问题二快速优化选点命令行入口
+|   |-- run_q2_fast.py         # 问题二快速优化选点命令行入口
+|   `-- run_q2_validation.py   # 问题二多场景批量收敛验证程序
 |-- q3/code/                   # 问题三：全向干扰源多目标协同搜索与清剿
 |   |-- q3_strategy.py         # 七点基准覆盖、在线双轨调度与清剿主逻辑
 |   `-- run_q3_official.py     # 问题三官方模拟器正式测试驱动脚本
@@ -65,7 +66,7 @@ mcm-2026/
 程序运行环境为 Python 3.10+，终端一键复现命令如下：
 \begin{enumerate}[leftmargin=2.2em, itemsep=0.1em]
     \item \textbf{问题一复现}：运行 \texttt{python q1/code/run\_q1.py} 输出基准算例定位多边形直径及覆盖判定。
-    \item \textbf{问题二复现}：运行 \texttt{python q2/code/run\_q2\_fast.py} 输出最优测点坐标 $(839.64, 538.75)$ 与压缩率。
+    \item \textbf{问题二复现}：运行 \texttt{python q2/code/run\_q2\_fast.py} 输出最优测点坐标 $(839.64, 538.75)$ 与压缩率；运行 \texttt{python q2/code/run\_q2\_validation.py} 完成 6 类复杂几何工况的多场景收敛验证。
     \item \textbf{问题三复现}：运行 \texttt{python q3/code/run\_q3\_official.py} 自动执行全向干扰源在线搜索与清剿。
     \item \textbf{问题四复现}：运行 \texttt{python q4/code/run\_q4\_official.py} 自动执行混合干扰源拓扑巡航与定向清剿。
 \end{enumerate}
@@ -218,6 +219,60 @@ def evaluate_candidate(cand: Point, first_poly: list[Point], sample_sources: lis
         conservative_safety_margin_m=conservative_safety_margin(cand, first_poly),
         worst_posterior_diameter_m=worst_diam
     )
+\end{lstlisting}
+
+\subsection{问题二多场景批量收敛验证代码（\texttt{run\_q2\_validation.py}）}
+本程序实现了问题二模型在中心测向、偏移测向、边界内向、边界切向、界外逆向及临界跳变等 6 种典型几何工况下的多分辨率候选带搜索与数值收敛性自动化验证：
+
+\begin{lstlisting}[caption={问题二多场景收敛验证程序（run\_q2\_validation.py）}]
+from dataclasses import dataclass
+from pathlib import Path
+import time
+from q2_regions import ResolutionLevel, solve_numerical_regions
+from q2_state import FirstObservation, Q2Config
+
+@dataclass(frozen=True)
+class Scenario:
+    name: str
+    first: FirstObservation
+
+SCENARIOS = (
+    Scenario("center", FirstObservation((0.0, 0.0), 0.0)),
+    Scenario("offset", FirstObservation((300.0, 500.0), 125.0)),
+    Scenario("edge_inward", FirstObservation((1600.0, 0.0), 180.0)),
+    Scenario("edge_tangent", FirstObservation((1600.0, 0.0), 90.0)),
+    Scenario("outside_inward", FirstObservation((2000.0, 0.0), 180.0)),
+    Scenario("wraparound", FirstObservation((0.0, 0.0), 359.5)),
+)
+
+def _levels(profile: str) -> tuple[ResolutionLevel, ...]:
+    if profile == "quick":
+        return (
+            ResolutionLevel(1000.0, 9, 8, 5, 2.0),
+            ResolutionLevel(500.0, 13, 12, 7, 1.0),
+            ResolutionLevel(250.0, 17, 16, 9, 0.5),
+        )
+    return (
+        ResolutionLevel(500.0, 25, 24, 9, 1.0),
+        ResolutionLevel(250.0, 37, 36, 13, 0.5),
+        ResolutionLevel(125.0, 49, 48, 17, 0.25),
+    )
+
+def run_scenarios(selected: list[Scenario], profile: str = "quick", max_candidates: int = 2200) -> dict[str, object]:
+    levels = _levels(profile)
+    config = Q2Config()
+    summary: dict[str, object] = {"profile": profile, "scenarios": []}
+    started = time.perf_counter()
+    for scenario in selected:
+        result = solve_numerical_regions(scenario.first, config, levels, max_candidates=max_candidates)
+        summary["scenarios"].append({
+            "name": scenario.name,
+            "status": result["result_status"],
+            "converged": result.get("convergence_assessment", {}).get("converged", False),
+            "convergence": result.get("convergence", []),
+        })
+    summary["elapsed_seconds"] = time.perf_counter() - started
+    return summary
 \end{lstlisting}
 
 \section{问题三：在线双轨搜索与动态清剿核心代码}
